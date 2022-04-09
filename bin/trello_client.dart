@@ -1,56 +1,48 @@
-void main(List<String> arguments) => parseArgs(arguments).fold(
-      onLeft: (errors) => reportErrors(errors),
-      onRight: (keys) => runApp(keys),
-    );
-
-void runApp(Keys keys) {}
-
-void reportErrors(ErrorList errors) {
-  errors.forEach((error) {
-    print(error);
-  });
-}
-
-typedef Supplier<T> = T Function();
-
-Either<ErrorList, Keys> parseArgs(List<String> arguments) {
-  return Left.of(['parseArgs: No Implemented']);
-}
-
-typedef Consumer<T> = void Function(T);
-
-abstract class Either<L, R> {
-  void fold({required Consumer<L> onLeft, required Consumer<R> onRight});
-}
-
-class Left<L, R> extends Either<L, R> {
-  L _error;
-  Left.of(this._error);
-  @override
-  void fold({required Consumer<L> onLeft, required Consumer<R> onRight}) {
-    onLeft.call(_error);
-  }
-}
-
-class Right<L, R> extends Either<L, R> {
-  R _value;
-  Right.of(this._value);
-  @override
-  void fold({required Consumer<L> onLeft, required Consumer<R> onRight}) {
-    onRight.call(_value);
-  }
-}
-
-typedef ErrorList = List<Error>;
+import 'package:trello_client/src/fp/fp.dart';
+import 'package:trello_client/src/models/models.dart';
+import 'package:trello_client/trello_client.dart';
 
 typedef Error = String;
+typedef ErrorList = List<Error>;
 
-class Keys {
-  String _key;
-  String get key => _key;
+Future<void> main(List<String> arguments) async =>
+    await parseArgs(arguments).map(trelloClient).fold<Future<void>>(
+          onError: (errors) => reportErrors(errors),
+          onSuccess: (client) => runApp(client),
+        );
 
-  String _secret;
-  String get secret => _secret;
-
-  Keys.of(this._key, this._secret);
+Future<void> runApp(TrelloClient client) async {
+  print('Select Board:');
+  List<Board> boards = await client.members
+      .getMemberBoards(fields: [BoardFields.id, BoardFields.name]);
+  boards
+      .asMap()
+      .entries
+      .map((entry) => "- ${entry.key + 1}: ${entry.value.name}")
+      .forEach(print);
+  client.close();
 }
+
+Future<void> reportErrors(ErrorList errors) async => errors.forEach(print);
+
+Either<ErrorList, TrelloAuthentication> parseArgs(List<String> arguments) {
+  if (arguments.isEmpty) {
+    return Left.of(['Trello Username, API key and token not given']);
+  }
+  final String username = arguments[0];
+  if (arguments.length < 2) {
+    return Left.of(['Trello API key and token not given']);
+  }
+  final String key = arguments[1];
+  if (arguments.length < 3) {
+    return Left.of(['Trello API token not given']);
+  }
+  final String secret = arguments[2];
+  if (arguments.length > 3) {
+    return Left.of(['Too many arguments']);
+  }
+  return Right.of(TrelloAuthentication.of(username, key, secret));
+}
+
+TrelloClient trelloClient(TrelloAuthentication authentication) =>
+    TrelloClient(authentication);
