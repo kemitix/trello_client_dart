@@ -5,32 +5,33 @@ class TrelloAuthentication {
   final String _key;
   String get key => _key;
 
-  final String _secret;
-  String get token => _secret;
+  final String _token;
+  String get token => _token;
 
   final String _username;
   String get username => _username;
 
-  TrelloAuthentication.of(this._username, this._key, this._secret);
+  TrelloAuthentication.of(this._username, this._key, this._token);
 }
 
 class TrelloClient {
-  final TrelloAuthentication _keys;
+  late final String _username;
   late final HttpClient _httpClient;
   late final Members _members;
 
-  TrelloClient(this._keys) {
+  TrelloClient(TrelloAuthentication authentication) {
     _httpClient = DioHttpClient(
       baseUrl: 'https://api.trello.com',
       queryParameters: {
-        'key': _keys.key,
-        'token': _keys.token,
+        'key': authentication.key,
+        'token': authentication.token,
       },
     );
+    _username = authentication.username;
     _members = Members(this);
   }
 
-  String get username => _keys.username;
+  String get username => _username;
   Members get members => _members;
   HttpClient get httpClient => _httpClient;
 
