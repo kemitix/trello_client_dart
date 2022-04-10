@@ -1,9 +1,9 @@
-import 'package:trello_client/src/client.dart';
-import 'package:trello_client/src/lists.dart';
+import 'package:trello_client/src/http_client.dart';
 import 'package:trello_client/src/misc.dart';
+import 'package:trello_client/src/models/models.dart';
 
 class Boards {
-  final TrelloClient _client;
+  final HttpClient _client;
 
   Boards(this._client);
 
@@ -26,13 +26,6 @@ class Boards {
               [])
           .map((item) => TrelloList(item, fields ?? [ListFields.all]))
           .toList(growable: false);
-}
-
-enum ListFields {
-  all,
-  id,
-  name,
-  //TODO more
 }
 
 enum BoardListFilter {

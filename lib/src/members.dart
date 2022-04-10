@@ -1,20 +1,21 @@
-import 'package:trello_client/src/client.dart';
+import 'package:trello_client/src/http_client.dart';
 import 'package:trello_client/src/misc.dart';
 import 'package:trello_client/src/models/models.dart';
 
 class Members {
-  final TrelloClient _client;
+  final HttpClient _client;
 
   Members(this._client);
 
   // Get Boards that Member belongs to
   // https://developer.atlassian.com/cloud/trello/rest/api-group-members/#api-members-id-boards-get
-  Future<List<Board>> getMemberBoards({
+  Future<List<Board>> getMemberBoards(
+    String username, {
     MemberBoardFilter filter = MemberBoardFilter.all,
     List<BoardFields>? fields,
   }) async =>
       ((await _client.get<List<dynamic>>(
-                '/1/members/${_client.username}/boards',
+                '/1/members/${username}/boards',
                 queryParameters: {
                   'filter': filter.name,
                   'fields': listEnumToCsv(fields ?? [BoardFields.all])

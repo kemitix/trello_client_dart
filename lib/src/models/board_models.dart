@@ -1,23 +1,3 @@
-enum BoardFields {
-  all,
-  id,
-  name,
-  desc,
-  descData,
-  closed,
-  idMemberCreator,
-  idOrganization,
-  pinned,
-  url,
-  shortUrl,
-  prefs,
-  labelNames,
-  starred,
-  //limits,
-  memberships,
-  enterpriseOwned
-}
-
 class Board {
   final dynamic _source;
   final List<BoardFields> _fields;
@@ -49,6 +29,26 @@ class Board {
     throw AssertionError(
         'Board: Attempt to access field not retrieved: ${field.name}');
   }
+}
+
+enum BoardFields {
+  all,
+  id,
+  name,
+  desc,
+  descData,
+  closed,
+  idMemberCreator,
+  idOrganization,
+  pinned,
+  url,
+  shortUrl,
+  prefs,
+  labelNames,
+  starred,
+  //limits,
+  memberships,
+  enterpriseOwned
 }
 
 enum BoardPrefsFields {

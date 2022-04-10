@@ -1,19 +1,21 @@
-import 'package:trello_client/src/boards.dart';
+import 'package:trello_client/src/http_client.dart';
+import 'package:trello_client/src/models/card_models.dart';
 
-class TrelloList {
-  final dynamic _source;
-  final List<ListFields> _fields;
+class Lists {
+  final HttpClient _client;
 
-  TrelloList(this._source, this._fields);
+  Lists(this._client);
 
-  String get id => _getValue(ListFields.id);
-  String get name => _getValue(ListFields.name);
-
-  T _getValue<T>(ListFields field) {
-    if (_fields.contains(ListFields.all) || _fields.contains(field)) {
-      return _source[field.name];
-    }
-    throw AssertionError(
-        'List: Attempt to access field not retrieved: ${field.name}');
-  }
+  // Get Cards in a List
+  // https://developer.atlassian.com/cloud/trello/rest/api-group-lists/#api-lists-id-cards-get
+  Future<List<Card>> getCards(
+          {required String listId, List<CardFields>? fields}) async =>
+      ((await _client.get<List<dynamic>>(
+                '/1/lists/${listId}/cards',
+                queryParameters: {},
+              ))
+                  .data ??
+              [])
+          .map((item) => Card(item, fields ?? [CardFields.all]))
+          .toList(growable: false);
 }
