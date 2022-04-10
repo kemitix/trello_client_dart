@@ -7,8 +7,11 @@ class MemberBoards {
 
   MemberBoards(this._client);
 
-  // Get Boards that Member belongs to
-  // https://developer.atlassian.com/cloud/trello/rest/api-group-members/#api-members-id-boards-get
+  /**
+   * Get Boards that Member belongs to
+   *
+   * https://developer.atlassian.com/cloud/trello/rest/api-group-members/#api-members-id-boards-get
+   */
   Future<List<Board>> get(
     String username, {
     MemberBoardFilter filter = MemberBoardFilter.all,
