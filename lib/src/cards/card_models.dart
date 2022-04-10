@@ -6,6 +6,32 @@ class Card {
 
   String get id => _getValue(CardFields.id);
   String get name => _getValue(CardFields.name);
+  // badges,
+  // checkItemStates,
+  // closed,
+  // dateLastActivity,
+  // desc,
+  // descData,
+  // due,
+  // dueComplete,
+  // idAttachmentCover,
+  // idBoard,
+  // idChecklists,
+  // idLabels,
+  // idList,
+  // idMembers,
+  // idMembersVoted,
+  // isShort,
+  // labels,
+  // manualCoverAttachment,
+  // pos,
+  // shortLink,
+  // shortUrl,
+  // subscribed,
+  // url,
+  // address,
+  // locationName,
+  // coodinates,
 
   T _getValue<T>(CardFields field) {
     if (_fields.contains(CardFields.all) || _fields.contains(field)) {
@@ -19,6 +45,38 @@ class Card {
 enum CardFields {
   all,
   id,
+  badges,
+  checkItemStates,
+  closed,
+  dateLastActivity,
+  desc,
+  descData,
+  due,
+  dueComplete,
+  idAttachmentCover,
+  idBoard,
+  idChecklists,
+  idLabels,
+  idList,
+  idMembers,
+  idMembersVoted,
+  isShort,
+  labels,
+  manualCoverAttachment,
   name,
-  //TODO more
+  pos,
+  shortLink,
+  shortUrl,
+  subscribed,
+  url,
+  address,
+  locationName,
+  coodinates,
+}
+
+enum CardFilter {
+  all,
+  closed,
+  none,
+  open,
 }

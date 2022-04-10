@@ -6,7 +6,10 @@ class TrelloList {
 
   String get id => _getValue(ListFields.id);
   String get name => _getValue(ListFields.name);
-  //TODO more
+  bool get closed => _getValue(ListFields.closed);
+  String get idBoard => _getValue(ListFields.idBoard);
+  int get pos => _getValue(ListFields.pos);
+  bool get subscribed => _getValue(ListFields.subscribed);
 
   T _getValue<T>(ListFields field) {
     if (_fields.contains(ListFields.all) || _fields.contains(field)) {
@@ -21,5 +24,15 @@ enum ListFields {
   all,
   id,
   name,
-  //TODO more
+  closed,
+  idBoard,
+  pos,
+  subscribed,
+}
+
+enum ListFilter {
+  all,
+  closed,
+  none,
+  open,
 }

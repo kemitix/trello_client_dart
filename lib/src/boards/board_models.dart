@@ -46,7 +46,7 @@ enum BoardFields {
   prefs,
   labelNames,
   starred,
-  //limits,
+  //limits, -- https://developer.atlassian.com/cloud/trello/guides/rest-api/limits/
   memberships,
   enterpriseOwned
 }
