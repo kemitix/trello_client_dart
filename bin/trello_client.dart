@@ -14,31 +14,45 @@ Future<void> main(List<String> arguments) async =>
           onSuccess: (client) => runApp(client),
         );
 
+const String choiceQuit = '< Quit';
+const String choiceSeparator = '--------------------------';
+
 Future<void> runApp(TrelloClient client) async {
-  List<String> menu = ['Open Board', 'Exit'];
+  List<String> menu = [choiceQuit, 'Open Board'];
   while (true) {
-    var choice = Chooser<String>(menu, message: "Select:").chooseSync();
-    print(choice);
+    print(choiceSeparator);
+    String choice = Chooser<String>(menu, message: "Select: ").chooseSync();
     switch (choice) {
+      case choiceQuit:
+        client.close();
+        exit(0);
       case 'Open Board':
         await openBoard(client);
         break;
-      case 'Exit':
-        client.close();
-        exit(0);
     }
   }
 }
 
 Future<void> openBoard(TrelloClient client) async {
-  print('Select Board:');
   List<Board> boards = await client.members
       .getMemberBoards(fields: [BoardFields.id, BoardFields.name]);
-  boards
-      .asMap()
-      .entries
-      .map((entry) => "- ${entry.key + 1}: ${entry.value.name}")
-      .forEach(print);
+  List<String> menu = boards.map((board) => board.name).toList();
+  menu.insert(0, choiceQuit);
+  while (true) {
+    print(choiceSeparator);
+    String choice =
+        Chooser<String>(menu, message: "Select Board: ").chooseSync();
+    switch (choice) {
+      case choiceQuit:
+        return;
+      default:
+        String boardId = boards
+            .where((board) => board.name == choice)
+            .map((board) => board.id)
+            .first;
+        print({boardId});
+    }
+  }
 }
 
 Future<void> reportErrors(ErrorList errors) async => errors.forEach(print);
