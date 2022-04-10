@@ -1,4 +1,5 @@
 import 'package:trello_client/src/boards/boards.dart';
+import 'package:trello_client/src/cards/cards.dart';
 import 'package:trello_client/src/http_client.dart';
 import 'package:trello_client/src/lists/lists.dart';
 import 'package:trello_client/src/members/members.dart';
@@ -22,6 +23,7 @@ class TrelloClient {
   late final Members _members;
   late final Boards _boards;
   late final Lists _lists;
+  late final Cards _cards;
 
   TrelloClient(TrelloAuthentication authentication) {
     _httpClient = DioHttpClient(
@@ -35,12 +37,14 @@ class TrelloClient {
     _members = Members(_httpClient);
     _boards = Boards(_httpClient);
     _lists = Lists(_httpClient);
+    _cards = Cards(_httpClient);
   }
 
   String get username => _username;
   Members get members => _members;
   Boards get boards => _boards;
   Lists get lists => _lists;
+  Cards get cards => _cards;
 
   void close() {
     _httpClient.close();

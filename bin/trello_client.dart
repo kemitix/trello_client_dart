@@ -60,7 +60,7 @@ Future<void> selectBoard(TrelloClient client) async {
 
 Future<void> selectList(String boardId, TrelloClient client) async {
   List<TrelloList> lists = await client.boards.lists
-      .get(boardId: boardId, fields: [ListFields.id, ListFields.name]);
+      .get(boardId, fields: [ListFields.id, ListFields.name]);
   List<String> menu = lists.map((list) => list.name).toList();
   menu.insert(0, choiceBack);
   while (true) {
@@ -83,7 +83,7 @@ Future<void> selectList(String boardId, TrelloClient client) async {
 
 Future<void> selectCard(String listId, TrelloClient client) async {
   List<Card> cards = await client.lists.cards
-      .get(listId: listId, fields: [CardFields.id, CardFields.name]);
+      .get(listId, fields: [CardFields.id, CardFields.name]);
   List<String> menu = cards.map((card) => card.name).toList();
   menu.insert(0, choiceBack);
   while (true) {
@@ -105,8 +105,12 @@ Future<void> selectCard(String listId, TrelloClient client) async {
 }
 
 Future<void> showCard(String cardId, TrelloClient client) async {
-  print('// TODO: show card ${cardId} here');
-  return;
+  Card? card = await client.cards.get(cardId);
+  if (card != null) {
+    print('Card: ${card.id} - ${card.name}');
+  } else {
+    print('Card not found');
+  }
 }
 
 Future<void> reportErrors(ErrorList errors) async => errors.forEach(print);

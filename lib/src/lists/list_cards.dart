@@ -8,8 +8,7 @@ class ListCards {
 
   // Get Cards in a List
   // https://developer.atlassian.com/cloud/trello/rest/api-group-lists/#api-lists-id-cards-get
-  Future<List<Card>> get(
-          {required String listId, List<CardFields>? fields}) async =>
+  Future<List<Card>> get(String listId, {List<CardFields>? fields}) async =>
       ((await _client.get<List<dynamic>>(
                 '/1/lists/${listId}/cards',
                 queryParameters: {},

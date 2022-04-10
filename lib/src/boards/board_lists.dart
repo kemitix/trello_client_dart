@@ -12,9 +12,8 @@ class BoardLists {
    *
    * https://developer.atlassian.com/cloud/trello/rest/api-group-boards/#api-boards-id-lists-get
    */
-  Future<List<TrelloList>> get(
-          {required String boardId,
-          BoardListFilter filter = BoardListFilter.all,
+  Future<List<TrelloList>> get(String boardId,
+          {BoardListFilter filter = BoardListFilter.all,
           List<ListFields>? fields}) async =>
       ((await _client.get<List<dynamic>>(
                 '/1/boards/${boardId}/lists',
