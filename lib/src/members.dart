@@ -15,7 +15,7 @@ class Members {
   }) async {
     fields ??= [BoardFields.all];
     List<Board> boards = [];
-    (await _client.dio.get(
+    (await _client.httpClient.get(
       '/1/members/${_client.username}/boards',
       queryParameters: {
         'filter': filter.name,
