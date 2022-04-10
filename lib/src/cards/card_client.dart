@@ -1,7 +1,7 @@
-import 'package:trello_client/trello_client.dart';
+import 'package:trello_client/src/http_client.dart';
 
 class Cards {
-  final TrelloClient _client;
+  final HttpClient _client;
 
   Cards(this._client);
 }
