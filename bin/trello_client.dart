@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:console/console.dart';
 import 'package:trello_client/src/fp/fp.dart';
 import 'package:trello_client/src/models/models.dart';
 import 'package:trello_client/trello_client.dart';
@@ -12,6 +15,22 @@ Future<void> main(List<String> arguments) async =>
         );
 
 Future<void> runApp(TrelloClient client) async {
+  List<String> menu = ['Open Board', 'Exit'];
+  while (true) {
+    var choice = Chooser<String>(menu, message: "Select:").chooseSync();
+    print(choice);
+    switch (choice) {
+      case 'Open Board':
+        await openBoard(client);
+        break;
+      case 'Exit':
+        client.close();
+        exit(0);
+    }
+  }
+}
+
+Future<void> openBoard(TrelloClient client) async {
   print('Select Board:');
   List<Board> boards = await client.members
       .getMemberBoards(fields: [BoardFields.id, BoardFields.name]);
@@ -20,7 +39,6 @@ Future<void> runApp(TrelloClient client) async {
       .entries
       .map((entry) => "- ${entry.key + 1}: ${entry.value.name}")
       .forEach(print);
-  client.close();
 }
 
 Future<void> reportErrors(ErrorList errors) async => errors.forEach(print);
