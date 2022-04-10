@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:console/console.dart';
+import 'package:trello_client/src/boards/boards.dart';
 import 'package:trello_client/src/fp/fp.dart';
 import 'package:trello_client/src/models/models.dart';
 import 'package:trello_client/trello_client.dart';
