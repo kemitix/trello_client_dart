@@ -1,6 +1,7 @@
 import 'package:trello_client/src/http_client.dart';
 import 'package:trello_client/src/misc.dart';
-import 'package:trello_client/src/models/models.dart';
+
+import '../lists/list_models.dart';
 
 class Boards {
   final HttpClient _client;
