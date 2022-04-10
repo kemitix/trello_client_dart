@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:console/console.dart';
+import 'package:trello_client/src/boards.dart';
 import 'package:trello_client/src/fp/fp.dart';
+import 'package:trello_client/src/lists.dart';
 import 'package:trello_client/src/models/models.dart';
 import 'package:trello_client/trello_client.dart';
 
@@ -28,7 +30,6 @@ Future<void> runApp(TrelloClient client) async {
         exit(0);
       case 'Open Board':
         await openBoard(client);
-        break;
     }
   }
 }
@@ -51,8 +52,15 @@ Future<void> openBoard(TrelloClient client) async {
             .map((board) => board.id)
             .first;
         print({boardId});
+        await openList(boardId, client);
     }
   }
+}
+
+Future<void> openList(String boardId, TrelloClient client) async {
+  List<TrelloList> lists = await client.boards.getBoardLists(
+      boardId: boardId, fields: [ListFields.id, ListFields.name]);
+  lists.map((list) => '${list.id} - ${list.name}').forEach(print);
 }
 
 Future<void> reportErrors(ErrorList errors) async => errors.forEach(print);

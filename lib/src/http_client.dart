@@ -1,9 +1,14 @@
 import 'package:dio/dio.dart';
 
+abstract class HttpResponse<T> {
+  T? get data;
+}
+
 abstract class HttpClient {
   void close();
 
-  get(String path, {Map<String, String>? queryParameters});
+  Future<HttpResponse<T>> get<T>(String path,
+      {Map<String, String>? queryParameters});
 }
 
 class DioHttpClient extends HttpClient {
@@ -17,6 +22,16 @@ class DioHttpClient extends HttpClient {
   void close() => _dio.close();
 
   @override
-  get(String path, {Map<String, String>? queryParameters}) =>
-      _dio.get(path, queryParameters: queryParameters);
+  Future<HttpResponse<T>> get<T>(String path,
+          {Map<String, String>? queryParameters}) async =>
+      DioHttpResponse(
+          await _dio.get<T>(path, queryParameters: queryParameters));
+}
+
+class DioHttpResponse<T> extends HttpResponse<T> {
+  final Response<T> _response;
+  DioHttpResponse(this._response);
+
+  @override
+  T? get data => _response.data;
 }

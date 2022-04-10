@@ -1,5 +1,5 @@
-import 'package:trello_client/src/boards.dart';
 import 'package:trello_client/src/client.dart';
+import 'package:trello_client/src/misc.dart';
 import 'package:trello_client/src/models/models.dart';
 
 class Members {
@@ -12,21 +12,18 @@ class Members {
   Future<List<Board>> getMemberBoards({
     MemberBoardFilter filter = MemberBoardFilter.all,
     List<BoardFields>? fields,
-  }) async {
-    fields ??= [BoardFields.all];
-    List<Board> boards = [];
-    (await _client.httpClient.get(
-      '/1/members/${_client.username}/boards',
-      queryParameters: {
-        'filter': filter.name,
-        'fields': boardFieldsToCsv(fields)
-      },
-    ))
-        .data
-        .map((item) => Board(item, fields!))
-        .forEach(boards.add);
-    return boards;
-  }
+  }) async =>
+      ((await _client.get<List<dynamic>>(
+                '/1/members/${_client.username}/boards',
+                queryParameters: {
+                  'filter': filter.name,
+                  'fields': listEnumToCsv(fields ?? [BoardFields.all])
+                },
+              ))
+                  .data ??
+              [])
+          .map((item) => Board(item, fields ?? [BoardFields.all]))
+          .toList(growable: false);
 }
 
 enum MemberBoardFilter {
@@ -36,5 +33,5 @@ enum MemberBoardFilter {
   open,
   organization,
   public,
-  starred
+  starred,
 }

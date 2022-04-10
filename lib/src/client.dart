@@ -1,3 +1,4 @@
+import 'package:trello_client/src/boards.dart';
 import 'package:trello_client/src/http_client.dart';
 import 'package:trello_client/src/members.dart';
 
@@ -18,6 +19,7 @@ class TrelloClient {
   late final String _username;
   late final HttpClient _httpClient;
   late final Members _members;
+  late final Boards _boards;
 
   TrelloClient(TrelloAuthentication authentication) {
     _httpClient = DioHttpClient(
@@ -29,11 +31,16 @@ class TrelloClient {
     );
     _username = authentication.username;
     _members = Members(this);
+    _boards = Boards(this);
   }
 
   String get username => _username;
   Members get members => _members;
-  HttpClient get httpClient => _httpClient;
+  Boards get boards => _boards;
+
+  Future<HttpResponse<T>> get<T>(String path,
+          {Map<String, String>? queryParameters}) =>
+      _httpClient.get<T>(path, queryParameters: queryParameters);
 
   void close() {
     _httpClient.close();
