@@ -1,36 +1,26 @@
-class Board {
-  final dynamic _source;
-  final List<BoardFields> _fields;
+import '../trello_object_model.dart';
 
-  Board(this._source, this._fields) {}
+class Board extends TrelloObject<BoardFields> {
+  Board(source, List<BoardFields> fields)
+      : super(source, fields, all: fields.contains(BoardFields.all));
 
-  dynamic get raw => _source;
-
-  String get id => _getValue(BoardFields.id);
-  String get name => _getValue(BoardFields.name);
-  String get desc => _getValue(BoardFields.desc);
-  String get descData => _getValue(BoardFields.descData);
-  bool get closed => _getValue(BoardFields.closed);
-  String get idMemberCreator => _getValue(BoardFields.idMemberCreator);
-  String get idOrganization => _getValue(BoardFields.idOrganization);
-  bool get pinned => _getValue(BoardFields.pinned);
-  String get url => _getValue(BoardFields.url);
-  String get shortUrl => _getValue(BoardFields.shortUrl);
-  BoardPrefs get prefs => BoardPrefs(_getValue(BoardFields.prefs));
+  String get id => getValue(BoardFields.id);
+  String get name => getValue(BoardFields.name);
+  String get desc => getValue(BoardFields.desc);
+  String get descData => getValue(BoardFields.descData);
+  bool get closed => getValue(BoardFields.closed);
+  String get idMemberCreator => getValue(BoardFields.idMemberCreator);
+  String get idOrganization => getValue(BoardFields.idOrganization);
+  bool get pinned => getValue(BoardFields.pinned);
+  String get url => getValue(BoardFields.url);
+  String get shortUrl => getValue(BoardFields.shortUrl);
+  BoardPrefs get prefs => BoardPrefs(getValue(BoardFields.prefs));
   BoardLabelNames get labelNames =>
-      BoardLabelNames(_getValue(BoardFields.labelNames));
-  bool get starred => _getValue(BoardFields.starred);
-  //TODO BoardLimits get limit => _getValue(BoardFields.limits);
-  String get memberships => _getValue(BoardFields.memberships);
-  String get enterpriseOwned => _getValue(BoardFields.enterpriseOwned);
-
-  T _getValue<T>(BoardFields field) {
-    if (_fields.contains(BoardFields.all) || _fields.contains(field)) {
-      return _source[field.name];
-    }
-    throw AssertionError(
-        'Board: Attempt to access field not retrieved: ${field.name}');
-  }
+      BoardLabelNames(getValue(BoardFields.labelNames));
+  bool get starred => getValue(BoardFields.starred);
+  //TODO BoardLimits get limit => getValue(BoardFields.limits);
+  String get memberships => getValue(BoardFields.memberships);
+  String get enterpriseOwned => getValue(BoardFields.enterpriseOwned);
 }
 
 enum BoardFields {
@@ -83,22 +73,22 @@ class BoardPrefs {
   BoardPrefs(this._source);
 
   String get permissionLevel =>
-      _getValue(BoardPrefsFields.permissionLevel); //org or board
-  bool get hideVotes => _getValue(BoardPrefsFields.hideVotes);
-  String get voting => _getValue(BoardPrefsFields.voting); //disabled or enabled
-  String get comments => _getValue(BoardPrefsFields.comments);
-  //TODO dynamic get invitations => _getValue(BoardPrefsFields.invitations);
-  bool get selfJoin => _getValue(BoardPrefsFields.selfJoin);
-  bool get cardCovers => _getValue(BoardPrefsFields.cardCovers);
-  bool get isTemplate => _getValue(BoardPrefsFields.isTemplate);
+      getValue(BoardPrefsFields.permissionLevel); //org or board
+  bool get hideVotes => getValue(BoardPrefsFields.hideVotes);
+  String get voting => getValue(BoardPrefsFields.voting); //disabled or enabled
+  String get comments => getValue(BoardPrefsFields.comments);
+  //TODO dynamic get invitations => getValue(BoardPrefsFields.invitations);
+  bool get selfJoin => getValue(BoardPrefsFields.selfJoin);
+  bool get cardCovers => getValue(BoardPrefsFields.cardCovers);
+  bool get isTemplate => getValue(BoardPrefsFields.isTemplate);
   String get cardAging =>
-      _getValue(BoardPrefsFields.cardAging); //pirate or regular
+      getValue(BoardPrefsFields.cardAging); //pirate or regular
   bool get calendarFeedEnabled =>
-      _getValue(BoardPrefsFields.calendarFeedEnabled);
-  String get background => _getValue(BoardPrefsFields.background);
-  String get backgroundImage => _getValue(BoardPrefsFields.backgroundImage);
+      getValue(BoardPrefsFields.calendarFeedEnabled);
+  String get background => getValue(BoardPrefsFields.background);
+  String get backgroundImage => getValue(BoardPrefsFields.backgroundImage);
   List<BoardBackgroundImageScaledDescriptor> get backgroundImageScaled {
-    var value = _getValue(BoardPrefsFields.backgroundImageScaled);
+    var value = getValue(BoardPrefsFields.backgroundImageScaled);
     List<BoardBackgroundImageScaledDescriptor> result = [];
     if (value != null) {
       value
@@ -108,20 +98,20 @@ class BoardPrefs {
     return result;
   }
 
-  bool get backgroundTile => _getValue(BoardPrefsFields.backgroundTile);
+  bool get backgroundTile => getValue(BoardPrefsFields.backgroundTile);
   String get backgroundBrightness =>
-      _getValue(BoardPrefsFields.backgroundBrightness);
+      getValue(BoardPrefsFields.backgroundBrightness);
   String get backgroundBottomColor =>
-      _getValue(BoardPrefsFields.backgroundBottomColor);
+      getValue(BoardPrefsFields.backgroundBottomColor);
   String get backgroundTopColor =>
-      _getValue(BoardPrefsFields.backgroundTopColor);
-  bool get canBePublic => _getValue(BoardPrefsFields.canBePublic);
-  bool get canBeEnterprise => _getValue(BoardPrefsFields.canBeEnterprise);
-  bool get canBeOrg => _getValue(BoardPrefsFields.canBeOrg);
-  bool get canBePrivate => _getValue(BoardPrefsFields.canBePrivate);
-  bool get canInvite => _getValue(BoardPrefsFields.canInvite);
+      getValue(BoardPrefsFields.backgroundTopColor);
+  bool get canBePublic => getValue(BoardPrefsFields.canBePublic);
+  bool get canBeEnterprise => getValue(BoardPrefsFields.canBeEnterprise);
+  bool get canBeOrg => getValue(BoardPrefsFields.canBeOrg);
+  bool get canBePrivate => getValue(BoardPrefsFields.canBePrivate);
+  bool get canInvite => getValue(BoardPrefsFields.canInvite);
 
-  T _getValue<T>(BoardPrefsFields field) {
+  T getValue<T>(BoardPrefsFields field) {
     return _source[field.name];
   }
 }
