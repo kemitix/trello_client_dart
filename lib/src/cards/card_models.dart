@@ -6,6 +6,8 @@ class Card {
 
   Card(this._source, this._fields);
 
+  dynamic get raw => _source;
+
   String get id => _getValue(CardFields.id);
   CardBadges get badges => _getValue(CardFields.badges);
   //List<?> get checkItemStates => _getValue(CardFields.checkItemStates);

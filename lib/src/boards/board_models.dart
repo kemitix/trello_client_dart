@@ -4,6 +4,8 @@ class Board {
 
   Board(this._source, this._fields) {}
 
+  dynamic get raw => _source;
+
   String get id => _getValue(BoardFields.id);
   String get name => _getValue(BoardFields.name);
   String get desc => _getValue(BoardFields.desc);

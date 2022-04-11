@@ -4,6 +4,8 @@ class TrelloList {
 
   TrelloList(this._source, this._fields);
 
+  dynamic get raw => _source;
+
   String get id => _getValue(ListFields.id);
   String get name => _getValue(ListFields.name);
   bool get closed => _getValue(ListFields.closed);
