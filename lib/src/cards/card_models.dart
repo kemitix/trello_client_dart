@@ -36,7 +36,15 @@ class Card {
   String get url => _getValue(CardFields.url);
   String get address => _getValue(CardFields.address);
   String get locationName => _getValue(CardFields.locationName);
-  CardCoordinates get coodinates => _getValue(CardFields.coodinates);
+  CardCoordinates get coodinates {
+    var raw = _source[CardFields.coodinates.name];
+    if (raw is String) {
+      List<String> split = raw.split(',');
+      return CardCoordinates(latitude: split[0], longitude: split[1]);
+    }
+    return CardCoordinates(
+        latitude: raw['latitude'], longitude: raw['longitude']);
+  }
 
   T _getValue<T>(CardFields field) {
     if (_fields.contains(CardFields.all) || _fields.contains(field)) {
@@ -56,6 +64,11 @@ DateTime? _dateTime(String? value) {
 class CardCoordinates {
   late Float latitude;
   late Float longitude;
+
+  CardCoordinates({required latitude, required longitude}) {
+    this.latitude = latitude;
+    this.longitude = longitude;
+  }
 }
 
 class CardLabel {
