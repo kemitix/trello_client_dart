@@ -11,10 +11,10 @@ class Card extends TrelloObject<CardFields> {
   //List<?> get checkItemStates => getValue(CardFields.checkItemStates);
   bool get closed => getValue(CardFields.closed);
   DateTime? get dateLastActivity =>
-      _dateTime(getValue(CardFields.dateLastActivity));
+      toDateTime(getValue(CardFields.dateLastActivity));
   String get desc => getValue(CardFields.desc);
   //? get descData => getValue(CardFields.descData);
-  DateTime? get due => _dateTime(getValue(CardFields.due));
+  DateTime? get due => toDateTime(getValue(CardFields.due));
   bool get dueComplete => getValue(CardFields.dueComplete);
   String get idAttachmentCover => getValue(CardFields.idAttachmentCover);
   String get idBoard => getValue(CardFields.idBoard);
@@ -43,11 +43,6 @@ class Card extends TrelloObject<CardFields> {
     return CardCoordinates(
         latitude: value['latitude'], longitude: value['longitude']);
   }
-}
-
-DateTime? _dateTime(String? value) {
-  if (value == null) return null;
-  return DateTime.parse(value);
 }
 
 // Field vale may come from Trello as 'latitude,longitude'

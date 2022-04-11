@@ -19,4 +19,10 @@ abstract class TrelloObject<T extends Enum> {
     throw AssertionError(
         'Attempt to access field not retrieved: ${field.name}');
   }
+
+  @protected
+  DateTime? toDateTime(String? value) {
+    if (value == null) return null;
+    return DateTime.parse(value);
+  }
 }
