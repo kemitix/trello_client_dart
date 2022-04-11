@@ -53,12 +53,13 @@ Future<void> selectBoard(TrelloClient client) async {
             .map((board) => board.id)
             .first;
         print({boardId});
-        await selectList(boardId, client);
+        await selectList(boardId, choice, client);
     }
   }
 }
 
-Future<void> selectList(String boardId, TrelloClient client) async {
+Future<void> selectList(
+    String boardId, String boardName, TrelloClient client) async {
   List<TrelloList> lists = await client.boards.lists
       .get(boardId, fields: [ListFields.id, ListFields.name]);
   List<String> menu = lists.map((list) => list.name).toList();
@@ -76,12 +77,13 @@ Future<void> selectList(String boardId, TrelloClient client) async {
             .map((list) => list.id)
             .first;
         print({listId});
-        await selectCard(listId, client);
+        await selectCard(listId, choice, boardName, client);
     }
   }
 }
 
-Future<void> selectCard(String listId, TrelloClient client) async {
+Future<void> selectCard(String listId, String listName, String boardName,
+    TrelloClient client) async {
   List<Card> cards = await client.lists.cards
       .get(listId, fields: [CardFields.id, CardFields.name]);
   List<String> menu = cards.map((card) => card.name).toList();
@@ -99,13 +101,14 @@ Future<void> selectCard(String listId, TrelloClient client) async {
             .map((card) => card.id)
             .first;
         print({cardId});
-        await showCard(cardId, client);
+        await showCard(cardId, choice, listName, boardName, client);
     }
   }
 }
 
-Future<void> showCard(String cardId, TrelloClient client) async {
   Card? card = await client.cards.get(cardId);
+Future<void> showCard(String cardId, String cardName, String listName,
+    String boardName, TrelloClient client) async {
   if (card != null) {
     print('Card: ${card.id} - ${card.name}');
   } else {
