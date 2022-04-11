@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:console/console.dart';
+import 'package:cli_dialog/cli_dialog.dart';
 import 'package:trello_client/src/boards/boards.dart';
 import 'package:trello_client/src/cards/cards.dart';
 import 'package:trello_client/src/fp/fp.dart';
@@ -24,7 +24,7 @@ Future<void> runApp(TrelloClient client) async {
   List<String> menu = [choiceQuit, 'Open Board'];
   while (true) {
     print(separator);
-    String choice = Chooser<String>(menu, message: "Select: ").chooseSync();
+    String choice = listQuestion(menu, message: "Select: ");
     switch (choice) {
       case choiceQuit:
         client.close();
@@ -35,6 +35,18 @@ Future<void> runApp(TrelloClient client) async {
   }
 }
 
+String listQuestion(List<String> menu, {required String message}) {
+  return CLI_Dialog(listQuestions: [
+    [
+      {
+        'question': message,
+        'options': menu,
+      },
+      'question'
+    ]
+  ]).ask()['question'];
+}
+
 Future<void> selectBoard(TrelloClient client) async {
   List<Board> boards = await client.members.boards
       .get(client.username, fields: [BoardFields.id, BoardFields.name]);
@@ -42,8 +54,7 @@ Future<void> selectBoard(TrelloClient client) async {
   menu.insert(0, choiceBack);
   while (true) {
     print(separator);
-    String choice =
-        Chooser<String>(menu, message: "Select Board: ").chooseSync();
+    String choice = listQuestion(menu, message: "Select Board: ");
     switch (choice) {
       case choiceBack:
         return;
@@ -66,8 +77,7 @@ Future<void> selectList(
   menu.insert(0, choiceBack);
   while (true) {
     print(separator);
-    String choice =
-        Chooser<String>(menu, message: "Select List: ").chooseSync();
+    String choice = listQuestion(menu, message: "Select List: ");
     switch (choice) {
       case choiceBack:
         return;
@@ -90,8 +100,7 @@ Future<void> selectCard(String listId, String listName, String boardName,
   menu.insert(0, choiceBack);
   while (true) {
     print(separator);
-    String choice =
-        Chooser<String>(menu, message: "Select Card: ").chooseSync();
+    String choice = listQuestion(menu, message: "Select Card: ");
     switch (choice) {
       case choiceBack:
         return;
