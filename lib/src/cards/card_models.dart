@@ -1,57 +1,47 @@
 import 'dart:ffi';
 
-class Card {
-  final dynamic _source;
-  final List<CardFields> _fields;
+import 'package:trello_client/src/trello_object_model.dart';
 
-  Card(this._source, this._fields);
+class Card extends TrelloObject<CardFields> {
+  Card(source, List<CardFields> fields)
+      : super(source, fields, all: fields.contains(CardFields.all));
 
-  dynamic get raw => _source;
-
-  String get id => _getValue(CardFields.id);
-  CardBadges get badges => _getValue(CardFields.badges);
-  //List<?> get checkItemStates => _getValue(CardFields.checkItemStates);
-  bool get closed => _getValue(CardFields.closed);
+  String get id => getValue(CardFields.id);
+  CardBadges get badges => getValue(CardFields.badges);
+  //List<?> get checkItemStates => getValue(CardFields.checkItemStates);
+  bool get closed => getValue(CardFields.closed);
   DateTime? get dateLastActivity =>
-      _dateTime(_getValue(CardFields.dateLastActivity));
-  String get desc => _getValue(CardFields.desc);
-  //? get descData => _getValue(CardFields.descData);
-  DateTime? get due => _dateTime(_getValue(CardFields.due));
-  bool get dueComplete => _getValue(CardFields.dueComplete);
-  String get idAttachmentCover => _getValue(CardFields.idAttachmentCover);
-  String get idBoard => _getValue(CardFields.idBoard);
-  List<String> get idChecklists => _getValue(CardFields.idChecklists);
-  List<String> get idLabels => _getValue(CardFields.idLabels);
-  String get idList => _getValue(CardFields.idList);
-  List<String> get idMembers => _getValue(CardFields.idMembers);
-  List<String> get idMembersVoted => _getValue(CardFields.idMembersVoted);
-  int get idShort => _getValue(CardFields.idShort);
-  List<CardLabel> get labels => _getValue(CardFields.labels);
-  bool get manualCoverAttachment => _getValue(CardFields.manualCoverAttachment);
-  String get name => _getValue(CardFields.name);
-  Float get pos => _getValue(CardFields.pos);
-  String get shortLink => _getValue(CardFields.shortLink);
-  String get shortUrl => _getValue(CardFields.shortUrl);
-  bool get subscribed => _getValue(CardFields.subscribed);
-  String get url => _getValue(CardFields.url);
-  String get address => _getValue(CardFields.address);
-  String get locationName => _getValue(CardFields.locationName);
+      _dateTime(getValue(CardFields.dateLastActivity));
+  String get desc => getValue(CardFields.desc);
+  //? get descData => getValue(CardFields.descData);
+  DateTime? get due => _dateTime(getValue(CardFields.due));
+  bool get dueComplete => getValue(CardFields.dueComplete);
+  String get idAttachmentCover => getValue(CardFields.idAttachmentCover);
+  String get idBoard => getValue(CardFields.idBoard);
+  List<String> get idChecklists => getValue(CardFields.idChecklists);
+  List<String> get idLabels => getValue(CardFields.idLabels);
+  String get idList => getValue(CardFields.idList);
+  List<String> get idMembers => getValue(CardFields.idMembers);
+  List<String> get idMembersVoted => getValue(CardFields.idMembersVoted);
+  int get idShort => getValue(CardFields.idShort);
+  List<CardLabel> get labels => getValue(CardFields.labels);
+  bool get manualCoverAttachment => getValue(CardFields.manualCoverAttachment);
+  String get name => getValue(CardFields.name);
+  Float get pos => getValue(CardFields.pos);
+  String get shortLink => getValue(CardFields.shortLink);
+  String get shortUrl => getValue(CardFields.shortUrl);
+  bool get subscribed => getValue(CardFields.subscribed);
+  String get url => getValue(CardFields.url);
+  String get address => getValue(CardFields.address);
+  String get locationName => getValue(CardFields.locationName);
   CardCoordinates get coodinates {
-    var raw = _source[CardFields.coodinates.name];
-    if (raw is String) {
-      List<String> split = raw.split(',');
+    var value = raw[CardFields.coodinates.name];
+    if (value is String) {
+      List<String> split = value.split(',');
       return CardCoordinates(latitude: split[0], longitude: split[1]);
     }
     return CardCoordinates(
-        latitude: raw['latitude'], longitude: raw['longitude']);
-  }
-
-  T _getValue<T>(CardFields field) {
-    if (_fields.contains(CardFields.all) || _fields.contains(field)) {
-      return _source[field.name];
-    }
-    throw AssertionError(
-        'List: Attempt to access field not retrieved: ${field.name}');
+        latitude: value['latitude'], longitude: value['longitude']);
   }
 }
 
