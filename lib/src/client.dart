@@ -4,6 +4,8 @@ import 'package:trello_client/src/http_client.dart';
 import 'package:trello_client/src/lists/lists.dart';
 import 'package:trello_client/src/members/members.dart';
 
+import 'fp/fp.dart';
+
 class TrelloAuthentication {
   final String _key;
   String get key => _key;
@@ -20,7 +22,7 @@ class TrelloAuthentication {
 class TrelloClient {
   late final String _username;
   late final HttpClient _httpClient;
-  late final Members _members;
+  late final Fn<String, Member> _member;
   late final Boards _boards;
   late final Lists _lists;
   late final Cards _cards;
@@ -34,14 +36,14 @@ class TrelloClient {
       },
     );
     _username = authentication.username;
-    _members = Members(_httpClient);
+    _member = (id) => Member(_httpClient, id);
     _boards = Boards(_httpClient);
     _lists = Lists(_httpClient);
     _cards = Cards(_httpClient);
   }
 
   String get username => _username;
-  Members get members => _members;
+  Member member(String id) => _member(id);
   Boards get boards => _boards;
   Lists get lists => _lists;
   Cards get cards => _cards;

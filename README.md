@@ -227,48 +227,48 @@ This list of API actions was retrieved from the [Trello Reference REST API](http
 
 ## Members
 
-| Status | Label                                          | .members    |
-|:------:|:-----------------------------------------------|-------------|
-|   𐄂   | Get a Member                                   |             |
-|   𐄂   | Update a Member                                |             |
-|   𐄂   | Get a field on a Member                        |             |
-|   𐄂   | Get a Member's Actions                         |             |
-|   𐄂   | Get Member's custom Board backgrounds          |             |
-|   𐄂   | Upload new boardBackground for Member          |             |
-|   𐄂   | Get a boardBackground of a Member              |             |
-|   𐄂   | Update a Member's custom Board background      |             |
-|   𐄂   | Delete a Member's custom Board background      |             |
-|   𐄂   | Get a Member's boardStars                      |             |
-|   𐄂   | Create Star for Board                          |             |
-|   𐄂   | Get a boardStar of Member                      |             |
-|   𐄂   | Update the position of a boardStar of Member   |             |
-|   𐄂   | Delete Star for Board                          |             |
-|   ✔   | Get Boards that Member belongs to              | .boards.get |
-|   𐄂   | Get Boards the Member has been invited to      |             |
-|   𐄂   | Get Cards the Member is on                     |             |
-|   𐄂   | Get a Member's custom Board Backgrounds        |             |
-|   𐄂   | Create a new custom Board Background           |             |
-|   𐄂   | Get custom Board Background of Member          |             |
-|   𐄂   | Update custom Board Background of Member       |             |
-|   𐄂   | Delete custom Board Background of Member       |             |
-|   𐄂   | Get a Member's customEmojis                    |             |
-|   𐄂   | Create custom Emoji for Member                 |             |
-|   𐄂   | Get a Member's custom Emoji                    |             |
-|   𐄂   | Get Member's custom Stickers                   |             |
-|   𐄂   | Create custom Sticker for Member               |             |
-|   𐄂   | Get a Member's custom Sticker                  |             |
-|   𐄂   | Delete a Member's custom Sticker               |             |
-|   𐄂   | Get Member's Notifications                     |             |
-|   𐄂   | Get Member's Organizations                     |             |
-|   𐄂   | Get Organizations a Member has been invited to |             |
-|   𐄂   | Get Member's saved searched                    |             |
-|   𐄂   | Create saved Search for Memer                  |             |
-|   𐄂   | Get a saved search                             |             |
-|   𐄂   | Update a saved search                          |             |
-|   𐄂   | Delete a saved search                          |             |
-|   𐄂   | Get Member's Tokens                            |             |
-|   𐄂   | Create Avatar for Member                       |             |
-|   𐄂   | Dismiss a message for Member                   |             |
+| Status | Label                                          | .members(id)                             | Query Path                                             |
+|:------:|:-----------------------------------------------|------------------------------------------|--------------------------------------------------------|
+|   𐄂   | Get a Member                                   | .get()                                   | GET /1/members/{id}                                    |
+|   𐄂   | Update a Member                                | .put(...)                               | PUT /1/members/{id}                                    |
+|   𐄂   | Get a field on a Member                        | .getField(field)                        | GET /1/members/{id}/{field}                            |
+|   𐄂   | Get a Member's Actions                         | .getActions()                           | GET /1/members/{id}/actions                            |
+|   𐄂   | Upload new boardBackground for Member          | .background.upload(...)                 | POST /1/members/{id}/boardBackgrounds                  |
+|   𐄂   | Get a boardBackground of a Member              | .background.get(idBackground)           | GET /1/members/{id}/boardBackgrounds/{idBackground}    |
+|   𐄂   | Get Member's custom Board backgrounds          | .background.getAll()                    | GET /1/members/{id}/boardBackgrounds                   |
+|   𐄂   | Get a Member's custom Board Backgrounds        | .background.custom.get()                | GET /1/members/{id}/customBoardBackgrounds             |
+|   𐄂   | Update a Member's custom Board background      | .background.custom.update(idBackground, ...) | PUT /1/members/{id}/boardBackgrounds/{idBackground}    |
+|   𐄂   | Delete a Member's custom Board background      | .background.custom.delete(idBackground) | DELETE /1/members/{id}/boardBackgrounds/{idBackground} |
+|   𐄂   | Get a Member's boardStars                      | .star.getAll()                          | GET /1/members/{id}/boardStars                         |
+|   𐄂   | Create Star for Board                          | .star.create(...)                       | POST /1/members/{id}/boardStars                        |
+|   𐄂   | Get a boardStar of Member                      | .star.get(idStar)                       | GET /1/members/{id}/boardStars/{idStar}                |
+|   𐄂   | Update the position of a boardStar of Member   | .star.put(idStar)                     | PUT /1/members/{id}/boardStars/{idStar}                |
+|   𐄂   | Delete Star for Board                          | .star.delete(idStar)                  | DELETE /1/members/{id}/boardStars/{idStar}             |
+|   ✔   | Get Boards that Member belongs to              | .boards.get()                           | GET /1/members/{id}/boards                             |
+|   𐄂   | Get Boards the Member has been invited to      | .boards.getInvites                       |                                                        |
+|   𐄂   | Get Cards the Member is on                     | .cards.getAll                            |                                                        |
+|   𐄂   | Create a new custom Board Background           |                                          |                                                        |
+|   𐄂   | Get custom Board Background of Member          |                                          |                                                        |
+|   𐄂   | Update custom Board Background of Member       |                                          |                                                        |
+|   𐄂   | Delete custom Board Background of Member       |                                          |                                                        |
+|   𐄂   | Get a Member's customEmojis                    |                                          |                                                        |
+|   𐄂   | Create custom Emoji for Member                 |                                          |                                                        |
+|   𐄂   | Get a Member's custom Emoji                    |                                          |                                                        |
+|   𐄂   | Get Member's custom Stickers                   |                                          |                                                        |
+|   𐄂   | Create custom Sticker for Member               |                                          |                                                        |
+|   𐄂   | Get a Member's custom Sticker                  |                                          |                                                        |
+|   𐄂   | Delete a Member's custom Sticker               |                                          |                                                        |
+|   𐄂   | Get Member's Notifications                     |                                          |                                                        |
+|   𐄂   | Get Member's Organizations                     |                                          |                                                        |
+|   𐄂   | Get Organizations a Member has been invited to |                                          |                                                        |
+|   𐄂   | Get Member's saved searched                    |                                          |                                                        |
+|   𐄂   | Create saved Search for Memer                  |                                          |                                                        |
+|   𐄂   | Get a saved search                             |                                          |                                                        |
+|   𐄂   | Update a saved search                          |                                          |                                                        |
+|   𐄂   | Delete a saved search                          |                                          |                                                        |
+|   𐄂   | Get Member's Tokens                            |                                          |                                                        |
+|   𐄂   | Create Avatar for Member                       |                                          |                                                        |
+|   𐄂   | Dismiss a message for Member                   |                                          |                                                        |
 
 ## Notifications
 
