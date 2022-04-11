@@ -1,25 +1,15 @@
-class TrelloList {
-  final dynamic _source;
-  final List<ListFields> _fields;
+import '../trello_object_model.dart';
 
-  TrelloList(this._source, this._fields);
+class TrelloList extends TrelloObject<ListFields> {
+  TrelloList(source, List<ListFields> fields)
+      : super(source, fields, all: fields.contains(ListFields.all));
 
-  dynamic get raw => _source;
-
-  String get id => _getValue(ListFields.id);
-  String get name => _getValue(ListFields.name);
-  bool get closed => _getValue(ListFields.closed);
-  String get idBoard => _getValue(ListFields.idBoard);
-  int get pos => _getValue(ListFields.pos);
-  bool get subscribed => _getValue(ListFields.subscribed);
-
-  T _getValue<T>(ListFields field) {
-    if (_fields.contains(ListFields.all) || _fields.contains(field)) {
-      return _source[field.name];
-    }
-    throw AssertionError(
-        'List: Attempt to access field not retrieved: ${field.name}');
-  }
+  String get id => getValue(ListFields.id);
+  String get name => getValue(ListFields.name);
+  bool get closed => getValue(ListFields.closed);
+  String get idBoard => getValue(ListFields.idBoard);
+  int get pos => getValue(ListFields.pos);
+  bool get subscribed => getValue(ListFields.subscribed);
 }
 
 enum ListFields {
