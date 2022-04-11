@@ -18,12 +18,12 @@ Future<void> main(List<String> arguments) async =>
 
 const String choiceQuit = '<< Quit';
 const String choiceBack = '< Back';
-const String choiceSeparator = '--------------------------';
+const String separator = '--------------------------';
 
 Future<void> runApp(TrelloClient client) async {
   List<String> menu = [choiceQuit, 'Open Board'];
   while (true) {
-    print(choiceSeparator);
+    print(separator);
     String choice = Chooser<String>(menu, message: "Select: ").chooseSync();
     switch (choice) {
       case choiceQuit:
@@ -41,7 +41,7 @@ Future<void> selectBoard(TrelloClient client) async {
   List<String> menu = boards.map((board) => board.name).toList();
   menu.insert(0, choiceBack);
   while (true) {
-    print(choiceSeparator);
+    print(separator);
     String choice =
         Chooser<String>(menu, message: "Select Board: ").chooseSync();
     switch (choice) {
@@ -64,7 +64,7 @@ Future<void> selectList(String boardId, TrelloClient client) async {
   List<String> menu = lists.map((list) => list.name).toList();
   menu.insert(0, choiceBack);
   while (true) {
-    print(choiceSeparator);
+    print(separator);
     String choice =
         Chooser<String>(menu, message: "Select List: ").chooseSync();
     switch (choice) {
@@ -87,7 +87,7 @@ Future<void> selectCard(String listId, TrelloClient client) async {
   List<String> menu = cards.map((card) => card.name).toList();
   menu.insert(0, choiceBack);
   while (true) {
-    print(choiceSeparator);
+    print(separator);
     String choice =
         Chooser<String>(menu, message: "Select Card: ").chooseSync();
     switch (choice) {
