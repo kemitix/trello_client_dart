@@ -50,8 +50,7 @@ String listQuestion(List<String> menu, {required String message}) {
 Future<void> selectBoard(TrelloClient client) async {
   List<Board> boards = await client
       .member(client.username)
-      .boards
-      .get(fields: [BoardFields.id, BoardFields.name]);
+      .getBoards(fields: [BoardFields.id, BoardFields.name]);
   List<String> menu = boards.map((board) => board.name).toList();
   menu.insert(0, choiceBack);
   while (true) {
