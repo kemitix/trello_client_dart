@@ -1,5 +1,5 @@
-import 'package:trello_client/src/http_client.dart';
-import 'package:trello_client/src/lists/list_cards.dart';
+import '../http_client.dart';
+import 'list_cards.dart';
 
 class Lists {
   final HttpClient _client;

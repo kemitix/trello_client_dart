@@ -1,5 +1,4 @@
-import 'package:trello_client/src/http_client.dart';
-
+import '../http_client.dart';
 import 'member_boards.dart';
 
 class MemberClient {

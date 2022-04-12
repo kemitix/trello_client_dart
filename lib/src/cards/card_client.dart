@@ -1,6 +1,5 @@
-import 'package:trello_client/src/http_client.dart';
-import 'package:trello_client/src/misc.dart';
-
+import '../http_client.dart';
+import '../misc.dart';
 import 'card_models.dart';
 
 class Cards {

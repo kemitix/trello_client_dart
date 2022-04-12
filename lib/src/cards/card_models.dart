@@ -1,6 +1,6 @@
 import 'dart:ffi';
 
-import 'package:trello_client/src/trello_object_model.dart';
+import '../trello_object_model.dart';
 
 class Card extends TrelloObject<CardFields> {
   Card(source, List<CardFields> fields)

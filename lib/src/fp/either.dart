@@ -1,4 +1,4 @@
-import 'package:trello_client/src/fp/fp.dart';
+import 'fp.dart';
 
 abstract class Either<L, R> {
   T fold<T>({

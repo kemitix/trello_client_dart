@@ -1,10 +1,9 @@
-import 'package:trello_client/src/boards/boards.dart';
-import 'package:trello_client/src/cards/cards.dart';
-import 'package:trello_client/src/http_client.dart';
-import 'package:trello_client/src/lists/lists.dart';
-import 'package:trello_client/src/members/members.dart';
-
+import 'boards/boards.dart';
+import 'cards/cards.dart';
 import 'fp/fp.dart';
+import 'http_client.dart';
+import 'lists/lists.dart';
+import 'members/members.dart';
 
 class TrelloAuthentication {
   final String _key;
