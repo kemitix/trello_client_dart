@@ -228,7 +228,7 @@ This list of API actions was retrieved from the [Trello Reference REST API](http
 
 | Status | Label                                          | .member(id)                                 | Query Path                                                   |
 |:------:|:-----------------------------------------------|---------------------------------------------|--------------------------------------------------------------|
-|        | Get a Member                                   | .get()                                      | GET /1/members/{id}                                          |
+|    ✔   | Get a Member                                   | .get()                                      | GET /1/members/{id}                                          |
 |        | Update a Member                                | .put(...)                                   | PUT /1/members/{id}                                          |
 |        | Get a field on a Member                        | .get(field)                                 | GET /1/members/{id}/{field}                                  |
 |        | Get a Member's Actions                         | .getActions()                               | GET /1/members/{id}/actions                                  |
