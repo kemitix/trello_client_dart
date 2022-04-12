@@ -73,8 +73,9 @@ Future<void> selectBoard(TrelloClient client) async {
 
 Future<void> selectList(
     String boardId, String boardName, TrelloClient client) async {
-  List<TrelloList> lists = await client.boards.lists
-      .get(boardId, fields: [ListFields.id, ListFields.name]);
+  List<TrelloList> lists = await client
+      .board(boardId)
+      .getLists(fields: [ListFields.id, ListFields.name]);
   List<String> menu = lists.map((list) => list.name).toList();
   menu.insert(0, choiceBack);
   while (true) {

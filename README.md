@@ -54,47 +54,47 @@ This list of API actions was retrieved from the [Trello Reference REST API](http
 
 ## Boards
 
-| Status | Label                                          | .boards    |
-|:------:|:-----------------------------------------------|------------|
-|       | Get Memberships of a Board                     |            |
-|       | Get a Board                                    |            |
-|       | Update a Board                                 |            |
-|       | Delete a Board                                 |            |
-|       | Get a field on a Board                         |            |
-|       | Get Actions of a Board                         |            |
-|       | Get a Card on a Board                          |            |
-|       | Get boardStars on a Board                      |            |
-|       | Get Checklists on a Board                      |            |
-|       | Create Checklist on a Board                    |            |
-|       | Get Cards on a Board                           |            |
-|       | Get filtered Cards on a Board                  |            |
-|       | Get Custom Fields for Board                    |            |
-|       | Get Labels on a Board                          |            |
-|       | Create a Label on a Board                      |            |
-|   ✔    | Get Lists on a Board                           | .lists.get |
-|       | Create a List on a Board                       |            |
-|       | Get filtered Lists on a Board                  |            |
-|       | Get the Members of a Board                     |            |
-|       | Invite Member to Board via email               |            |
-|       | Add a Member to a Board                        |            |
-|       | Remove Member from Board                       |            |
-|       | Update Membership of Member on a Board         |            |
-|       | Update emailPosition Pref on a Board           |            |
-|       | Update idEmailList Pref on a Board             |            |
-|       | Update showListGuide Pref on a Board           |            |
-|       | Update showSidebar Pref on a Board             |            |
-|       | Update showSidebarActivity Pref on a Board     |            |
-|       | Update showSidebarBoardActions Pref on a Board |            |
-|       | Update showSidebarMembers Pref on a Board      |            |
-|       | Create a Board                                 |            |
-|       | Create a calendarKey for a Board               |            |
-|       | Create a emailKey for a Board                  |            |
-|       | Create a Tag for a Board                       |            |
-|       | Mark Board as viewed                           |            |
-|       | Get Enabled Power-Ups on Board                 |            |
-|       | (deprecated) Enable a Power-Up on a Board      |            |
-|       | (deprecated) Disable a Power-Up on a Board     |            |
-|       | Get Power-Ups on a Board                       |            |
+| Status | Label                                          | .board(id)  | Query Path                |
+|:------:|:-----------------------------------------------|-------------|---------------------------|
+|        | Get Memberships of a Board                     |             |                           |
+|        | Get a Board                                    |             |                           |
+|        | Update a Board                                 |             |                           |
+|        | Delete a Board                                 |             |                           |
+|        | Get a field on a Board                         |             |                           |
+|        | Get Actions of a Board                         |             |                           |
+|        | Get a Card on a Board                          |             |                           |
+|        | Get boardStars on a Board                      |             |                           |
+|        | Get Checklists on a Board                      |             |                           |
+|        | Create Checklist on a Board                    |             |                           |
+|        | Get Cards on a Board                           |             |                           |
+|        | Get filtered Cards on a Board                  |             |                           |
+|        | Get Custom Fields for Board                    |             |                           |
+|        | Get Labels on a Board                          |             |                           |
+|        | Create a Label on a Board                      |             |                           |
+|   ✔    | Get Lists on a Board                           | .getLists() | GET /1/boards/{id}/lists  |
+|        | Create a List on a Board                       |             |                           |
+|        | Get filtered Lists on a Board                  |             |                           |
+|        | Get the Members of a Board                     |             |                           |
+|        | Invite Member to Board via email               |             |                           |
+|        | Add a Member to a Board                        |             |                           |
+|        | Remove Member from Board                       |             |                           |
+|        | Update Membership of Member on a Board         |             |                           |
+|        | Update emailPosition Pref on a Board           |             |                           |
+|        | Update idEmailList Pref on a Board             |             |                           |
+|        | Update showListGuide Pref on a Board           |             |                           |
+|        | Update showSidebar Pref on a Board             |             |                           |
+|        | Update showSidebarActivity Pref on a Board     |             |                           |
+|        | Update showSidebarBoardActions Pref on a Board |             |                           |
+|        | Update showSidebarMembers Pref on a Board      |             |                           |
+|        | Create a Board                                 |             |                           |
+|        | Create a calendarKey for a Board               |             |                           |
+|        | Create a emailKey for a Board                  |             |                           |
+|        | Create a Tag for a Board                       |             |                           |
+|        | Mark Board as viewed                           |             |                           |
+|        | Get Enabled Power-Ups on Board                 |             |                           |
+|        | (deprecated) Enable a Power-Up on a Board      |             |                           |
+|        | (deprecated) Disable a Power-Up on a Board     |             |                           |
+|        | Get Power-Ups on a Board                       |             |                           |
 
 ## Cards
 
