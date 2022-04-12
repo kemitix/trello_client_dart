@@ -5,6 +5,7 @@ import 'package:trello_client/src/boards/boards.dart';
 import 'package:trello_client/src/cards/cards.dart';
 import 'package:trello_client/src/fp/fp.dart';
 import 'package:trello_client/src/lists/lists.dart';
+import 'package:trello_client/src/members/members.dart';
 import 'package:trello_client/trello_client.dart';
 
 typedef Error = String;
@@ -49,7 +50,7 @@ String listQuestion(List<String> menu, {required String message}) {
 
 Future<void> selectBoard(TrelloClient client) async {
   List<Board> boards = await client
-      .member(client.username)
+      .member(client.memberId)
       .getBoards(fields: [BoardFields.id, BoardFields.name]);
   List<String> menu = boards.map((board) => board.name).toList();
   menu.insert(0, choiceBack);
@@ -132,9 +133,10 @@ Future<void> reportErrors(ErrorList errors) async => errors.forEach(print);
 
 Either<ErrorList, TrelloAuthentication> parseArgs(List<String> arguments) {
   if (arguments.isEmpty) {
-    return Left.of(['Trello Username, API key and token not given']);
+    return Left.of(
+        ['Trello Username (or Member Id), API key and token not given']);
   }
-  final String username = arguments[0];
+  final MemberId memberId = MemberId(arguments[0]);
   if (arguments.length < 2) {
     return Left.of(['Trello API key and token not given']);
   }
@@ -146,7 +148,7 @@ Either<ErrorList, TrelloAuthentication> parseArgs(List<String> arguments) {
   if (arguments.length > 3) {
     return Left.of(['Too many arguments']);
   }
-  return Right.of(TrelloAuthentication.of(username, key, secret));
+  return Right.of(TrelloAuthentication.of(memberId, key, secret));
 }
 
 TrelloClient trelloClient(TrelloAuthentication authentication) =>
