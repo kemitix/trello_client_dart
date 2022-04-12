@@ -7,7 +7,7 @@ void main() {
     //given
     List<BoardFields> fields = [BoardFields.id, BoardFields.name];
     //when
-    String csv = listEnumToCsv(fields);
+    String csv = asCsv(fields);
     //then
     expect(csv, 'id,name');
   });

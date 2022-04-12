@@ -19,7 +19,7 @@ class CardClient {
       .get<dynamic>(
         '/1/cards/${_id}',
         queryParameters: {
-          'fields': listEnumToCsv(fields ?? [CardFields.all]),
+          'fields': asCsv(fields ?? [CardFields.all]),
         },
       )
       .then((response) => response.data)

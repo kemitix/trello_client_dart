@@ -28,9 +28,9 @@ class BoardClient {
                 '/1/boards/${_id}/lists',
                 queryParameters: {
                   'cards': cards.name,
-                  'card_fields': listEnumToCsv(card_fields),
+                  'card_fields': asCsv(card_fields),
                   'filter': filter.name,
-                  'fields': listEnumToCsv(fields),
+                  'fields': asCsv(fields),
                 },
               ))
                   .data ??
