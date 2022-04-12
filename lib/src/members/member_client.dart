@@ -1,7 +1,7 @@
-import '../../trello_client.dart';
 import '../boards/boards.dart';
 import '../http_client.dart';
 import '../misc.dart';
+import 'members.dart';
 
 class MemberClient {
   final HttpClient _client;
@@ -31,10 +31,6 @@ class MemberClient {
               [])
           .map((item) => Board(item, fields ?? [BoardFields.all]))
           .toList(growable: false);
-}
-
-class MemberId extends StringId {
-  MemberId(id) : super(id);
 }
 
 enum MemberBoardFilter {

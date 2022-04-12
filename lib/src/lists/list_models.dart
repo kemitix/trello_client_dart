@@ -1,5 +1,5 @@
+import '../../trello_client.dart';
 import '../trello_object_model.dart';
-import 'lists.dart';
 
 class TrelloList extends TrelloObject<ListFields> {
   TrelloList(source, List<ListFields> fields)
@@ -11,6 +11,10 @@ class TrelloList extends TrelloObject<ListFields> {
   String get idBoard => getValue(ListFields.idBoard);
   int get pos => getValue(ListFields.pos);
   bool get subscribed => getValue(ListFields.subscribed);
+}
+
+class ListId extends StringId {
+  ListId(id) : super(id);
 }
 
 enum ListFields {
