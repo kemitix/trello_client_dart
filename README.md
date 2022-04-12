@@ -229,46 +229,46 @@ This list of API actions was retrieved from the [Trello Reference REST API](http
 
 | Status | Label                                          | .member(id)                                 | Query Path                                                   |
 |:------:|:-----------------------------------------------|---------------------------------------------|--------------------------------------------------------------|
-|       | Get a Member                                   | .get()                                      | GET /1/members/{id}                                          |
-|       | Update a Member                                | .put(...)                                   | PUT /1/members/{id}                                          |
-|       | Get a field on a Member                        | .get(field)                                 | GET /1/members/{id}/{field}                                  |
-|       | Get a Member's Actions                         | .getActions()                               | GET /1/members/{id}/actions                                  |
-|       | Upload new boardBackground for Member          | .uploadBackground(...)                      | POST /1/members/{id}/boardBackgrounds                        |
-|       | Get Member's custom Board backgrounds          | .getBackgrounds()                           | GET /1/members/{id}/boardBackgrounds                         |
-|       | Get a boardBackground of a Member              | .background(idBackground).get()             | GET /1/members/{id}/boardBackgrounds/{idBackground}          |
-|       | Update a Member's custom Board background      | .background(idBackground).put(...)          | PUT /1/members/{id}/boardBackgrounds/{idBackground}          |
-|       | Delete a Member's custom Board background      | .background(idBackground).delete()          | DELETE /1/members/{id}/boardBackgrounds/{idBackground}       |
-|       | Get a Member's custom Board Backgrounds        | .getCustomBackgrounds()                     | GET /1/members/{id}/customBoardBackgrounds                   |
-|       | Create a new custom Board Background           | .uploadCustomBackground(...)                | POST /1/members/{id}/customBoardBackgrounds                  |
-|       | Get custom Board Background of Member          | .customBackground(idBackground).get()       | GET /1/members/{id}/customBoardBackgrounds/{idBackground}    |
-|       | Update custom Board Background of Member       | .customBackground(idBackground).update(...) | PUT /1/members/{id}/customBoardBackgrounds/{idBackground}    |
-|       | Delete custom Board Background of Member       | .customBackground(idBackground).delete()    | DELETE /1/members/{id}/customBoardBackgrounds/{idBackground} |
-|       | Get a Member's boardStars                      | .getStars()                                 | GET /1/members/{id}/boardStars                               |
-|       | Create Star for Board                          | .createStar(...)                            | POST /1/members/{id}/boardStars                              |
-|       | Get a boardStar of Member                      | .star(idStart).get()                        | GET /1/members/{id}/boardStars/{idStar}                      |
-|       | Update the position of a boardStar of Member   | .star(idStar).put()                         | PUT /1/members/{id}/boardStars/{idStar}                      |
-|       | Delete Star for Board                          | .star(idStar).delete()                      | DELETE /1/members/{id}/boardStars/{idStar}                   |
+|        | Get a Member                                   | .get()                                      | GET /1/members/{id}                                          |
+|        | Update a Member                                | .put(...)                                   | PUT /1/members/{id}                                          |
+|        | Get a field on a Member                        | .get(field)                                 | GET /1/members/{id}/{field}                                  |
+|        | Get a Member's Actions                         | .getActions()                               | GET /1/members/{id}/actions                                  |
+|        | Upload new boardBackground for Member          | .uploadBackground(...)                      | POST /1/members/{id}/boardBackgrounds                        |
+|        | Get Member's custom Board backgrounds          | .getBackgrounds()                           | GET /1/members/{id}/boardBackgrounds                         |
+|        | Get a boardBackground of a Member              | .background(idBackground).get()             | GET /1/members/{id}/boardBackgrounds/{idBackground}          |
+|        | Update a Member's custom Board background      | .background(idBackground).put(...)          | PUT /1/members/{id}/boardBackgrounds/{idBackground}          |
+|        | Delete a Member's custom Board background      | .background(idBackground).delete()          | DELETE /1/members/{id}/boardBackgrounds/{idBackground}       |
+|        | Get a Member's custom Board Backgrounds        | .getCustomBackgrounds()                     | GET /1/members/{id}/customBoardBackgrounds                   |
+|        | Create a new custom Board Background           | .uploadCustomBackground(...)                | POST /1/members/{id}/customBoardBackgrounds                  |
+|        | Get custom Board Background of Member          | .customBackground(idBackground).get()       | GET /1/members/{id}/customBoardBackgrounds/{idBackground}    |
+|        | Update custom Board Background of Member       | .customBackground(idBackground).update(...) | PUT /1/members/{id}/customBoardBackgrounds/{idBackground}    |
+|        | Delete custom Board Background of Member       | .customBackground(idBackground).delete()    | DELETE /1/members/{id}/customBoardBackgrounds/{idBackground} |
+|        | Get a Member's boardStars                      | .getStars()                                 | GET /1/members/{id}/boardStars                               |
+|        | Create Star for Board                          | .createStar(...)                            | POST /1/members/{id}/boardStars                              |
+|        | Get a boardStar of Member                      | .star(idStart).get()                        | GET /1/members/{id}/boardStars/{idStar}                      |
+|        | Update the position of a boardStar of Member   | .star(idStar).put()                         | PUT /1/members/{id}/boardStars/{idStar}                      |
+|        | Delete Star for Board                          | .star(idStar).delete()                      | DELETE /1/members/{id}/boardStars/{idStar}                   |
 |   ✔    | Get Boards that Member belongs to              | .getBoards()                                | GET /1/members/{id}/boards                                   |
-|       | Get Boards the Member has been invited to      | .getBoardsInvited()                         | GET /1/members/{id}/boardsInvited                            |
-|       | Get Cards the Member is on                     | .getCards()                                 | GET /1/members/{id}/cards                                    |
-|       | Get a Member's customEmojis                    | .getEmoji()                                 | GET /1/members/{id}/customEmoji                              |
-|       | Create custom Emoji for Member                 | .createEmoji(...)                           | POST /1/members/{id}/customEmoji                             |
-|       | Get a Member's custom Emoji                    | .emoji(idEmoji).get()                       | GET /1/members/{id}/customEmoji/{idEmoji}                    |
-|       | Get Member's custom Stickers                   | .getStickers()                              | GET /1/members/{id}/customStickers                           |
-|       | Create custom Sticker for Member               | .createSticker(...)                         | POST /1/members/{id}/customStickers                          |
-|       | Get a Member's custom Sticker                  | .sticker(idSticker).get()                   | GET /1/members/{id}/customStickers/{idSticker}               |
-|       | Delete a Member's custom Sticker               | .sticker(idSticker).delete()                | DELETE /1/members/{id}/customStickers/{idSticker}            |
-|       | Get Member's Notifications                     | .getNotifications()                         | GET /1/members/{id}/notifications                            |
-|       | Get Member's Organizations                     | .getOrganizations()                         | GET /1/members/{id}/organizations                            |
-|       | Get Organizations a Member has been invited to | .getOrganizationsInvited()                  | GET /1/members/{id}/organizationsInvited                     |
-|       | Get Member's saved searched                    | .getSavedSearches()                         | GET /1/members/{id}/savedSearches                            |
-|       | Create saved Search for Memer                  | .createSavedSearch(...)                     | POST /1/members/{id}/savedSearches                           |
-|       | Get a saved search                             | .savedSearch(idSearch).get()                | GET /1/members/{id}/savedSearches/{idSearch}                 |
-|       | Update a saved search                          | .savedSearch(idSearch).put(...)             | PUT /1/members/{id}/savedSearches/{idSearch}                 |
-|       | Delete a saved search                          | .savedSearch(idSearch).delete()             | DELETE /1/members/{id}/savedSearches/{idSearch}              |
-|       | Get Member's Tokens                            | .getTokens()                                | GET /1/members/{id}/tokens                                   |
-|       | Create Avatar for Member                       | .createAvatar(...)                          | POST /1/members/{id}/avatar                                  |
-|       | Dismiss a message for Member                   | .dismissMessage(...)                        | POST /1/members/{id}/oneTimeMessagesDismissed                |
+|        | Get Boards the Member has been invited to      | .getBoardsInvited()                         | GET /1/members/{id}/boardsInvited                            |
+|        | Get Cards the Member is on                     | .getCards()                                 | GET /1/members/{id}/cards                                    |
+|        | Get a Member's customEmojis                    | .getEmoji()                                 | GET /1/members/{id}/customEmoji                              |
+|        | Create custom Emoji for Member                 | .createEmoji(...)                           | POST /1/members/{id}/customEmoji                             |
+|        | Get a Member's custom Emoji                    | .emoji(idEmoji).get()                       | GET /1/members/{id}/customEmoji/{idEmoji}                    |
+|        | Get Member's custom Stickers                   | .getStickers()                              | GET /1/members/{id}/customStickers                           |
+|        | Create custom Sticker for Member               | .createSticker(...)                         | POST /1/members/{id}/customStickers                          |
+|        | Get a Member's custom Sticker                  | .sticker(idSticker).get()                   | GET /1/members/{id}/customStickers/{idSticker}               |
+|        | Delete a Member's custom Sticker               | .sticker(idSticker).delete()                | DELETE /1/members/{id}/customStickers/{idSticker}            |
+|        | Get Member's Notifications                     | .getNotifications()                         | GET /1/members/{id}/notifications                            |
+|        | Get Member's Organizations                     | .getOrganizations()                         | GET /1/members/{id}/organizations                            |
+|        | Get Organizations a Member has been invited to | .getOrganizationsInvited()                  | GET /1/members/{id}/organizationsInvited                     |
+|        | Get Member's saved searched                    | .getSavedSearches()                         | GET /1/members/{id}/savedSearches                            |
+|        | Create saved Search for Memer                  | .createSavedSearch(...)                     | POST /1/members/{id}/savedSearches                           |
+|        | Get a saved search                             | .savedSearch(idSearch).get()                | GET /1/members/{id}/savedSearches/{idSearch}                 |
+|        | Update a saved search                          | .savedSearch(idSearch).put(...)             | PUT /1/members/{id}/savedSearches/{idSearch}                 |
+|        | Delete a saved search                          | .savedSearch(idSearch).delete()             | DELETE /1/members/{id}/savedSearches/{idSearch}              |
+|        | Get Member's Tokens                            | .getTokens()                                | GET /1/members/{id}/tokens                                   |
+|        | Create Avatar for Member                       | .createAvatar(...)                          | POST /1/members/{id}/avatar                                  |
+|        | Dismiss a message for Member                   | .dismissMessage(...)                        | POST /1/members/{id}/oneTimeMessagesDismissed                |
 
 ## Notifications
 
