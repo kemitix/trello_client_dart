@@ -1,10 +1,10 @@
 import '../http_client.dart';
 import '../misc.dart';
-import 'card_models.dart';
+import 'cards.dart';
 
 class CardClient {
   final HttpClient _client;
-  final String _id;
+  final CardId _id;
 
   CardClient(this._client, this._id);
 

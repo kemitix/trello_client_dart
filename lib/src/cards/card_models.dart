@@ -1,12 +1,13 @@
 import 'dart:ffi';
 
+import '../../trello_client.dart';
 import '../trello_object_model.dart';
 
 class Card extends TrelloObject<CardFields> {
   Card(source, List<CardFields> fields)
       : super(source, fields, all: fields.contains(CardFields.all));
 
-  String get id => getValue(CardFields.id);
+  CardId get id => CardId(getValue(CardFields.id));
   CardBadges get badges => getValue(CardFields.badges);
   //List<?> get checkItemStates => getValue(CardFields.checkItemStates);
   bool get closed => getValue(CardFields.closed);
@@ -43,6 +44,10 @@ class Card extends TrelloObject<CardFields> {
     return CardCoordinates(
         latitude: value['latitude'], longitude: value['longitude']);
   }
+}
+
+class CardId extends StringId {
+  CardId(String id) : super(id);
 }
 
 // Field vale may come from Trello as 'latitude,longitude'

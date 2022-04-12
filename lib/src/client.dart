@@ -24,7 +24,7 @@ class TrelloClient {
   late final Fn<MemberId, MemberClient> _member;
   late final Fn<String, BoardClient> _board;
   late final Fn<ListId, ListClient> _list;
-  late final Fn<String, CardClient> _card;
+  late final Fn<CardId, CardClient> _card;
 
   TrelloClient(TrelloAuthentication authentication) {
     _httpClient = DioHttpClient(
@@ -45,7 +45,7 @@ class TrelloClient {
   MemberClient member(MemberId id) => _member(id);
   BoardClient board(String id) => _board(id);
   ListClient list(ListId id) => _list(id);
-  CardClient card(String id) => _card(id);
+  CardClient card(CardId id) => _card(id);
 
   void close() {
     _httpClient.close();

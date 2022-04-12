@@ -109,7 +109,7 @@ Future<void> selectCard(ListId listId, String listName, String boardName,
       case choiceBack:
         return;
       default:
-        String cardId = cards
+        CardId cardId = cards
             .where((card) => card.name == choice)
             .map((card) => card.id)
             .first;
@@ -119,7 +119,7 @@ Future<void> selectCard(ListId listId, String listName, String boardName,
   }
 }
 
-Future<void> showCard(String cardId, String cardName, String listName,
+Future<void> showCard(CardId cardId, String cardName, String listName,
     String boardName, TrelloClient client) async {
   Card? card = await client.card(cardId).get();
   if (card != null) {
