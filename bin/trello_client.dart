@@ -97,8 +97,9 @@ Future<void> selectList(
 
 Future<void> selectCard(String listId, String listName, String boardName,
     TrelloClient client) async {
-  List<Card> cards = await client.lists.cards
-      .get(listId, fields: [CardFields.id, CardFields.name]);
+  List<Card> cards = await client
+      .list(listId)
+      .getCards(fields: [CardFields.id, CardFields.name]);
   List<String> menu = cards.map((card) => card.name).toList();
   menu.insert(0, choiceBack);
   while (true) {

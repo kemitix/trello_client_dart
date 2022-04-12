@@ -9,15 +9,13 @@ class BoardClient {
 
   BoardClient(this._client, this._id);
 
-  /**
-   * Get Lists on a Board
-   *
-   * GET /1/boards/{id}/lists
-   *
-   * Get the Lists on a Board
-   *
-   * https://developer.atlassian.com/cloud/trello/rest/api-group-boards/#api-boards-id-lists-get
-   */
+  /// Get Lists on a Board
+  ///
+  /// GET /1/boards/{id}/lists
+  ///
+  /// Get the Lists on a Board
+  ///
+  /// https://developer.atlassian.com/cloud/trello/rest/api-group-boards/#api-boards-id-lists-get
   Future<List<TrelloList>> getLists({
     CardFilter cards = CardFilter.all,
     List<CardFields> card_fields = const [CardFields.all],

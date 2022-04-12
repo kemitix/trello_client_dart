@@ -210,19 +210,19 @@ This list of API actions was retrieved from the [Trello Reference REST API](http
 
 ### Lists
 
-| Status | Label                       | .lists     |
-|:------:|:----------------------------|------------|
-|       | Get a List                  |            |
-|       | Update a List               |            |
-|       | Create a new List           |            |
-|       | Archive all Cards in List   |            |
-|       | Move all Cards in List      |            |
-|       | Archive or unarchive a list |            |
-|       | Move List to Board          |            |
-|       | Update a field on a List    |            |
-|       | Get Actions for a List      |            |
-|       | Get the Board a List is on  |            |
-|   ✔   | Get Cards in a List         | .cards.get |
+| Status | Label                       | .list(id)   | Query Path              |
+|:------:|:----------------------------|-------------|-------------------------|
+|       | Get a List                  |             |                         |
+|       | Update a List               |             |                         |
+|       | Create a new List           |             |                         |
+|       | Archive all Cards in List   |             |                         |
+|       | Move all Cards in List      |             |                         |
+|       | Archive or unarchive a list |             |                         |
+|       | Move List to Board          |             |                         |
+|       | Update a field on a List    |             |                         |
+|       | Get Actions for a List      |             |                         |
+|       | Get the Board a List is on  |             |                         |
+|   ✔   | Get Cards in a List         | .getCards() | GET /1/lists/{id}/cards |
 
 ### Members
 

@@ -7,15 +7,13 @@ class Cards {
 
   Cards(this._client);
 
-  /**
-   * Get a Card
-   *
-   * GET /1/cards/{id}
-   *
-   * Get a card by its ID
-   *
-   * https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-id-get
-   */
+  /// Get a Card
+  ///
+  /// GET /1/cards/{id}
+  ///
+  /// Get a card by its ID
+  ///
+  /// https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-id-get
   Future<Card?> get(String cardId, {List<CardFields>? fields}) async => _client
       .get<dynamic>(
         '/1/cards/${cardId}',
