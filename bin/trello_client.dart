@@ -120,7 +120,7 @@ Future<void> selectCard(String listId, String listName, String boardName,
 
 Future<void> showCard(String cardId, String cardName, String listName,
     String boardName, TrelloClient client) async {
-  Card? card = await client.cards.get(cardId);
+  Card? card = await client.card(cardId).get();
   if (card != null) {
     print('Card: ${card.id} - ${card.name}');
   } else {
