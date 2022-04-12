@@ -1,9 +1,10 @@
+import '../../trello_client.dart';
 import '../cards/cards.dart';
 import '../http_client.dart';
 
 class ListClient {
   final HttpClient _client;
-  final String _id;
+  final ListId _id;
 
   ListClient(this._client, this._id);
 
@@ -23,4 +24,8 @@ class ListClient {
               [])
           .map((item) => Card(item, fields ?? [CardFields.all]))
           .toList(growable: false);
+}
+
+class ListId extends StringId {
+  ListId(id) : super(id);
 }

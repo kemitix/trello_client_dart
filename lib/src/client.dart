@@ -23,7 +23,7 @@ class TrelloClient {
   late final HttpClient _httpClient;
   late final Fn<MemberId, MemberClient> _member;
   late final Fn<String, BoardClient> _board;
-  late final Fn<String, ListClient> _list;
+  late final Fn<ListId, ListClient> _list;
   late final Fn<String, CardClient> _card;
 
   TrelloClient(TrelloAuthentication authentication) {
@@ -44,7 +44,7 @@ class TrelloClient {
   MemberId get memberId => _memberId;
   MemberClient member(MemberId id) => _member(id);
   BoardClient board(String id) => _board(id);
-  ListClient list(String id) => _list(id);
+  ListClient list(ListId id) => _list(id);
   CardClient card(String id) => _card(id);
 
   void close() {
