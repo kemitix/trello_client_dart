@@ -61,7 +61,7 @@ Future<void> selectBoard(TrelloClient client) async {
       case choiceBack:
         return;
       default:
-        String boardId = boards
+        BoardId boardId = boards
             .where((board) => board.name == choice)
             .map((board) => board.id)
             .first;
@@ -72,7 +72,7 @@ Future<void> selectBoard(TrelloClient client) async {
 }
 
 Future<void> selectList(
-    String boardId, String boardName, TrelloClient client) async {
+    BoardId boardId, String boardName, TrelloClient client) async {
   List<TrelloList> lists = await client
       .board(boardId)
       .getLists(fields: [ListFields.id, ListFields.name]);

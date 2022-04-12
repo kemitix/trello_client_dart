@@ -1,3 +1,5 @@
+import 'package:trello_client/src/boards/boards.dart';
+
 import '../cards/cards.dart';
 import '../http_client.dart';
 import '../lists/lists.dart';
@@ -5,7 +7,7 @@ import '../misc.dart';
 
 class BoardClient {
   final HttpClient _client;
-  final String _id;
+  final BoardId _id;
 
   BoardClient(this._client, this._id);
 

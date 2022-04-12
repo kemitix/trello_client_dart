@@ -1,10 +1,11 @@
+import '../../trello_client.dart';
 import '../trello_object_model.dart';
 
 class Board extends TrelloObject<BoardFields> {
   Board(source, List<BoardFields> fields)
       : super(source, fields, all: fields.contains(BoardFields.all));
 
-  String get id => getValue(BoardFields.id);
+  BoardId get id => BoardId(getValue(BoardFields.id));
   String get name => getValue(BoardFields.name);
   String get desc => getValue(BoardFields.desc);
   String get descData => getValue(BoardFields.descData);
@@ -21,6 +22,10 @@ class Board extends TrelloObject<BoardFields> {
   //TODO BoardLimits get limit => getValue(BoardFields.limits);
   String get memberships => getValue(BoardFields.memberships);
   String get enterpriseOwned => getValue(BoardFields.enterpriseOwned);
+}
+
+class BoardId extends StringId {
+  BoardId(String id) : super(id);
 }
 
 enum BoardFields {
