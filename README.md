@@ -12,14 +12,13 @@ Developing a client library for interacting with Trello API. Includes a command 
 $ dart run bin/trello_client.dart $TRELLO_USERNAME $TRELLO_KEY $TRELLO_TOKEN 
 ```
 
-# API Coverage
+## API Coverage
 
 This list of API actions was retrieved from the [Trello Reference REST API](https://developer.atlassian.com/cloud/trello/rest/api-group-actions/#api-actions-idaction-reactionssummary-get) on 11th April 2022.
 
 - ✔ Done
--   To do
 
-## Actions
+### Actions
 
 | Status  | Label                               |
 |:-------:|:------------------------------------|
@@ -40,19 +39,19 @@ This list of API actions was retrieved from the [Trello Reference REST API](http
 |        | Delete Action's Reaction            |
 |        | List Action's summary of Reactions  |
 
-## Applications
+### Applications
 
 | Status | Label                             |
 |:------:|:----------------------------------|
 |       | Get Application's compliance data |
 
-## Batch
+### Batch
 
 | Status | Label          |
 |:------:|:---------------|
 |       | Batch Requests |
 
-## Boards
+### Boards
 
 | Status | Label                                          | .board(id)  | Query Path                |
 |:------:|:-----------------------------------------------|-------------|---------------------------|
@@ -96,7 +95,7 @@ This list of API actions was retrieved from the [Trello Reference REST API](http
 |        | (deprecated) Disable a Power-Up on a Board     |             |                           |
 |        | Get Power-Ups on a Board                       |             |                           |
 
-## Cards
+### Cards
 
 | Status | Label                                 |
 |:------:|:--------------------------------------|
@@ -142,7 +141,7 @@ This list of API actions was retrieved from the [Trello Reference REST API](http
 |       | Update Checkitem on Checklist on Card |
 |       | Delete a Checklist on a Card          |
 
-## Checklists
+### Checklists
 
 | Status | Label                             |
 |:------:|:----------------------------------|
@@ -159,7 +158,7 @@ This list of API actions was retrieved from the [Trello Reference REST API](http
 |       | Get a Checkitem on a Checklist    |
 |       | Delete Checkitem from Checklist   |
 
-## CustomFields
+### CustomFields
 
 | Status | Label                                  |
 |:------:|:---------------------------------------|
@@ -172,13 +171,13 @@ This list of API actions was retrieved from the [Trello Reference REST API](http
 |       | Get Option of Custom Field dropdown    |
 |       | Delete Option of Custom Field dropdown |
 
-## Emoji
+### Emoji
 
 | Status | Label                |
 |:------:|:---------------------|
 |       | List available Emoji |
 
-## Enterprises
+### Enterprises
 
 | Status | Label                                                            |
 |:------:|:-----------------------------------------------------------------|
@@ -199,7 +198,7 @@ This list of API actions was retrieved from the [Trello Reference REST API](http
 |       | Remove a Member as admin from Enterprise.                        |
 |       | Delete an Organization from an Enterprise.                       |
 
-## Labels
+### Labels
 
 | Status | Label                     |
 |:------:|:--------------------------|
@@ -209,7 +208,7 @@ This list of API actions was retrieved from the [Trello Reference REST API](http
 |       | Update a field on a label |
 |       | Create a Label            |
 
-## Lists
+### Lists
 
 | Status | Label                       | .lists     |
 |:------:|:----------------------------|------------|
@@ -225,7 +224,7 @@ This list of API actions was retrieved from the [Trello Reference REST API](http
 |       | Get the Board a List is on  |            |
 |   ✔   | Get Cards in a List         | .cards.get |
 
-## Members
+### Members
 
 | Status | Label                                          | .member(id)                                 | Query Path                                                   |
 |:------:|:-----------------------------------------------|---------------------------------------------|--------------------------------------------------------------|
@@ -270,7 +269,7 @@ This list of API actions was retrieved from the [Trello Reference REST API](http
 |        | Create Avatar for Member                       | .createAvatar(...)                          | POST /1/members/{id}/avatar                                  |
 |        | Dismiss a message for Member                   | .dismissMessage(...)                        | POST /1/members/{id}/oneTimeMessagesDismissed                |
 
-## Notifications
+### Notifications
 
 | Status | Label                                                    |
 |:------:|:---------------------------------------------------------|
@@ -286,7 +285,7 @@ This list of API actions was retrieved from the [Trello Reference REST API](http
 |       | Get the Member who created the Notification              |
 |       | Get a Notification's associated Organization             |
 
-## Organizations
+### Organizations
 
 | Status | Label                                                                      |
 |:------:|:---------------------------------------------------------------------------|
@@ -317,7 +316,7 @@ This list of API actions was retrieved from the [Trello Reference REST API](http
 |       | Delete an Organization's Tag                                               |
 |       | Get Organizations new billable guests                                      |
 
-## Plugins
+### Plugins
 
 | Status | Label                                  |
 |:------:|:---------------------------------------|
@@ -327,14 +326,14 @@ This list of API actions was retrieved from the [Trello Reference REST API](http
 |       | Get Plugin's Member privacy compliance |
 |       | Updating Plugin's Listing              |
 
-## Search
+### Search
 
 | Status | Label              |
 |:------:|:-------------------|
 |       | Search Trello      |
 |       | Search for Members |
 
-## Tokens
+### Tokens
 
 | Status | Label                              |
 |:------:|:-----------------------------------|
@@ -347,7 +346,7 @@ This list of API actions was retrieved from the [Trello Reference REST API](http
 |       | Delete a Webhook created by Token  |
 |       | Delete a Token                     |
 
-## Webhooks
+### Webhooks
 
 | Status | Label                    |
 |:------:|:-------------------------|
