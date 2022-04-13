@@ -105,7 +105,7 @@ This list of API actions was retrieved from the [Trello Reference REST API](http
 |        | Delete a Card                         |                   |                               |
 |        | Get a field on a Card                 |                   |                               |
 |        | Get Actions on a Card                 |                   |                               |
-|        | Get Attachments on a Card             | .getAttachments() | GET /1/cards/{id}/attachments |
+|   ✔    | Get Attachments on a Card             | .getAttachments() | GET /1/cards/{id}/attachments |
 |        | Create Attachment On Card             |                   |                               |
 |        | Get an Attachment on a Card           |                   |                               |
 |        | Delete an Attachment on a Card        |                   |                               |
