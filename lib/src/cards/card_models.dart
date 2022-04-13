@@ -120,3 +120,18 @@ enum CardFilter {
   none,
   open,
 }
+
+class Attachment extends TrelloObject<AttachmentFields> {
+  Attachment(source, List<AttachmentFields> fields) : super(source, fields);
+}
+
+enum AttachmentFields {
+  all,
+  id,
+  data,
+  date,
+  idMemberCreator,
+  type,
+}
+
+enum AttachmentFilter { FALSE, cover }

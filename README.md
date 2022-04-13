@@ -97,49 +97,49 @@ This list of API actions was retrieved from the [Trello Reference REST API](http
 
 ### Cards
 
-| Status | Label                                 | .card(id) | Query Path        |
-|:------:|:--------------------------------------|-----------|-------------------|
-|        | Create a new Card                     |           |                   |
-|   ✔    | Get a Card                            | .get()    | GET /1/cards/{id} |
-|        | Update a Card                         |           |                   |
-|        | Delete a Card                         |           |                   |
-|        | Get a field on a Card                 |           |                   |
-|        | Get Actions on a Card                 |           |                   |
-|        | Get Attachments on a Card             |           |                   |
-|        | Create Attachment On Card             |           |                   |
-|        | Get an Attachment on a Card           |           |                   |
-|        | Delete an Attachment on a Card        |           |                   |
-|        | Get the Board the Card is on          |           |                   |
-|        | Get checkItems on a Card              |           |                   |
-|        | Get Checklists on a Card              |           |                   |
-|        | Create Checklist on a Card            |           |                   |
-|        | Get checkItem on a Card               |           |                   |
-|        | Update a checkItem on a Card          |           |                   |
-|        | Delete checkItem on a Card            |           |                   |
-|        | Get the List of a Card                |           |                   |
-|        | Get the Members of a Card             |           |                   |
-|        | Get Members who have voted on a Card  |           |                   |
-|        | Add Member vote to Card               |           |                   |
-|        | Get pluginData on a Card              |           |                   |
-|        | Get Stickers on a Card                |           |                   |
-|        | Add a Sticker to a Card               |           |                   |
-|        | Get a Sticker on a Card               |           |                   |
-|        | Update a Sticker on a Card            |           |                   |
-|        | Delete a Sticker on a Card            |           |                   |
-|        | Update Comment Action on a Card       |           |                   |
-|        | Delete a comment on a Card            |           |                   |
-|        | Update Custom Field item on Card      |           |                   |
-|        | Get Custom Field Items for a Card     |           |                   |
-|        | Add a new comment to a Card           |           |                   |
-|        | Add a Label to a Card                 |           |                   |
-|        | Add a Member to a Card                |           |                   |
-|        | Create a new Label on a Card          |           |                   |
-|        | Mark a Card's Notifications as read   |           |                   |
-|        | Remove a Label from a Card            |           |                   |
-|        | Remove a Member from a Card           |           |                   |
-|        | Remove a Member's Vote on a Card      |           |                   |
-|        | Update Checkitem on Checklist on Card |           |                   |
-|        | Delete a Checklist on a Card          |           |                   |
+| Status | Label                                 | .card(id)         | Query Path                    |
+|:------:|:--------------------------------------|-------------------|-------------------------------|
+|        | Create a new Card                     |                   |                               |
+|   ✔    | Get a Card                            | .get()            | GET /1/cards/{id}             |
+|        | Update a Card                         |                   |                               |
+|        | Delete a Card                         |                   |                               |
+|        | Get a field on a Card                 |                   |                               |
+|        | Get Actions on a Card                 |                   |                               |
+|        | Get Attachments on a Card             | .getAttachments() | GET /1/cards/{id}/attachments |
+|        | Create Attachment On Card             |                   |                               |
+|        | Get an Attachment on a Card           |                   |                               |
+|        | Delete an Attachment on a Card        |                   |                               |
+|        | Get the Board the Card is on          |                   |                               |
+|        | Get checkItems on a Card              |                   |                               |
+|        | Get Checklists on a Card              |                   |                               |
+|        | Create Checklist on a Card            |                   |                               |
+|        | Get checkItem on a Card               |                   |                               |
+|        | Update a checkItem on a Card          |                   |                               |
+|        | Delete checkItem on a Card            |                   |                               |
+|        | Get the List of a Card                |                   |                               |
+|        | Get the Members of a Card             |                   |                               |
+|        | Get Members who have voted on a Card  |                   |                               |
+|        | Add Member vote to Card               |                   |                               |
+|        | Get pluginData on a Card              |                   |                               |
+|        | Get Stickers on a Card                |                   |                               |
+|        | Add a Sticker to a Card               |                   |                               |
+|        | Get a Sticker on a Card               |                   |                               |
+|        | Update a Sticker on a Card            |                   |                               |
+|        | Delete a Sticker on a Card            |                   |                               |
+|        | Update Comment Action on a Card       |                   |                               |
+|        | Delete a comment on a Card            |                   |                               |
+|        | Update Custom Field item on Card      |                   |                               |
+|        | Get Custom Field Items for a Card     |                   |                               |
+|        | Add a new comment to a Card           |                   |                               |
+|        | Add a Label to a Card                 |                   |                               |
+|        | Add a Member to a Card                |                   |                               |
+|        | Create a new Label on a Card          |                   |                               |
+|        | Mark a Card's Notifications as read   |                   |                               |
+|        | Remove a Label from a Card            |                   |                               |
+|        | Remove a Member from a Card           |                   |                               |
+|        | Remove a Member's Vote on a Card      |                   |                               |
+|        | Update Checkitem on Checklist on Card |                   |                               |
+|        | Delete a Checklist on a Card          |                   |                               |
 
 ### Checklists
 

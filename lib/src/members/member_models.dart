@@ -1,7 +1,6 @@
-import 'package:trello_client/src/trello_object_model.dart';
-
 import '../../trello_client.dart';
 import '../trello_models.dart';
+import '../trello_object_model.dart';
 
 class Member extends TrelloObject<MemberFields> {
   Member(source, List<MemberFields> fields) : super(source, fields);
