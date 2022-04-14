@@ -12,6 +12,20 @@ Developing a client library for interacting with Trello API. Includes a command 
 $ dart run bin/trello_client.dart $TRELLO_USERNAME $TRELLO_KEY $TRELLO_TOKEN 
 ```
 
+## Roadmap
+
+These are the initial APIs that will be implemented.
+
+- [x] Get Boards that Member belongs to
+- [x] Get Lists on a Board
+- [x] Get Cards in a List
+- [x] Get a Card
+- [x] Get Attachments on a Card
+- [x] Get a Member
+- [ ] Update a Card
+- [ ] Add a Member to a Card
+- [ ] Remove a Member from a Card
+
 ## API Coverage
 
 This list of API actions was retrieved from the [Trello Reference REST API](https://developer.atlassian.com/cloud/trello/rest/api-group-actions/#api-actions-idaction-reactionssummary-get) on 11th April 2022.
