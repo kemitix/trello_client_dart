@@ -123,6 +123,8 @@ enum CardFilter {
 
 class Attachment extends TrelloObject<AttachmentFields> {
   Attachment(source, List<AttachmentFields> fields) : super(source, fields);
+
+  //TODO add field getters
 }
 
 enum AttachmentFields {
