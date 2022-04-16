@@ -1,4 +1,4 @@
-import '../../trello_client.dart';
+import '../client.dart';
 import '../trello_models.dart';
 import '../trello_object_model.dart';
 

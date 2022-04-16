@@ -1,30 +1,89 @@
-# Trello Client for Dart
+CLI and SDK for accessing the Trello API
 
-- trello_client_dart
+- 'package:trello/trello_sdk' - Access the Trello API
+- bin/trello - CLI to access Trello
 
 Status: experimental/alpha/development
 
-Developing a client library for interacting with Trello API. Includes a command line tool to exercise and test the client library that will provide *some* functionality as a simple Trello Client in itself. Ultimately these should be broken into two packages - when I figure out how to do that, but it's not a priority.
+Developing a client library for interacting with Trello API.
+Includes a CLI to exercise and test `trello_sdk`.
+The CLI will provide *some* functionality as a simple Trello Client in itself.
 
 ## Test Drive
 
 ```bash
-$ dart run bin/trello_client.dart $TRELLO_USERNAME $TRELLO_KEY $TRELLO_TOKEN 
+$ dart run bin/trello.dart --help
+```
+
+Or, once installed and `trello` is on `PATH`:
+
+```bash
+trello --help
 ```
 
 ## Roadmap
 
-These are the initial APIs that will be implemented.
+These are the initial APIs and CLI commands that will be implemented.
 
-- [x] Get Boards that Member belongs to
-- [x] Get Lists on a Board
-- [x] Get Cards in a List
-- [x] Get a Card
-- [x] Get Attachments on a Card
-- [x] Get a Member
+- [ ] Get a Member
+
+```bash
+trello member $MEMBER_ID get
+```
+
+- [ ] Get Boards that Member belongs to
+
+```bash
+trello member list-boards --member $MEMBER_ID 
+```
+
+- [ ] Get Lists on a Board
+
+```bash
+trello board $BOARD_ID list-lists 
+```
+
+- [ ] Get Cards in a List
+
+```bash
+trello list $LIST_ID list-cards
+```
+
+- [ ] Get a Card
+
+```bash
+trello card $CARD_ID get
+```
+
+- [ ] Get Attachments on a Card
+
+```bash
+trello card $CARD_ID list-attachments
+```
+
+- [ ] Download attachment from a Card
+
+```bash
+trello card $CARD_ID download-attachment $ATTACHMENT_ID > filename.txt
+```
+
 - [ ] Update a Card
+
+```bash
+trello card $CARD_ID update --title "New Card Title"
+```
+
 - [ ] Add a Member to a Card
+
+```bash
+trello card $CARD_ID add-member $MEMBER_ID
+```
+
 - [ ] Remove a Member from a Card
+
+```bash
+trello card $CARD_ID remove-member $MEMBER_ID
+```
 
 ## API Coverage
 

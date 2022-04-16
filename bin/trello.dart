@@ -1,12 +1,7 @@
 import 'dart:io';
 
 import 'package:cli_dialog/cli_dialog.dart';
-import 'package:trello_client/src/boards/boards.dart';
-import 'package:trello_client/src/cards/cards.dart';
-import 'package:trello_client/src/fp/fp.dart';
-import 'package:trello_client/src/lists/lists.dart';
-import 'package:trello_client/src/members/members.dart';
-import 'package:trello_client/trello_client.dart';
+import 'package:trello_sdk/trello_sdk.dart';
 
 typedef Error = String;
 typedef ErrorList = List<Error>;

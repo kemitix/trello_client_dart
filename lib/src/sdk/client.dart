@@ -1,6 +1,6 @@
+import '../fp/fp.dart';
 import 'boards/boards.dart';
 import 'cards/cards.dart';
-import 'fp/fp.dart';
 import 'http_client.dart';
 import 'lists/lists.dart';
 import 'members/members.dart';
