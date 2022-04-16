@@ -5,23 +5,36 @@ import 'package:args/command_runner.dart';
 import '../../../trello_sdk.dart';
 import '../cli.dart';
 
-class MemberCommand extends Command {
+class MemberModule extends Command {
   @override
   final String name = 'member';
   @override
   final String description = 'Trello Members (users)';
 
-  MemberCommand(TrelloClient client) {
-    [GetMemberCommand(client)].forEach(addSubcommand);
+  MemberModule(TrelloClient client) {
+    [
+      GetMemberCommand(client),
+      ListMemberBoardsCommand(client),
+    ].forEach(addSubcommand);
   }
 }
 
-class GetMemberCommand extends TrelloCommand {
-  GetMemberCommand(TrelloClient client) : super('get', 'Get a member', client);
+abstract class MemberCommand extends TrelloCommand {
+  MemberCommand(String name, String description, TrelloClient client)
+      : super(name, description, client);
 
-  final String errorIdMissing = 'Member Id was not given';
+  MemberId get memberId {
+    if (parameters.isEmpty) {
+      throw UsageException('Member Id was not given', usage);
+    }
+    return MemberId(parameters.first);
+  }
+}
 
-  List<MemberFields> fields = [
+class GetMemberCommand extends MemberCommand {
+  GetMemberCommand(TrelloClient client) : super('get', 'Get a Member', client);
+
+  final List<MemberFields> fields = [
     MemberFields.username,
     MemberFields.email,
     MemberFields.fullName,
@@ -35,9 +48,27 @@ class GetMemberCommand extends TrelloCommand {
 
   @override
   FutureOr<void> run() async {
-    if (parameters.isEmpty) throw UsageException(errorIdMissing, usage);
-    MemberId id = MemberId(parameters.first);
-    Member member = await client.member(id).get();
-    print(tabulateFields(fields, member));
+    Member member = await client.member(memberId).get();
+    print(tabulateObject(member, fields));
+  }
+}
+
+class ListMemberBoardsCommand extends MemberCommand {
+  ListMemberBoardsCommand(TrelloClient client)
+      : super('list-boards', 'Get Boards that Member belongs to', client);
+
+  final List<BoardFields> fields = [
+    BoardFields.id,
+    BoardFields.name,
+    BoardFields.pinned,
+    BoardFields.closed,
+    BoardFields.starred,
+    BoardFields.shortUrl,
+  ];
+
+  @override
+  FutureOr<void> run() async {
+    List<Board> boards = await client.member(memberId).getBoards();
+    print(tabulateObjects(boards, fields));
   }
 }

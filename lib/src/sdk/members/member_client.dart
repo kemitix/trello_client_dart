@@ -89,7 +89,6 @@ class MemberClient {
               ))
                   .data ??
               [])
-          .map((response) => response.data)
           .map((item) => Board(item, fields ?? [BoardFields.all]))
           .toList(growable: false);
 }

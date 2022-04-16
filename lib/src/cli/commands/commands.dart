@@ -24,10 +24,31 @@ abstract class TrelloCommand extends Command {
 
   List<String> get parameters => argResults!.rest;
 
-  String tabulateFields<T extends Enum>(
-      List<T> fields, TrelloObject<T> member) {
+  String tabulateObject<T extends Enum>(
+    TrelloObject<T> object,
+    List<T> fields,
+  ) {
     return tabular(
-        fields.map((field) => [field.name, member.getValue(field)]).toList(),
+        fields.map((field) => [field.name, object.getValue(field)]).toList(),
         rowDividers: []);
   }
+
+  String tabulateObjects<T extends Enum>(
+    List<TrelloObject<T>> objects,
+    List<T> fields,
+  ) {
+    List<List<String>> data = [
+      fields.map((field) => field.name).toList(),
+      ...objects.map(objectFieldValuesAsStringList(fields))
+    ];
+    return tabular(data);
+  }
+
+  List<String> Function(TrelloObject<T>)
+      objectFieldValuesAsStringList<T extends Enum>(List<T> fields) =>
+          (object) => fields.map(fieldValueAsString(object)).toList();
+
+  String Function(T) fieldValueAsString<T extends Enum>(
+          TrelloObject<T> object) =>
+      (field) => object.getValue(field).toString();
 }
