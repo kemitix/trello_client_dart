@@ -7,7 +7,7 @@ typedef Error = String;
 typedef ErrorList = List<Error>;
 
 Future<void> main(List<String> arguments) async =>
-    await parseArgs(arguments).map(trelloClient).fold<Future<void>>(
+    await authentication().map(trelloClient).fold<Future<void>>(
           onError: (errors) => reportErrors(errors),
           onSuccess: (client) => runApp(client),
         );
@@ -126,24 +126,26 @@ Future<void> showCard(CardId cardId, String cardName, String listName,
 
 Future<void> reportErrors(ErrorList errors) async => errors.forEach(print);
 
-Either<ErrorList, TrelloAuthentication> parseArgs(List<String> arguments) {
-  if (arguments.isEmpty) {
-    return Left.of(
-        ['Trello Username (or Member Id), API key and token not given']);
+Either<ErrorList, TrelloAuthentication> authentication() {
+  var userEnv = 'TRELLO_USERNAME';
+  var keyEnv = 'TRELLO_KEY';
+  var tokenEnv = 'TRELLO_SECRET';
+  var e = <String>[];
+  void testEnvironment(String key) {
+    if (!Platform.environment.keys.contains(key)) {
+      e.add('Environment no set ${key}');
+    }
   }
-  final MemberId memberId = MemberId(arguments[0]);
-  if (arguments.length < 2) {
-    return Left.of(['Trello API key and token not given']);
-  }
-  final String key = arguments[1];
-  if (arguments.length < 3) {
-    return Left.of(['Trello API token not given']);
-  }
-  final String secret = arguments[2];
-  if (arguments.length > 3) {
-    return Left.of(['Too many arguments']);
-  }
-  return Right.of(TrelloAuthentication.of(memberId, key, secret));
+
+  testEnvironment(userEnv);
+  testEnvironment(keyEnv);
+  testEnvironment(tokenEnv);
+  if (e.isNotEmpty) return Left.of(e);
+
+  var memberId = MemberId(Platform.environment[userEnv]!);
+  var key = Platform.environment[keyEnv]!;
+  var token = Platform.environment[tokenEnv]!;
+  return Right.of(TrelloAuthentication.of(memberId, key, token));
 }
 
 TrelloClient trelloClient(TrelloAuthentication authentication) =>
