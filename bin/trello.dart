@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
+import 'package:trello_sdk/src/cli/commands/list_module.dart';
 import 'package:trello_sdk/trello_cli.dart';
 
 typedef Error = String;
@@ -17,6 +18,7 @@ Future<void> runApp(TrelloClient client, List<String> arguments) async {
   [
     MemberModule(client),
     BoardModule(client),
+    ListModule(client),
   ].forEach(runner.addCommand);
   await runner.run(arguments).catchError((error) {
     client.close();
