@@ -15,7 +15,14 @@ Future<void> main(List<String> arguments) async =>
 Future<void> runApp(TrelloClient client, List<String> arguments) async {
   var runner = CommandRunner('trello', "A CLI for Trello");
   runner.addCommand(MemberCommand(client));
-  await runner.run(arguments);
+  await runner.run(arguments).catchError((error) {
+    client.close();
+    if (error is! UsageException) {
+      throw error;
+    }
+    print(error);
+    exit(1);
+  });
   client.close();
 }
 

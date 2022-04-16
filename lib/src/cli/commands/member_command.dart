@@ -1,32 +1,43 @@
 import 'dart:async';
 
+import 'package:args/command_runner.dart';
+
 import '../../../trello_sdk.dart';
 import '../cli.dart';
 
-class MemberCommand extends TrelloCommand {
+class MemberCommand extends Command {
   @override
   final String name = 'member';
   @override
   final String description = 'Trello Members (users)';
 
-  MemberCommand(TrelloClient client) : super(client) {
-    addSubcommand(GetMemberCommand(client));
+  MemberCommand(TrelloClient client) {
+    [GetMemberCommand(client)].forEach(addSubcommand);
   }
 }
 
 class GetMemberCommand extends TrelloCommand {
-  @override
-  final String name = 'get';
-  @override
-  final String description = 'Get a member';
+  GetMemberCommand(TrelloClient client) : super('get', 'Get a member', client);
 
-  GetMemberCommand(TrelloClient client) : super(client);
+  final String errorIdMissing = 'Member Id was not given';
+
+  List<MemberFields> fields = [
+    MemberFields.username,
+    MemberFields.email,
+    MemberFields.fullName,
+    MemberFields.initials,
+    MemberFields.url,
+    MemberFields.status,
+    MemberFields.memberType,
+    MemberFields.confirmed,
+    MemberFields.bio,
+  ];
 
   @override
-  Future<FutureOr<void>> run() async {
-    if (argResults!.rest.isEmpty) throw Exception('Member Id not given');
-    MemberId id = MemberId(argResults!.rest.first);
+  FutureOr<void> run() async {
+    if (parameters.isEmpty) throw UsageException(errorIdMissing, usage);
+    MemberId id = MemberId(parameters.first);
     Member member = await client.member(id).get();
-    print(member.url);
+    print(tabulateFields(fields, member));
   }
 }
