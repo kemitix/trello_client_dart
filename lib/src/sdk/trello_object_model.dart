@@ -11,7 +11,7 @@ abstract class TrelloObject<T extends Enum> {
 
   dynamic get raw => _source;
 
-  @protected
+  //@protected
   V getValue<V>(T field) {
     if (_all || _fields.contains(field)) {
       return _source[field.name];

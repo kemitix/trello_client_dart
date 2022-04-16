@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:args/command_runner.dart';
-import 'package:tabular/tabular.dart';
 
 import '../../../trello_sdk.dart';
 import '../cli.dart';
@@ -22,21 +21,23 @@ class GetMemberCommand extends TrelloCommand {
 
   final String errorIdMissing = 'Member Id was not given';
 
+  List<MemberFields> fields = [
+    MemberFields.username,
+    MemberFields.email,
+    MemberFields.fullName,
+    MemberFields.initials,
+    MemberFields.url,
+    MemberFields.status,
+    MemberFields.memberType,
+    MemberFields.confirmed,
+    MemberFields.bio,
+  ];
+
   @override
   FutureOr<void> run() async {
     if (parameters.isEmpty) throw UsageException(errorIdMissing, usage);
     MemberId id = MemberId(parameters.first);
     Member member = await client.member(id).get();
-    print(tabular([
-      ['username', member.username],
-      ['email', member.email],
-      ['full name', member.fullName],
-      ['initials', member.initials],
-      ['url', member.url],
-      ['status', member.status],
-      ['member type', member.memberType],
-      ['confirmed', member.confirmed],
-      ['Bio', member.bio],
-    ], rowDividers: []));
+    print(tabulateFields(fields, member));
   }
 }
