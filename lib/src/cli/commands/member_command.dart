@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:args/command_runner.dart';
+import 'package:tabular/tabular.dart';
 
 import '../../../trello_sdk.dart';
 import '../cli.dart';
@@ -26,6 +27,16 @@ class GetMemberCommand extends TrelloCommand {
     if (parameters.isEmpty) throw UsageException(errorIdMissing, usage);
     MemberId id = MemberId(parameters.first);
     Member member = await client.member(id).get();
-    print(member.url);
+    print(tabular([
+      ['username', member.username],
+      ['email', member.email],
+      ['full name', member.fullName],
+      ['initials', member.initials],
+      ['url', member.url],
+      ['status', member.status],
+      ['member type', member.memberType],
+      ['confirmed', member.confirmed],
+      ['Bio', member.bio],
+    ], rowDividers: []));
   }
 }
