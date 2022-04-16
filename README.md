@@ -25,7 +25,7 @@ trello --help
 
 These are the initial APIs and CLI commands that will be implemented.
 
-- [ ] Get a Member
+- [x] Get a Member
 
 ```bash
 trello member get $MEMBER_ID
