@@ -37,7 +37,7 @@ trello member get $MEMBER_ID
 trello member list-boards $MEMBER_ID 
 ```
 
-- [ ] Get Lists on a Board
+- [x] Get Lists on a Board
 
 ```bash
 trello board list-lists $BOARD_ID

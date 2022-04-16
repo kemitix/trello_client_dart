@@ -25,7 +25,7 @@ abstract class MemberCommand extends TrelloCommand {
 
   MemberId get memberId {
     if (parameters.isEmpty) {
-      throw UsageException('Member Id was not given', usage);
+      usageException('Member Id was not given');
     }
     return MemberId(parameters.first);
   }
@@ -68,7 +68,8 @@ class ListMemberBoardsCommand extends MemberCommand {
 
   @override
   FutureOr<void> run() async {
-    List<Board> boards = await client.member(memberId).getBoards();
+    List<Board> boards =
+        await client.member(memberId).getBoards(fields: fields);
     print(tabulateObjects(boards, fields));
   }
 }
