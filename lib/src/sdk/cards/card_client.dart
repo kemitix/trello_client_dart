@@ -17,7 +17,7 @@ class CardClient {
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-id-get
   Future<Card?> get({List<CardFields>? fields}) async => _client
       .get<dynamic>(
-        '/1/cards/${_id}',
+        '/1/cards/$_id',
         queryParameters: {
           'fields': asCsv(fields ?? [CardFields.all]),
         },
@@ -34,7 +34,7 @@ class CardClient {
     AttachmentFilter filter = AttachmentFilter.FALSE,
     List<AttachmentFields>? fields,
   }) async =>
-      ((await _client.get<dynamic>('/1/cards/${_id}/attachments',
+      ((await _client.get<dynamic>('/1/cards/$_id/attachments',
                       queryParameters: {
                     'filter': filter.name,
                     'fields': asCsv(fields ?? [AttachmentFields.all]),

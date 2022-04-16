@@ -49,7 +49,7 @@ trello board list-lists $BOARD_ID
 trello list list-cards $LIST_ID
 ```
 
-- [ ] Get a Card
+- [x] Get a Card
 
 ```bash
 trello card get $CARD_ID
