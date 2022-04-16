@@ -28,61 +28,61 @@ These are the initial APIs and CLI commands that will be implemented.
 - [ ] Get a Member
 
 ```bash
-trello member $MEMBER_ID get
+trello member get $MEMBER_ID
 ```
 
 - [ ] Get Boards that Member belongs to
 
 ```bash
-trello member list-boards --member $MEMBER_ID 
+trello member list-boards $MEMBER_ID 
 ```
 
 - [ ] Get Lists on a Board
 
 ```bash
-trello board $BOARD_ID list-lists 
+trello board list-lists $BOARD_ID
 ```
 
 - [ ] Get Cards in a List
 
 ```bash
-trello list $LIST_ID list-cards
+trello list list-cards $LIST_ID
 ```
 
 - [ ] Get a Card
 
 ```bash
-trello card $CARD_ID get
+trello card get $CARD_ID
 ```
 
 - [ ] Get Attachments on a Card
 
 ```bash
-trello card $CARD_ID list-attachments
+trello card list-attachments $CARD_ID
 ```
 
 - [ ] Download attachment from a Card
 
 ```bash
-trello card $CARD_ID download-attachment $ATTACHMENT_ID > filename.txt
+trello card download-attachment $CARD_ID --attachment $ATTACHMENT_ID > filename.txt
 ```
 
 - [ ] Update a Card
 
 ```bash
-trello card $CARD_ID update --title "New Card Title"
+trello card update $CARD_ID --title "New Card Title"
 ```
 
 - [ ] Add a Member to a Card
 
 ```bash
-trello card $CARD_ID add-member $MEMBER_ID
+trello card add-member $CARD_ID --member $MEMBER_ID
 ```
 
 - [ ] Remove a Member from a Card
 
 ```bash
-trello card $CARD_ID remove-member $MEMBER_ID
+trello card remove-member $CARD_ID --member $MEMBER_ID
 ```
 
 ## API Coverage

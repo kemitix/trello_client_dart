@@ -65,6 +65,7 @@ class MemberClient {
     if (notifications != null) queryParameters['notifications'] = notifications;
     return (_client
         .get<dynamic>('/1/members/${_id}', queryParameters: queryParameters)
+        .then((response) => response.data)
         .then((item) => Member(item, fields ?? [MemberFields.all])));
   }
 
@@ -88,6 +89,7 @@ class MemberClient {
               ))
                   .data ??
               [])
+          .map((response) => response.data)
           .map((item) => Board(item, fields ?? [BoardFields.all]))
           .toList(growable: false);
 }

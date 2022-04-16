@@ -5,7 +5,7 @@ abstract class TrelloObject<T extends Enum> {
   final List<T> _fields;
   late final bool _all; // were all fields selected'
 
-  TrelloObject(this._source, this._fields, {all: bool}) {
+  TrelloObject(this._source, this._fields, {bool all = true}) {
     _all = all;
   }
 
