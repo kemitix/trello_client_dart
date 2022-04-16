@@ -31,7 +31,7 @@ These are the initial APIs and CLI commands that will be implemented.
 trello member get $MEMBER_ID
 ```
 
-- [ ] Get Boards that Member belongs to
+- [x] Get Boards that Member belongs to
 
 ```bash
 trello member list-boards $MEMBER_ID 
