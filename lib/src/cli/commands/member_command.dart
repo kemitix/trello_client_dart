@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:args/command_runner.dart';
+
 import '../../../trello_sdk.dart';
 import '../cli.dart';
 
@@ -23,8 +25,10 @@ class GetMemberCommand extends TrelloCommand {
   GetMemberCommand(TrelloClient client) : super(client);
 
   @override
-  Future<FutureOr<void>> run() async {
-    if (argResults!.rest.isEmpty) throw Exception('Member Id not given');
+  FutureOr<void> run() async {
+    if (argResults!.rest.isEmpty) {
+      throw UsageException('Member Id not given', usage);
+    }
     MemberId id = MemberId(argResults!.rest.first);
     Member member = await client.member(id).get();
     print(member.url);
