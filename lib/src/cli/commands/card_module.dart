@@ -14,7 +14,7 @@ class CardModule extends Command {
   CardModule(TrelloClient client) {
     [
       GetCardCommand(client),
-      //ListAttachmentsCommand(client),
+      ListAttachmentsCommand(client),
     ].forEach(addSubcommand);
   }
 }
@@ -54,7 +54,9 @@ class ListAttachmentsCommand extends CardCommand {
 
   final List<AttachmentFields> fields = [
     AttachmentFields.id,
-    AttachmentFields.type,
+    AttachmentFields.name,
+    AttachmentFields.mimeType,
+    AttachmentFields.bytes,
   ];
 
   @override

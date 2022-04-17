@@ -130,10 +130,19 @@ class Attachment extends TrelloObject<AttachmentFields> {
 enum AttachmentFields {
   all,
   id,
-  data,
+  bytes,
   date,
-  idMemberCreator,
-  type,
+  edgeColor,
+  idMember,
+  isUpload,
+  mimeType,
+  name,
+  pos,
+  previews,
+  url,
 }
 
-enum AttachmentFilter { FALSE, cover }
+enum AttachmentFilter {
+  falsE, // Uppercase E to avoid clashing with language keyword - use toLowerCase when passing to API
+  cover,
+}

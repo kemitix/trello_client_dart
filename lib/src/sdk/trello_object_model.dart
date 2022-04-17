@@ -1,7 +1,7 @@
 import 'package:meta/meta.dart';
 
 abstract class TrelloObject<T extends Enum> {
-  final dynamic _source;
+  final Map<String, dynamic> _source;
   final List<T> _fields;
   late final bool _all; // were all fields selected'
 
@@ -9,15 +9,17 @@ abstract class TrelloObject<T extends Enum> {
     _all = all;
   }
 
-  dynamic get raw => _source;
+  Map<String, dynamic> get raw => _source;
 
   //@protected
   V getValue<V>(T field) {
+    String fieldName = field.name;
     if (_all || _fields.contains(field)) {
-      return _source[field.name];
+      if (_source.keys.contains(fieldName)) {
+        return _source[fieldName];
+      }
     }
-    throw AssertionError(
-        'Attempt to access field not retrieved: ${field.name}');
+    throw AssertionError('Attempt to access field not retrieved: $fieldName');
   }
 
   @protected
