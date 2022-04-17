@@ -126,93 +126,93 @@ This list of API actions was retrieved from the [Trello Reference REST API](http
 
 ### Boards
 
-| Status | Label                                          | .board(id)  | Query Path                |
-|:------:|:-----------------------------------------------|-------------|---------------------------|
-|        | Get Memberships of a Board                     |             |                           |
-|        | Get a Board                                    |             |                           |
-|        | Update a Board                                 |             |                           |
-|        | Delete a Board                                 |             |                           |
-|        | Get a field on a Board                         |             |                           |
-|        | Get Actions of a Board                         |             |                           |
-|        | Get a Card on a Board                          |             |                           |
-|        | Get boardStars on a Board                      |             |                           |
-|        | Get Checklists on a Board                      |             |                           |
-|        | Create Checklist on a Board                    |             |                           |
-|        | Get Cards on a Board                           |             |                           |
-|        | Get filtered Cards on a Board                  |             |                           |
-|        | Get Custom Fields for Board                    |             |                           |
-|        | Get Labels on a Board                          |             |                           |
-|        | Create a Label on a Board                      |             |                           |
-|   ✔    | Get Lists on a Board                           | .getLists() | GET /1/boards/{id}/lists  |
-|        | Create a List on a Board                       |             |                           |
-|        | Get filtered Lists on a Board                  |             |                           |
-|        | Get the Members of a Board                     |             |                           |
-|        | Invite Member to Board via email               |             |                           |
-|        | Add a Member to a Board                        |             |                           |
-|        | Remove Member from Board                       |             |                           |
-|        | Update Membership of Member on a Board         |             |                           |
-|        | Update emailPosition Pref on a Board           |             |                           |
-|        | Update idEmailList Pref on a Board             |             |                           |
-|        | Update showListGuide Pref on a Board           |             |                           |
-|        | Update showSidebar Pref on a Board             |             |                           |
-|        | Update showSidebarActivity Pref on a Board     |             |                           |
-|        | Update showSidebarBoardActions Pref on a Board |             |                           |
-|        | Update showSidebarMembers Pref on a Board      |             |                           |
-|        | Create a Board                                 |             |                           |
-|        | Create a calendarKey for a Board               |             |                           |
-|        | Create a emailKey for a Board                  |             |                           |
-|        | Create a Tag for a Board                       |             |                           |
-|        | Mark Board as viewed                           |             |                           |
-|        | Get Enabled Power-Ups on Board                 |             |                           |
-|        | (deprecated) Enable a Power-Up on a Board      |             |                           |
-|        | (deprecated) Disable a Power-Up on a Board     |             |                           |
-|        | Get Power-Ups on a Board                       |             |                           |
+| Status | Label                                          | SDK: .board(id) | CLI: board    | Query Path                |
+|:------:|:-----------------------------------------------|-----------------|---------------|---------------------------|
+|        | Get Memberships of a Board                     |                 |               |                           |
+|        | Get a Board                                    |                 |               |                           |
+|        | Update a Board                                 |                 |               |                           |
+|        | Delete a Board                                 |                 |               |                           |
+|        | Get a field on a Board                         |                 |               |                           |
+|        | Get Actions of a Board                         |                 |               |                           |
+|        | Get a Card on a Board                          |                 |               |                           |
+|        | Get boardStars on a Board                      |                 |               |                           |
+|        | Get Checklists on a Board                      |                 |               |                           |
+|        | Create Checklist on a Board                    |                 |               |                           |
+|        | Get Cards on a Board                           |                 |               |                           |
+|        | Get filtered Cards on a Board                  |                 |               |                           |
+|        | Get Custom Fields for Board                    |                 |               |                           |
+|        | Get Labels on a Board                          |                 |               |                           |
+|        | Create a Label on a Board                      |                 |               |                           |
+|   ✔    | Get Lists on a Board                           | .getLists()     | list-lists ID | GET /1/boards/{id}/lists  |
+|        | Create a List on a Board                       |                 |               |                           |
+|        | Get filtered Lists on a Board                  |                 |               |                           |
+|        | Get the Members of a Board                     |                 |               |                           |
+|        | Invite Member to Board via email               |                 |               |                           |
+|        | Add a Member to a Board                        |                 |               |                           |
+|        | Remove Member from Board                       |                 |               |                           |
+|        | Update Membership of Member on a Board         |                 |               |                           |
+|        | Update emailPosition Pref on a Board           |                 |               |                           |
+|        | Update idEmailList Pref on a Board             |                 |               |                           |
+|        | Update showListGuide Pref on a Board           |                 |               |                           |
+|        | Update showSidebar Pref on a Board             |                 |               |                           |
+|        | Update showSidebarActivity Pref on a Board     |                 |               |                           |
+|        | Update showSidebarBoardActions Pref on a Board |                 |               |                           |
+|        | Update showSidebarMembers Pref on a Board      |                 |               |                           |
+|        | Create a Board                                 |                 |               |                           |
+|        | Create a calendarKey for a Board               |                 |               |                           |
+|        | Create a emailKey for a Board                  |                 |               |                           |
+|        | Create a Tag for a Board                       |                 |               |                           |
+|        | Mark Board as viewed                           |                 |               |                           |
+|        | Get Enabled Power-Ups on Board                 |                 |               |                           |
+|        | (deprecated) Enable a Power-Up on a Board      |                 |               |                           |
+|        | (deprecated) Disable a Power-Up on a Board     |                 |               |                           |
+|        | Get Power-Ups on a Board                       |                 |               |                           |
 
 ### Cards
 
-| Status | Label                                 | .card(id)         | Query Path                    |
-|:------:|:--------------------------------------|-------------------|-------------------------------|
-|        | Create a new Card                     |                   |                               |
-|   ✔    | Get a Card                            | .get()            | GET /1/cards/{id}             |
-|        | Update a Card                         |                   |                               |
-|        | Delete a Card                         |                   |                               |
-|        | Get a field on a Card                 |                   |                               |
-|        | Get Actions on a Card                 |                   |                               |
-|   ✔    | Get Attachments on a Card             | .getAttachments() | GET /1/cards/{id}/attachments |
-|        | Create Attachment On Card             |                   |                               |
-|        | Get an Attachment on a Card           |                   |                               |
-|        | Delete an Attachment on a Card        |                   |                               |
-|        | Get the Board the Card is on          |                   |                               |
-|        | Get checkItems on a Card              |                   |                               |
-|        | Get Checklists on a Card              |                   |                               |
-|        | Create Checklist on a Card            |                   |                               |
-|        | Get checkItem on a Card               |                   |                               |
-|        | Update a checkItem on a Card          |                   |                               |
-|        | Delete checkItem on a Card            |                   |                               |
-|        | Get the List of a Card                |                   |                               |
-|        | Get the Members of a Card             |                   |                               |
-|        | Get Members who have voted on a Card  |                   |                               |
-|        | Add Member vote to Card               |                   |                               |
-|        | Get pluginData on a Card              |                   |                               |
-|        | Get Stickers on a Card                |                   |                               |
-|        | Add a Sticker to a Card               |                   |                               |
-|        | Get a Sticker on a Card               |                   |                               |
-|        | Update a Sticker on a Card            |                   |                               |
-|        | Delete a Sticker on a Card            |                   |                               |
-|        | Update Comment Action on a Card       |                   |                               |
-|        | Delete a comment on a Card            |                   |                               |
-|        | Update Custom Field item on Card      |                   |                               |
-|        | Get Custom Field Items for a Card     |                   |                               |
-|        | Add a new comment to a Card           |                   |                               |
-|        | Add a Label to a Card                 |                   |                               |
-|        | Add a Member to a Card                |                   |                               |
-|        | Create a new Label on a Card          |                   |                               |
-|        | Mark a Card's Notifications as read   |                   |                               |
-|        | Remove a Label from a Card            |                   |                               |
-|        | Remove a Member from a Card           |                   |                               |
-|        | Remove a Member's Vote on a Card      |                   |                               |
-|        | Update Checkitem on Checklist on Card |                   |                               |
-|        | Delete a Checklist on a Card          |                   |                               |
+| Status | Label                                 | SDK: .card(id)    | CLI: card           | Query Path                    |
+|:------:|:--------------------------------------|-------------------|---------------------|-------------------------------|
+|        | Create a new Card                     |                   |                     |                               |
+|   ✔    | Get a Card                            | .get()            | get ID              | GET /1/cards/{id}             |
+|        | Update a Card                         |                   |                     |                               |
+|        | Delete a Card                         |                   |                     |                               |
+|        | Get a field on a Card                 |                   |                     |                               |
+|        | Get Actions on a Card                 |                   |                     |                               |
+|   ✔    | Get Attachments on a Card             | .getAttachments() | list-attachments ID | GET /1/cards/{id}/attachments |
+|        | Create Attachment On Card             |                   |                     |                               |
+|        | Get an Attachment on a Card           |                   |                     |                               |
+|        | Delete an Attachment on a Card        |                   |                     |                               |
+|        | Get the Board the Card is on          |                   |                     |                               |
+|        | Get checkItems on a Card              |                   |                     |                               |
+|        | Get Checklists on a Card              |                   |                     |                               |
+|        | Create Checklist on a Card            |                   |                     |                               |
+|        | Get checkItem on a Card               |                   |                     |                               |
+|        | Update a checkItem on a Card          |                   |                     |                               |
+|        | Delete checkItem on a Card            |                   |                     |                               |
+|        | Get the List of a Card                |                   |                     |                               |
+|        | Get the Members of a Card             |                   |                     |                               |
+|        | Get Members who have voted on a Card  |                   |                     |                               |
+|        | Add Member vote to Card               |                   |                     |                               |
+|        | Get pluginData on a Card              |                   |                     |                               |
+|        | Get Stickers on a Card                |                   |                     |                               |
+|        | Add a Sticker to a Card               |                   |                     |                               |
+|        | Get a Sticker on a Card               |                   |                     |                               |
+|        | Update a Sticker on a Card            |                   |                     |                               |
+|        | Delete a Sticker on a Card            |                   |                     |                               |
+|        | Update Comment Action on a Card       |                   |                     |                               |
+|        | Delete a comment on a Card            |                   |                     |                               |
+|        | Update Custom Field item on Card      |                   |                     |                               |
+|        | Get Custom Field Items for a Card     |                   |                     |                               |
+|        | Add a new comment to a Card           |                   |                     |                               |
+|        | Add a Label to a Card                 |                   |                     |                               |
+|        | Add a Member to a Card                |                   |                     |                               |
+|        | Create a new Label on a Card          |                   |                     |                               |
+|        | Mark a Card's Notifications as read   |                   |                     |                               |
+|        | Remove a Label from a Card            |                   |                     |                               |
+|        | Remove a Member from a Card           |                   |                     |                               |
+|        | Remove a Member's Vote on a Card      |                   |                     |                               |
+|        | Update Checkitem on Checklist on Card |                   |                     |                               |
+|        | Delete a Checklist on a Card          |                   |                     |                               |
 
 ### Checklists
 
@@ -283,64 +283,64 @@ This list of API actions was retrieved from the [Trello Reference REST API](http
 
 ### Lists
 
-| Status | Label                       | .list(id)   | Query Path              |
-|:------:|:----------------------------|-------------|-------------------------|
-|       | Get a List                  |             |                         |
-|       | Update a List               |             |                         |
-|       | Create a new List           |             |                         |
-|       | Archive all Cards in List   |             |                         |
-|       | Move all Cards in List      |             |                         |
-|       | Archive or unarchive a list |             |                         |
-|       | Move List to Board          |             |                         |
-|       | Update a field on a List    |             |                         |
-|       | Get Actions for a List      |             |                         |
-|       | Get the Board a List is on  |             |                         |
-|   ✔   | Get Cards in a List         | .getCards() | GET /1/lists/{id}/cards |
+| Status | Label                       | SDK: .list(id) | CLI: list     | Query Path              |
+|:------:|:----------------------------|----------------|---------------|-------------------------|
+|        | Get a List                  |                |               |                         |
+|        | Update a List               |                |               |                         |
+|        | Create a new List           |                |               |                         |
+|        | Archive all Cards in List   |                |               |                         |
+|        | Move all Cards in List      |                |               |                         |
+|        | Archive or unarchive a list |                |               |                         |
+|        | Move List to Board          |                |               |                         |
+|        | Update a field on a List    |                |               |                         |
+|        | Get Actions for a List      |                |               |                         |
+|        | Get the Board a List is on  |                |               |                         |
+|   ✔    | Get Cards in a List         | .getCards()    | list-cards ID | GET /1/lists/{id}/cards |
 
 ### Members
 
-| Status | Label                                          | .member(id)                                 | Query Path                                                   |
-|:------:|:-----------------------------------------------|---------------------------------------------|--------------------------------------------------------------|
-|    ✔   | Get a Member                                   | .get()                                      | GET /1/members/{id}                                          |
-|        | Update a Member                                | .put(...)                                   | PUT /1/members/{id}                                          |
-|        | Get a field on a Member                        | .get(field)                                 | GET /1/members/{id}/{field}                                  |
-|        | Get a Member's Actions                         | .getActions()                               | GET /1/members/{id}/actions                                  |
-|        | Upload new boardBackground for Member          | .uploadBackground(...)                      | POST /1/members/{id}/boardBackgrounds                        |
-|        | Get Member's custom Board backgrounds          | .getBackgrounds()                           | GET /1/members/{id}/boardBackgrounds                         |
-|        | Get a boardBackground of a Member              | .background(idBackground).get()             | GET /1/members/{id}/boardBackgrounds/{idBackground}          |
-|        | Update a Member's custom Board background      | .background(idBackground).put(...)          | PUT /1/members/{id}/boardBackgrounds/{idBackground}          |
-|        | Delete a Member's custom Board background      | .background(idBackground).delete()          | DELETE /1/members/{id}/boardBackgrounds/{idBackground}       |
-|        | Get a Member's custom Board Backgrounds        | .getCustomBackgrounds()                     | GET /1/members/{id}/customBoardBackgrounds                   |
-|        | Create a new custom Board Background           | .uploadCustomBackground(...)                | POST /1/members/{id}/customBoardBackgrounds                  |
-|        | Get custom Board Background of Member          | .customBackground(idBackground).get()       | GET /1/members/{id}/customBoardBackgrounds/{idBackground}    |
-|        | Update custom Board Background of Member       | .customBackground(idBackground).update(...) | PUT /1/members/{id}/customBoardBackgrounds/{idBackground}    |
-|        | Delete custom Board Background of Member       | .customBackground(idBackground).delete()    | DELETE /1/members/{id}/customBoardBackgrounds/{idBackground} |
-|        | Get a Member's boardStars                      | .getStars()                                 | GET /1/members/{id}/boardStars                               |
-|        | Create Star for Board                          | .createStar(...)                            | POST /1/members/{id}/boardStars                              |
-|        | Get a boardStar of Member                      | .star(idStart).get()                        | GET /1/members/{id}/boardStars/{idStar}                      |
-|        | Update the position of a boardStar of Member   | .star(idStar).put()                         | PUT /1/members/{id}/boardStars/{idStar}                      |
-|        | Delete Star for Board                          | .star(idStar).delete()                      | DELETE /1/members/{id}/boardStars/{idStar}                   |
-|   ✔    | Get Boards that Member belongs to              | .getBoards()                                | GET /1/members/{id}/boards                                   |
-|        | Get Boards the Member has been invited to      | .getBoardsInvited()                         | GET /1/members/{id}/boardsInvited                            |
-|        | Get Cards the Member is on                     | .getCards()                                 | GET /1/members/{id}/cards                                    |
-|        | Get a Member's customEmojis                    | .getEmoji()                                 | GET /1/members/{id}/customEmoji                              |
-|        | Create custom Emoji for Member                 | .createEmoji(...)                           | POST /1/members/{id}/customEmoji                             |
-|        | Get a Member's custom Emoji                    | .emoji(idEmoji).get()                       | GET /1/members/{id}/customEmoji/{idEmoji}                    |
-|        | Get Member's custom Stickers                   | .getStickers()                              | GET /1/members/{id}/customStickers                           |
-|        | Create custom Sticker for Member               | .createSticker(...)                         | POST /1/members/{id}/customStickers                          |
-|        | Get a Member's custom Sticker                  | .sticker(idSticker).get()                   | GET /1/members/{id}/customStickers/{idSticker}               |
-|        | Delete a Member's custom Sticker               | .sticker(idSticker).delete()                | DELETE /1/members/{id}/customStickers/{idSticker}            |
-|        | Get Member's Notifications                     | .getNotifications()                         | GET /1/members/{id}/notifications                            |
-|        | Get Member's Organizations                     | .getOrganizations()                         | GET /1/members/{id}/organizations                            |
-|        | Get Organizations a Member has been invited to | .getOrganizationsInvited()                  | GET /1/members/{id}/organizationsInvited                     |
-|        | Get Member's saved searched                    | .getSavedSearches()                         | GET /1/members/{id}/savedSearches                            |
-|        | Create saved Search for Memer                  | .createSavedSearch(...)                     | POST /1/members/{id}/savedSearches                           |
-|        | Get a saved search                             | .savedSearch(idSearch).get()                | GET /1/members/{id}/savedSearches/{idSearch}                 |
-|        | Update a saved search                          | .savedSearch(idSearch).put(...)             | PUT /1/members/{id}/savedSearches/{idSearch}                 |
-|        | Delete a saved search                          | .savedSearch(idSearch).delete()             | DELETE /1/members/{id}/savedSearches/{idSearch}              |
-|        | Get Member's Tokens                            | .getTokens()                                | GET /1/members/{id}/tokens                                   |
-|        | Create Avatar for Member                       | .createAvatar(...)                          | POST /1/members/{id}/avatar                                  |
-|        | Dismiss a message for Member                   | .dismissMessage(...)                        | POST /1/members/{id}/oneTimeMessagesDismissed                |
+| Status | Label                                          | SDK: .member(id)                            | CLI: member    | Query Path                                                   |
+|:------:|:-----------------------------------------------|---------------------------------------------|----------------|--------------------------------------------------------------|
+|    ✔   | Get a Member                                   | .get()                                      | get ID         | GET /1/members/{id}                                          |
+|        | Update a Member                                | .put(...)                                   |                | PUT /1/members/{id}                                          |
+|        | Get a field on a Member                        | .get(field)                                 |                | GET /1/members/{id}/{field}                                  |
+|        | Get a Member's Actions                         | .getActions()                               |                | GET /1/members/{id}/actions                                  |
+|        | Upload new boardBackground for Member          | .uploadBackground(...)                      |                | POST /1/members/{id}/boardBackgrounds                        |
+|        | Get Member's custom Board backgrounds          | .getBackgrounds()                           |                | GET /1/members/{id}/boardBackgrounds                         |
+|        | Get a boardBackground of a Member              | .background(idBackground).get()             |                | GET /1/members/{id}/boardBackgrounds/{idBackground}          |
+|        | Update a Member's custom Board background      | .background(idBackground).put(...)          |                | PUT /1/members/{id}/boardBackgrounds/{idBackground}          |
+|        | Delete a Member's custom Board background      | .background(idBackground).delete()          |                | DELETE /1/members/{id}/boardBackgrounds/{idBackground}       |
+|        | Get a Member's custom Board Backgrounds        | .getCustomBackgrounds()                     |                | GET /1/members/{id}/customBoardBackgrounds                   |
+|        | Create a new custom Board Background           | .uploadCustomBackground(...)                |                | POST /1/members/{id}/customBoardBackgrounds                  |
+|        | Get custom Board Background of Member          | .customBackground(idBackground).get()       |                | GET /1/members/{id}/customBoardBackgrounds/{idBackground}    |
+|        | Update custom Board Background of Member       | .customBackground(idBackground).update(...) |                | PUT /1/members/{id}/customBoardBackgrounds/{idBackground}    |
+|        | Delete custom Board Background of Member       | .customBackground(idBackground).delete()    |                | DELETE /1/members/{id}/customBoardBackgrounds/{idBackground} |
+|        | Get a Member's boardStars                      | .getStars()                                 |                | GET /1/members/{id}/boardStars                    |
+|        | Create Star for Board                          | .createStar(...)                            |                | POST /1/members/{id}/boardStars                   |
+|        | Get a boardStar of Member                      | .star(idStart).get()                        |                | GET /1/members/{id}/boardStars/{idStar}           |
+|        | Update the position of a boardStar of Member   | .star(idStar).put()                         |                | PUT /1/members/{id}/boardStars/{idStar}           |
+|        | Delete Star for Board                          | .star(idStar).delete()                      |                | DELETE /1/members/{id}/boardStars/{idStar}        |
+|   ✔    | Get Boards that Member belongs to              | .getBoards()                                | list-boards ID | GET /1/members/{id}/boards                        |
+|        | Get Boards the Member has been invited to      | .getBoardsInvited()                         |                | GET /1/members/{id}/boardsInvited                 |
+|        | Get Cards the Member is on                     | .getCards()                                 |                | GET /1/members/{id}/cards                         |
+|        | Get a Member's customEmojis                    | .getEmoji()                                 |                | GET /1/members/{id}/customEmoji                   |
+|        | Create custom Emoji for Member                 | .createEmoji(...)                           |                | POST /1/members/{id}/customEmoji                  |
+|        | Get a Member's custom Emoji                    | .emoji(idEmoji).get()                       |                | GET /1/members/{id}/customEmoji/{idEmoji}         |
+|        | Get Member's custom Stickers                   | .getStickers()                              |                | GET /1/members/{id}/customStickers                |
+|        | Create custom Sticker for Member               | .createSticker(...)                         |                | POST /1/members/{id}/customStickers               |
+|        | Get a Member's custom Sticker                  | .sticker(idSticker).get()                   |                | GET /1/members/{id}/customStickers/{idSticker}    |
+|        | Delete a Member's custom Sticker               | .sticker(idSticker).delete()                |                | DELETE /1/members/{id}/customStickers/{idSticker} |
+|        | Get Member's Notifications                     | .getNotifications()                         |                | GET /1/members/{id}/notifications               |
+|        | Get Member's Organizations                     | .getOrganizations()                         |                | GET /1/members/{id}/organizations               |
+|        | Get Organizations a Member has been invited to | .getOrganizationsInvited()                  |                | GET /1/members/{id}/organizationsInvited        |
+|        | Get Member's saved searched                    | .getSavedSearches()                         |                | GET /1/members/{id}/savedSearches               |
+|        | Create saved Search for Memer                  | .createSavedSearch(...)                     |                | POST /1/members/{id}/savedSearches              |
+|        | Get a saved search                             | .savedSearch(idSearch).get()                |                | GET /1/members/{id}/savedSearches/{idSearch}    |
+|        | Update a saved search                          | .savedSearch(idSearch).put(...)             |                | PUT /1/members/{id}/savedSearches/{idSearch}    |
+|        | Delete a saved search                          | .savedSearch(idSearch).delete()             |                | DELETE /1/members/{id}/savedSearches/{idSearch} |
+|        | Get Member's Tokens                            | .getTokens()                                |                | GET /1/members/{id}/tokens                    |
+|        | Create Avatar for Member                       | .createAvatar(...)                          |                | POST /1/members/{id}/avatar                   |
+|        | Dismiss a message for Member                   | .dismissMessage(...)                        |                | POST /1/members/{id}/oneTimeMessagesDismissed |
 
 ### Notifications
 
