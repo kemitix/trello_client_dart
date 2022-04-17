@@ -55,7 +55,7 @@ trello list list-cards $LIST_ID
 trello card get $CARD_ID
 ```
 
-- [ ] Get Attachments on a Card
+- [x] Get Attachments on a Card
 
 ```bash
 trello card list-attachments $CARD_ID
