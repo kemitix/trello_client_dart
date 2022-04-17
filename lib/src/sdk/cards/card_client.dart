@@ -1,15 +1,21 @@
 import 'package:trello_sdk/src/sdk/client.dart';
 
+import '../../../trello_sdk.dart';
 import '../http_client.dart';
 import '../misc.dart';
 import 'cards.dart';
 
 class CardClient {
+  CardClient(this._client, this._cardId, this._authentication) {
+    _attachment =
+        (id) => AttachmentClient(_client, _cardId, id, _authentication);
+  }
   final HttpClient _client;
-  final CardId _id;
+  final CardId _cardId;
   final TrelloAuthentication _authentication;
+  late final Fn<AttachmentId, AttachmentClient> _attachment;
 
-  CardClient(this._client, this._id, this._authentication);
+  AttachmentClient attachment(AttachmentId id) => _attachment(id);
 
   /// Get a Card
   ///
@@ -20,7 +26,7 @@ class CardClient {
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-id-get
   Future<Card?> get({List<CardFields>? fields}) async => _client
       .get<dynamic>(
-        '/1/cards/$_id',
+        '/1/cards/$_cardId',
         queryParameters: {
           'fields': asCsv(fields ?? [CardFields.all]),
         },
@@ -40,31 +46,18 @@ class CardClient {
     List<AttachmentFields>? fields,
   }) async =>
       _client
-          .get<List<dynamic>>('/1/cards/$_id/attachments', queryParameters: {
-            'filter': filter.name.toLowerCase(),
-            'fields': asCsv(fields ?? [AttachmentFields.all]),
-          }, headers: {
-            'Authorization':
-                'OAuth oauth_consumer_key="${_authentication.key}", '
-                    'oauth_token="${_authentication.token}"',
-          })
+          .get<List<dynamic>>('/1/cards/$_cardId/attachments',
+              queryParameters: {
+                'filter': filter.name.toLowerCase(),
+                'fields': asCsv(fields ?? [AttachmentFields.all]),
+              },
+              headers: {
+                'Authorization':
+                    'OAuth oauth_consumer_key="${_authentication.key}", '
+                        'oauth_token="${_authentication.token}"',
+              })
           .then((response) => response.data ?? [])
           .then((data) => data
               .map((item) => Attachment(item, fields ?? [AttachmentFields.all]))
               .toList());
-
-  /// Get an Attachment on a Card
-  ///
-  /// GET /1/cards/{id}/attachments/{idAttachment}
-  ///
-  /// Get a specific Attachment on a Card.
-  ///
-  /// https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-id-attachments-idattachment-get
-  Future<Attachment> getAttachment(AttachmentId attachmentId,
-          {List<AttachmentFields>? fields}) async =>
-      _client
-          .get<Map<String, dynamic>>(
-              '/1/cards/$_id/attachments/${attachmentId}')
-          .then((response) => response.data)
-          .then((data) => Attachment(data, fields ?? [AttachmentFields.all]));
 }

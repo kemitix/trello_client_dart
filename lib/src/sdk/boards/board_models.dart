@@ -24,7 +24,7 @@ class Board extends TrelloObject<BoardFields> {
   String get enterpriseOwned => getValue(BoardFields.enterpriseOwned);
 }
 
-class BoardId extends StringId {
+class BoardId extends StringValue {
   BoardId(String id) : super(id);
 }
 

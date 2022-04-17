@@ -53,12 +53,12 @@ class TrelloClient {
   }
 }
 
-abstract class StringId {
-  final String id;
-  StringId(this.id);
+abstract class StringValue {
+  final String value;
+  StringValue(this.value);
 
   @override
   String toString() {
-    return id;
+    return value;
   }
 }

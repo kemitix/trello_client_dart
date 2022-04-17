@@ -13,7 +13,7 @@ class TrelloList extends TrelloObject<ListFields> {
   bool get subscribed => getValue(ListFields.subscribed);
 }
 
-class ListId extends StringId {
+class ListId extends StringValue {
   ListId(id) : super(id);
 }
 

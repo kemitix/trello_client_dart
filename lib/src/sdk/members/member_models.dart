@@ -21,7 +21,7 @@ class Member extends TrelloObject<MemberFields> {
   //TODO add a toString
 }
 
-class MemberId extends StringId {
+class MemberId extends StringValue {
   MemberId(id) : super(id);
 }
 

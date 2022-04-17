@@ -46,12 +46,16 @@ class Card extends TrelloObject<CardFields> {
   }
 }
 
-class CardId extends StringId {
+class CardId extends StringValue {
   CardId(String id) : super(id);
 }
 
-class AttachmentId extends StringId {
+class AttachmentId extends StringValue {
   AttachmentId(String id) : super(id);
+}
+
+class FileName extends StringValue {
+  FileName(String fileName) : super(fileName);
 }
 
 // Field vale may come from Trello as 'latitude,longitude'
@@ -127,6 +131,10 @@ enum CardFilter {
 
 class Attachment extends TrelloObject<AttachmentFields> {
   Attachment(source, List<AttachmentFields> fields) : super(source, fields);
+
+  String get url => getValue(AttachmentFields.url);
+
+  int get bytes => getValue(AttachmentFields.bytes);
 
   //TODO add field getters
 }

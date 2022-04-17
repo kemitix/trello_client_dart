@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
+
+import '../../trello_sdk.dart';
 
 abstract class HttpResponse<T> {
   T? get data;
@@ -12,18 +16,29 @@ abstract class HttpClient {
     Map<String, String>? queryParameters,
     Map<String, String>? headers,
   });
+
+  Future<void> download(
+    String path,
+    FileName fileName, {
+    Map<String, String>? queryParameters,
+    Map<String, String>? headers,
+    void Function(int, int)? onReceiveProgress,
+  });
 }
 
 class DioHttpClient extends HttpClient {
   late final Dio _dio;
+  late final Dio _dioDownloader;
   DioHttpClient(
       {required String baseUrl, required Map<String, String> queryParameters}) {
     _dio = Dio(BaseOptions(baseUrl: baseUrl, queryParameters: queryParameters));
     //_dio.interceptors.add(CurlLoggerDioInterceptor());
+    _dioDownloader = Dio(BaseOptions(queryParameters: queryParameters));
+    //_dioDownloader.interceptors.add(CurlLoggerDioInterceptor());
   }
 
   @override
-  void close() => _dio.close();
+  void close() => {_dio.close(), _dioDownloader.close()};
 
   @override
   Future<HttpResponse<T>> get<T>(
@@ -36,6 +51,38 @@ class DioHttpClient extends HttpClient {
           options: Options(
             headers: headers,
           )));
+
+  @override
+  Future<void> download(
+    String path,
+    FileName fileName, {
+    Map<String, String>? queryParameters,
+    Map<String, String>? headers,
+    void Function(int, int)? onReceiveProgress,
+  }) async {
+    try {
+      var response = await _dioDownloader.get(
+        path, onReceiveProgress: onReceiveProgress,
+        queryParameters: queryParameters,
+        //Received data with List<int>
+        options: Options(
+          responseType: ResponseType.bytes,
+          followRedirects: false,
+          validateStatus: (status) {
+            return status != null && status < 500;
+          },
+          headers: headers,
+        ),
+      );
+      File file = File(fileName.value);
+      var raf = file.openSync(mode: FileMode.write);
+      //   // response.data is List<int> type
+      raf.writeFromSync(response.data);
+      await raf.close();
+    } catch (e) {
+      print(e);
+    }
+  }
 }
 
 class CurlLoggerDioInterceptor extends Interceptor {

@@ -16,7 +16,7 @@ class CardModule extends Command {
       GetCardCommand(client),
       ListAttachmentsCommand(client),
       GetAttachmentCommand(client),
-      //DownloadAttachmentCommand(client),
+      DownloadAttachmentCommand(client),
     ].forEach(addSubcommand);
   }
 }
@@ -28,6 +28,8 @@ abstract class CardCommand extends TrelloCommand {
   CardId get cardId => CardId(nextParameter('Card Id'));
 
   AttachmentId get attachmentId => AttachmentId(nextParameter('Attachment Id'));
+
+  FileName get fileName => FileName(nextParameter('File name'));
 }
 
 class GetCardCommand extends CardCommand {
@@ -81,16 +83,18 @@ class GetAttachmentCommand extends CardCommand {
   @override
   FutureOr<void> run() async {
     Attachment attachment =
-        await client.card(cardId).getAttachment(attachmentId, fields: fields);
+        await client.card(cardId).attachment(attachmentId).get(fields: fields);
     print(tabulateObject(attachment, fields));
   }
 }
 
-// /// download-attachment $CARD_ID --attachment $ATTACHMENT_ID --output filename,txt
-// class DownloadAttachmentCommand extends CardCommand {
-//   DownloadAttachmentCommand(TrelloClient client)
-//       : super('download-attachment', 'Download an Attachment file', client);
-//
-//   @override
-//   FutureOr<void> run() async {await client.card(cardId).getAttachment()}
-// }
+/// download-attachment $CARD_ID $ATTACHMENT_ID $FILE_NAME
+class DownloadAttachmentCommand extends CardCommand {
+  DownloadAttachmentCommand(TrelloClient client)
+      : super('download-attachment', 'Download an Attachment file', client);
+
+  @override
+  FutureOr<void> run() async {
+    await client.card(cardId).attachment(attachmentId).download(fileName);
+  }
+}
