@@ -52,4 +52,19 @@ class CardClient {
           .then((data) => data
               .map((item) => Attachment(item, fields ?? [AttachmentFields.all]))
               .toList());
+
+  /// Get an Attachment on a Card
+  ///
+  /// GET /1/cards/{id}/attachments/{idAttachment}
+  ///
+  /// Get a specific Attachment on a Card.
+  ///
+  /// https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-id-attachments-idattachment-get
+  Future<Attachment> getAttachment(AttachmentId attachmentId,
+          {List<AttachmentFields>? fields}) async =>
+      _client
+          .get<Map<String, dynamic>>(
+              '/1/cards/$_id/attachments/${attachmentId}')
+          .then((response) => response.data)
+          .then((data) => Attachment(data, fields ?? [AttachmentFields.all]));
 }

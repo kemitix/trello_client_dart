@@ -50,6 +50,10 @@ class CardId extends StringId {
   CardId(String id) : super(id);
 }
 
+class AttachmentId extends StringId {
+  AttachmentId(String id) : super(id);
+}
+
 // Field vale may come from Trello as 'latitude,longitude'
 class CardCoordinates {
   late Float latitude;

@@ -25,6 +25,17 @@ abstract class TrelloCommand extends Command {
 
   List<String> get parameters => argResults!.rest;
 
+  int _parameter_index = 0;
+
+  String nextParameter(String description) {
+    if (parameters.length < -_parameter_index) {
+      usageException('$description not given');
+    }
+    String next = parameters[_parameter_index];
+    _parameter_index++;
+    return next;
+  }
+
   String tabulateObject<T extends Enum>(
     TrelloObject<T> object,
     List<T> fields,
