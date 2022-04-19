@@ -3,8 +3,8 @@ import 'dart:ffi';
 import '../client.dart';
 import '../trello_object_model.dart';
 
-class Card extends TrelloObject<CardFields> {
-  Card(source, List<CardFields> fields)
+class TrelloCard extends TrelloObject<CardFields> {
+  TrelloCard(source, List<CardFields> fields)
       : super(source, fields, all: fields.contains(CardFields.all));
 
   CardId get id => CardId(getValue(CardFields.id));
@@ -129,8 +129,9 @@ enum CardFilter {
   open,
 }
 
-class Attachment extends TrelloObject<AttachmentFields> {
-  Attachment(source, List<AttachmentFields> fields) : super(source, fields);
+class TrelloAttachment extends TrelloObject<AttachmentFields> {
+  TrelloAttachment(source, List<AttachmentFields> fields)
+      : super(source, fields);
 
   String get url => getValue(AttachmentFields.url);
 

@@ -48,7 +48,7 @@ class GetMemberCommand extends MemberCommand {
 
   @override
   FutureOr<void> run() async {
-    Member member = await client.member(memberId).get();
+    TrelloMember member = await client.member(memberId).get();
     print(tabulateObject(member, fields));
   }
 }
@@ -68,7 +68,7 @@ class ListMemberBoardsCommand extends MemberCommand {
 
   @override
   FutureOr<void> run() async {
-    List<Board> boards =
+    List<TrelloBoard> boards =
         await client.member(memberId).getBoards(fields: fields);
     print(tabulateObjects(boards, fields));
   }

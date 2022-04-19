@@ -1,8 +1,8 @@
 import '../client.dart';
 import '../trello_object_model.dart';
 
-class Board extends TrelloObject<BoardFields> {
-  Board(source, List<BoardFields> fields)
+class TrelloBoard extends TrelloObject<BoardFields> {
+  TrelloBoard(source, List<BoardFields> fields)
       : super(source, fields, all: fields.contains(BoardFields.all));
 
   BoardId get id => BoardId(getValue(BoardFields.id));

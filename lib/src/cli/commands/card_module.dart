@@ -44,7 +44,7 @@ class GetCardCommand extends CardCommand {
 
   @override
   FutureOr<void> run() async {
-    Card? card = await client.card(cardId).get();
+    TrelloCard? card = await client.card(cardId).get();
     if (card != null) print(tabulateObject(card, fields));
   }
 }
@@ -62,7 +62,7 @@ class ListAttachmentsCommand extends CardCommand {
 
   @override
   FutureOr<void> run() async {
-    List<Attachment> attachments =
+    List<TrelloAttachment> attachments =
         await client.card(cardId).getAttachments(fields: fields);
     print(tabulateObjects(attachments, fields));
   }
@@ -82,7 +82,7 @@ class GetAttachmentCommand extends CardCommand {
 
   @override
   FutureOr<void> run() async {
-    Attachment attachment =
+    TrelloAttachment attachment =
         await client.card(cardId).attachment(attachmentId).get(fields: fields);
     print(tabulateObject(attachment, fields));
   }
