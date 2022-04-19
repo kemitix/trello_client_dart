@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:trello_sdk/src/sdk/client.dart';
 
 import '../../../trello_sdk.dart';
@@ -13,7 +14,7 @@ class CardClient {
   final HttpClient _client;
   final CardId _cardId;
   final TrelloAuthentication _authentication;
-  late final Fn<AttachmentId, AttachmentClient> _attachment;
+  late final Function1<AttachmentId, AttachmentClient> _attachment;
 
   AttachmentClient attachment(AttachmentId id) => _attachment(id);
 

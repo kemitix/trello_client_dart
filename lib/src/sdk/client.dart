@@ -1,4 +1,5 @@
-import '../fp/fp.dart';
+import 'package:dartz/dartz.dart';
+
 import 'boards/boards.dart';
 import 'cards/cards.dart';
 import 'http_client.dart';
@@ -21,10 +22,10 @@ class TrelloAuthentication {
 class TrelloClient {
   late final MemberId _memberId;
   late final HttpClient _httpClient;
-  late final Fn<MemberId, MemberClient> _member;
-  late final Fn<BoardId, BoardClient> _board;
-  late final Fn<ListId, ListClient> _list;
-  late final Fn<CardId, CardClient> _card;
+  late final Function1<MemberId, MemberClient> _member;
+  late final Function1<BoardId, BoardClient> _board;
+  late final Function1<ListId, ListClient> _list;
+  late final Function1<CardId, CardClient> _card;
 
   TrelloClient(TrelloAuthentication authentication) {
     _httpClient = DioHttpClient(

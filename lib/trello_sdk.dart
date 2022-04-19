@@ -1,4 +1,3 @@
-export 'src/fp/fp.dart';
 export 'src/sdk/boards/boards.dart';
 export 'src/sdk/cards/cards.dart';
 export 'src/sdk/client.dart';
