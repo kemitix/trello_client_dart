@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
+import 'package:dartz/dartz.dart';
 import 'package:trello_sdk/src/cli/commands/card_module.dart';
 import 'package:trello_sdk/src/cli/commands/list_module.dart';
 import 'package:trello_sdk/trello_cli.dart';
@@ -10,8 +11,8 @@ typedef ErrorList = List<Error>;
 
 Future<void> main(List<String> arguments) async =>
     await authentication().map(trelloClient).fold<Future<void>>(
-          onError: (errors) => reportErrors(errors),
-          onSuccess: (client) => runApp(client, arguments),
+          (errors) => reportErrors(errors),
+          (client) => runApp(client, arguments),
         );
 
 Future<void> runApp(TrelloClient client, List<String> arguments) async {
@@ -49,12 +50,12 @@ Either<ErrorList, TrelloAuthentication> authentication() {
   testEnvironment(userEnv);
   testEnvironment(keyEnv);
   testEnvironment(tokenEnv);
-  if (e.isNotEmpty) return Left.of(e);
+  if (e.isNotEmpty) return Left(e);
 
   var memberId = MemberId(Platform.environment[userEnv]!);
   var key = Platform.environment[keyEnv]!;
   var token = Platform.environment[tokenEnv]!;
-  return Right.of(TrelloAuthentication.of(memberId, key, token));
+  return Right(TrelloAuthentication.of(memberId, key, token));
 }
 
 TrelloClient trelloClient(TrelloAuthentication authentication) =>
