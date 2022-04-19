@@ -2,8 +2,8 @@ import '../client.dart';
 import '../trello_models.dart';
 import '../trello_object_model.dart';
 
-class Member extends TrelloObject<MemberFields> {
-  Member(source, List<MemberFields> fields) : super(source, fields);
+class TrelloMember extends TrelloObject<MemberFields> {
+  TrelloMember(source, List<MemberFields> fields) : super(source, fields);
 
   MemberId get id => MemberId(getValue(MemberFields.id));
   String get fullName => getValue(MemberFields.fullName);

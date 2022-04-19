@@ -40,7 +40,7 @@ class ListCardsCommand extends ListCommand {
 
   @override
   FutureOr<void> run() async {
-    List<Card> cards = await client.list(listId).getCards(fields: fields);
+    List<TrelloCard> cards = await client.list(listId).getCards(fields: fields);
     print(tabulateObjects(cards, fields));
   }
 }

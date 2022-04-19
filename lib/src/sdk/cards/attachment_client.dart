@@ -18,10 +18,13 @@ class AttachmentClient {
   /// Get a specific Attachment on a Card.
   ///
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-id-attachments-idattachment-get
-  Future<Attachment> get({List<AttachmentFields>? fields}) async => _client
-      .get<Map<String, dynamic>>('/1/cards/$_cardId/attachments/$_attachmentId')
-      .then((response) => response.data)
-      .then((data) => Attachment(data, fields ?? [AttachmentFields.all]));
+  Future<TrelloAttachment> get({List<AttachmentFields>? fields}) async =>
+      _client
+          .get<Map<String, dynamic>>(
+              '/1/cards/$_cardId/attachments/$_attachmentId')
+          .then((response) => response.data)
+          .then((data) =>
+              TrelloAttachment(data, fields ?? [AttachmentFields.all]));
 
   /// Download an Attachment on a Card
   ///

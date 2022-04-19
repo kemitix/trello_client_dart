@@ -25,7 +25,7 @@ class CardClient {
   /// Get a card by its ID
   ///
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-id-get
-  Future<Card?> get({List<CardFields>? fields}) async => _client
+  Future<TrelloCard?> get({List<CardFields>? fields}) async => _client
       .get<dynamic>(
         '/1/cards/$_cardId',
         queryParameters: {
@@ -33,7 +33,7 @@ class CardClient {
         },
       )
       .then((response) => response.data)
-      .then((data) => Card(data, fields ?? [CardFields.all]));
+      .then((data) => TrelloCard(data, fields ?? [CardFields.all]));
 
   /// Get Attachments on a Card
   ///
@@ -42,7 +42,7 @@ class CardClient {
   /// List the attachments on a card
   ///
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-id-attachments-get
-  Future<List<Attachment>> getAttachments({
+  Future<List<TrelloAttachment>> getAttachments({
     AttachmentFilter filter = AttachmentFilter.falsE,
     List<AttachmentFields>? fields,
   }) async =>
@@ -59,6 +59,7 @@ class CardClient {
               })
           .then((response) => response.data ?? [])
           .then((data) => data
-              .map((item) => Attachment(item, fields ?? [AttachmentFields.all]))
+              .map((item) =>
+                  TrelloAttachment(item, fields ?? [AttachmentFields.all]))
               .toList());
 }
