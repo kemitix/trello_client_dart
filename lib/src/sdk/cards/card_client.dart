@@ -1,10 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:trello_sdk/src/sdk/client.dart';
 
 import '../../../trello_sdk.dart';
 import '../http_client.dart';
-import '../misc.dart';
-import 'cards.dart';
 
 class CardClient {
   CardClient(this._client, this._cardId, this._authentication) {
