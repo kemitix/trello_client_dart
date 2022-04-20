@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:args/command_runner.dart';
+import 'package:dartz/dartz.dart';
 
 import '../../../trello_sdk.dart';
+import '../../sdk/http_client.dart';
 import '../cli.dart';
 
 class CardModule extends Command {
@@ -44,8 +46,14 @@ class GetCardCommand extends CardCommand {
 
   @override
   FutureOr<void> run() async {
-    TrelloCard? card = await client.card(cardId).get();
-    if (card != null) print(tabulateObject(card, fields));
+    (await client.card(cardId).get())
+        .flatMap<TrelloCard>((maybeCard) =>
+            (maybeCard == null ? Left(Failure()) : Right(maybeCard)))
+        .map((card) => tabulateObject(card, fields))
+        .fold(
+          (failure) => print(failure),
+          (table) => print(table),
+        );
   }
 }
 
@@ -62,9 +70,12 @@ class ListAttachmentsCommand extends CardCommand {
 
   @override
   FutureOr<void> run() async {
-    List<TrelloAttachment> attachments =
-        await client.card(cardId).getAttachments(fields: fields);
-    print(tabulateObjects(attachments, fields));
+    (await client.card(cardId).getAttachments(fields: fields))
+        .map((attachments) => tabulateObjects(attachments, fields))
+        .fold(
+          (failure) => print(failure),
+          (table) => print(table),
+        );
   }
 }
 
@@ -82,9 +93,12 @@ class GetAttachmentCommand extends CardCommand {
 
   @override
   FutureOr<void> run() async {
-    TrelloAttachment attachment =
-        await client.card(cardId).attachment(attachmentId).get(fields: fields);
-    print(tabulateObject(attachment, fields));
+    (await client.card(cardId).attachment(attachmentId).get(fields: fields))
+        .map((attachment) => tabulateObject(attachment, fields))
+        .fold(
+          (failure) => print(failure),
+          (table) => print(table),
+        );
   }
 }
 

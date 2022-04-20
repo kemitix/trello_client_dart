@@ -1,3 +1,5 @@
+import 'package:dartz/dartz.dart';
+
 import '../cards/cards.dart';
 import '../http_client.dart';
 import 'lists.dart';
@@ -15,13 +17,14 @@ class ListClient {
   /// List the cards in a list
   ///
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-lists/#api-lists-id-cards-get
-  Future<List<TrelloCard>> getCards({List<CardFields>? fields}) async =>
-      ((await _client.get<List<dynamic>>(
-                '/1/lists/${_id}/cards',
-                queryParameters: {},
-              ))
-                  .data ??
-              [])
-          .map((item) => TrelloCard(item, fields ?? [CardFields.all]))
-          .toList(growable: false);
+  Future<Either<Failure, List<TrelloCard>>> getCards(
+          {List<CardFields>? fields}) async =>
+      (await _client.get<List<dynamic>>(
+        '/1/lists/${_id}/cards',
+        queryParameters: {},
+      ))
+          .map((response) => response.data ?? [])
+          .map((items) => items
+              .map((item) => TrelloCard(item, fields ?? [CardFields.all]))
+              .toList(growable: false));
 }
