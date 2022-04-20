@@ -48,8 +48,12 @@ class GetMemberCommand extends MemberCommand {
 
   @override
   FutureOr<void> run() async {
-    TrelloMember member = await client.member(memberId).get();
-    print(tabulateObject(member, fields));
+    (await client.member(memberId).get())
+        .map((member) => tabulateObject(member, fields))
+        .fold(
+          (failure) => print(failure),
+          (table) => print(table),
+        );
   }
 }
 
@@ -68,8 +72,11 @@ class ListMemberBoardsCommand extends MemberCommand {
 
   @override
   FutureOr<void> run() async {
-    List<TrelloBoard> boards =
-        await client.member(memberId).getBoards(fields: fields);
-    print(tabulateObjects(boards, fields));
+    (await client.member(memberId).getBoards(fields: fields))
+        .map((boards) => tabulateObjects(boards, fields))
+        .fold(
+          (failure) => print(failure),
+          (table) => print(table),
+        );
   }
 }

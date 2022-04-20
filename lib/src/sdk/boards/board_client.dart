@@ -1,3 +1,5 @@
+import 'package:dartz/dartz.dart';
+
 import '../cards/cards.dart';
 import '../http_client.dart';
 import '../lists/lists.dart';
@@ -17,23 +19,23 @@ class BoardClient {
   /// Get the Lists on a Board
   ///
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-boards/#api-boards-id-lists-get
-  Future<List<TrelloList>> getLists({
+  Future<Either<Failure, List<TrelloList>>> getLists({
     CardFilter cards = CardFilter.all,
     List<CardFields> card_fields = const [CardFields.all],
     ListFilter filter = ListFilter.all,
     List<ListFields> fields = const [ListFields.all],
   }) async =>
-      ((await _client.get<List<dynamic>>(
-                '/1/boards/${_id}/lists',
-                queryParameters: {
-                  'cards': cards.name,
-                  'card_fields': asCsv(card_fields),
-                  'filter': filter.name,
-                  'fields': asCsv(fields),
-                },
-              ))
-                  .data ??
-              [])
-          .map((item) => TrelloList(item, fields))
-          .toList(growable: false);
+      (await _client.get<List<dynamic>>(
+        '/1/boards/${_id}/lists',
+        queryParameters: {
+          'cards': cards.name,
+          'card_fields': asCsv(card_fields),
+          'filter': filter.name,
+          'fields': asCsv(fields),
+        },
+      ))
+          .map((response) => response.data ?? [])
+          .map((items) => items
+              .map((item) => TrelloList(item, fields))
+              .toList(growable: false));
 }

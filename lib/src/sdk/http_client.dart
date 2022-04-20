@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
 import '../../trello_sdk.dart';
@@ -11,13 +12,13 @@ abstract class HttpResponse<T> {
 abstract class HttpClient {
   void close();
 
-  Future<HttpResponse<T>> get<T>(
+  Future<Either<Failure, HttpResponse<T>>> get<T>(
     String path, {
     Map<String, String>? queryParameters,
     Map<String, String>? headers,
   });
 
-  Future<void> download(
+  Future<Either<Failure, void>> download(
     String path,
     FileName fileName, {
     Map<String, String>? queryParameters,
@@ -41,21 +42,26 @@ class DioHttpClient extends HttpClient {
   void close() => {_dio.close(), _dioDownloader.close()};
 
   @override
-  Future<HttpResponse<T>> get<T>(
+  Future<Either<Failure, HttpResponse<T>>> get<T>(
     String path, {
     Map<String, String>? queryParameters,
     Map<String, String>? headers,
-  }) async =>
-      _dio
-          .get<T>(path,
-              queryParameters: queryParameters,
-              options: Options(
-                headers: headers,
-              ))
-          .then(DioHttpResponse.fromResponse);
+  }) async {
+    try {
+      var response = await _dio.get<T>(path,
+          queryParameters: queryParameters,
+          options: Options(
+            headers: headers,
+          ));
+      var dioResponse = DioHttpResponse(response);
+      return Right(dioResponse);
+    } catch (e) {
+      return Left(Failure());
+    }
+  }
 
   @override
-  Future<void> download(
+  Future<Either<Failure, void>> download(
     String path,
     FileName fileName, {
     Map<String, String>? queryParameters,
@@ -80,12 +86,15 @@ class DioHttpClient extends HttpClient {
       var raf = file.openSync(mode: FileMode.write);
       //   // response.data is List<int> type
       raf.writeFromSync(response.data);
-      await raf.close();
+      return Right(await raf.close());
     } catch (e) {
-      print(e);
+      //TODO put the error into the Failure
+      return Left(Failure());
     }
   }
 }
+
+class Failure {}
 
 class CurlLoggerDioInterceptor extends Interceptor {
   @override
@@ -126,8 +135,4 @@ class DioHttpResponse<T> extends HttpResponse<T> {
 
   @override
   T? get data => _response.data;
-
-  factory DioHttpResponse.fromResponse(Response<T> response) {
-    return DioHttpResponse(response);
-  }
 }

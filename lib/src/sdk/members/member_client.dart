@@ -1,3 +1,5 @@
+import 'package:dartz/dartz.dart';
+
 import '../boards/boards.dart';
 import '../http_client.dart';
 import '../misc.dart';
@@ -14,7 +16,7 @@ class MemberClient {
   /// GET /1/members/{id}
   ///
   /// Get a member
-  Future<TrelloMember> get({
+  Future<Either<Failure, TrelloMember>> get({
     MemberActions? actions,
     MemberBoards? boards,
     MemberBoardBackgrounds boardBackgrounds = MemberBoardBackgrounds.none,
@@ -37,7 +39,7 @@ class MemberClient {
     bool paidAccount = false,
     bool savedSearches = false,
     MemberTokens tokens = MemberTokens.none,
-  }) {
+  }) async {
     Map<String, String> queryParameters = {
       'boardBackgrounds': boardBackgrounds.name,
       'boardStars': boardStars.toString(),
@@ -63,10 +65,10 @@ class MemberClient {
     if (actions != null) queryParameters['actions'] = actions;
     if (boards != null) queryParameters['boards'] = boards;
     if (notifications != null) queryParameters['notifications'] = notifications;
-    return _client
-        .get<dynamic>('/1/members/${_id}', queryParameters: queryParameters)
-        .then((response) => response.data)
-        .then((item) => TrelloMember(item, fields ?? [MemberFields.all]));
+    return (await _client.get<dynamic>('/1/members/${_id}',
+            queryParameters: queryParameters))
+        .map((r) => r.data)
+        .map((item) => TrelloMember(item, fields ?? [MemberFields.all]));
   }
 
   /// Get Boards that Member belongs to
@@ -76,21 +78,21 @@ class MemberClient {
   /// Lists the boards that the user is a member of.
   ///
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-members/#api-members-id-boards-get
-  Future<List<TrelloBoard>> getBoards({
+  Future<Either<Failure, List<TrelloBoard>>> getBoards({
     MemberBoardFilter filter = MemberBoardFilter.all,
     List<BoardFields>? fields,
   }) async =>
-      ((await _client.get<List<dynamic>>(
-                '/1/members/${this._id}/boards',
-                queryParameters: {
-                  'filter': filter.name,
-                  'fields': asCsv(fields ?? [BoardFields.all])
-                },
-              ))
-                  .data ??
-              [])
-          .map((item) => TrelloBoard(item, fields ?? [BoardFields.all]))
-          .toList(growable: false);
+      (await _client.get<List<dynamic>>(
+        '/1/members/${this._id}/boards',
+        queryParameters: {
+          'filter': filter.name,
+          'fields': asCsv(fields ?? [BoardFields.all])
+        },
+      ))
+          .map((response) => response.data ?? [])
+          .map((items) => items
+              .map((item) => TrelloBoard(item, fields ?? [BoardFields.all]))
+              .toList(growable: false));
 }
 
 enum MemberBoardFilter {

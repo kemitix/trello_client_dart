@@ -25,15 +25,15 @@ class CardClient {
   /// Get a card by its ID
   ///
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-id-get
-  Future<TrelloCard?> get({List<CardFields>? fields}) async => _client
-      .get<dynamic>(
+  Future<Either<Failure, TrelloCard?>> get({List<CardFields>? fields}) async =>
+      (await _client.get<dynamic>(
         '/1/cards/$_cardId',
         queryParameters: {
           'fields': asCsv(fields ?? [CardFields.all]),
         },
-      )
-      .then((response) => response.data)
-      .then((data) => TrelloCard(data, fields ?? [CardFields.all]));
+      ))
+          .map((response) => response.data)
+          .map((data) => TrelloCard(data, fields ?? [CardFields.all]));
 
   /// Get Attachments on a Card
   ///
@@ -42,23 +42,22 @@ class CardClient {
   /// List the attachments on a card
   ///
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-id-attachments-get
-  Future<List<TrelloAttachment>> getAttachments({
+  Future<Either<Failure, List<TrelloAttachment>>> getAttachments({
     AttachmentFilter filter = AttachmentFilter.falsE,
     List<AttachmentFields>? fields,
   }) async =>
-      _client
-          .get<List<dynamic>>('/1/cards/$_cardId/attachments',
+      (await _client.get<List<dynamic>>('/1/cards/$_cardId/attachments',
               queryParameters: {
-                'filter': filter.name.toLowerCase(),
-                'fields': asCsv(fields ?? [AttachmentFields.all]),
-              },
+            'filter': filter.name.toLowerCase(),
+            'fields': asCsv(fields ?? [AttachmentFields.all]),
+          },
               headers: {
-                'Authorization':
-                    'OAuth oauth_consumer_key="${_authentication.key}", '
-                        'oauth_token="${_authentication.token}"',
-              })
-          .then((response) => response.data ?? [])
-          .then((data) => data
+            'Authorization':
+                'OAuth oauth_consumer_key="${_authentication.key}", '
+                    'oauth_token="${_authentication.token}"',
+          }))
+          .map((response) => response.data ?? [])
+          .map((items) => items
               .map((item) =>
                   TrelloAttachment(item, fields ?? [AttachmentFields.all]))
               .toList());

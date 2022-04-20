@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:progress_bar/progress_bar.dart';
 
 import '../../../trello_sdk.dart';
@@ -18,12 +19,12 @@ class AttachmentClient {
   /// Get a specific Attachment on a Card.
   ///
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-id-attachments-idattachment-get
-  Future<TrelloAttachment> get({List<AttachmentFields>? fields}) async =>
-      _client
-          .get<Map<String, dynamic>>(
-              '/1/cards/$_cardId/attachments/$_attachmentId')
-          .then((response) => response.data)
-          .then((data) =>
+  Future<Either<Failure, TrelloAttachment>> get(
+          {List<AttachmentFields>? fields}) async =>
+      (await _client.get<Map<String, dynamic>>(
+              '/1/cards/$_cardId/attachments/$_attachmentId'))
+          .map((response) => response.data)
+          .map((data) =>
               TrelloAttachment(data, fields ?? [AttachmentFields.all]));
 
   /// Download an Attachment on a Card
@@ -31,18 +32,20 @@ class AttachmentClient {
   /// GET (url from 'Get an Attachment on a Card')
   ///
   /// Download an attachment and save it to disk.
-  Future<void> download(FileName fileName) async {
-    var attachment =
-        await get(fields: [AttachmentFields.url, AttachmentFields.bytes]);
-    var url = attachment.url;
-    var bytes = attachment.bytes;
-    var bar = ProgressBar(' [:bar] :percent :etas ', total: bytes);
-    await _client.download(url, fileName,
-        onReceiveProgress: (downloaded, total) =>
-            bar.update(downloaded / total),
-        headers: {
-          'Authorization': 'OAuth oauth_consumer_key="${_authentication.key}", '
-              'oauth_token="${_authentication.token}"',
-        });
-  }
+  Future<Either<Failure, void>> download(FileName fileName) async =>
+      (await get(fields: [AttachmentFields.url, AttachmentFields.bytes])).fold(
+        (failure) => Left(failure),
+        (attachment) async => await _client.download(
+          attachment.url,
+          fileName,
+          headers: {
+            'Authorization':
+                'OAuth oauth_consumer_key="${_authentication.key}", '
+                    'oauth_token="${_authentication.token}"',
+          },
+          onReceiveProgress: (downloaded, total) =>
+              ProgressBar(' [:bar] :percent :etas ', total: attachment.bytes)
+                  .update(downloaded / total),
+        ),
+      );
 }
