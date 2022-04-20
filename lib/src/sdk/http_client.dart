@@ -94,8 +94,6 @@ class DioHttpClient extends HttpClient {
   }
 }
 
-class Failure {}
-
 class CurlLoggerDioInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
