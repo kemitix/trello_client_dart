@@ -63,10 +63,10 @@ class MemberClient {
     if (actions != null) queryParameters['actions'] = actions;
     if (boards != null) queryParameters['boards'] = boards;
     if (notifications != null) queryParameters['notifications'] = notifications;
-    return (_client
+    return _client
         .get<dynamic>('/1/members/${_id}', queryParameters: queryParameters)
         .then((response) => response.data)
-        .then((item) => TrelloMember(item, fields ?? [MemberFields.all])));
+        .then((item) => TrelloMember(item, fields ?? [MemberFields.all]));
   }
 
   /// Get Boards that Member belongs to

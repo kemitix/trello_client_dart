@@ -46,11 +46,13 @@ class DioHttpClient extends HttpClient {
     Map<String, String>? queryParameters,
     Map<String, String>? headers,
   }) async =>
-      DioHttpResponse(await _dio.get<T>(path,
-          queryParameters: queryParameters,
-          options: Options(
-            headers: headers,
-          )));
+      _dio
+          .get<T>(path,
+              queryParameters: queryParameters,
+              options: Options(
+                headers: headers,
+              ))
+          .then(DioHttpResponse.fromResponse);
 
   @override
   Future<void> download(
@@ -124,4 +126,8 @@ class DioHttpResponse<T> extends HttpResponse<T> {
 
   @override
   T? get data => _response.data;
+
+  factory DioHttpResponse.fromResponse(Response<T> response) {
+    return DioHttpResponse(response);
+  }
 }
