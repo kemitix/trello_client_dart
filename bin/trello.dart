@@ -24,14 +24,9 @@ Future<void> runApp(TrelloClient client, List<String> arguments) async {
     CardModule(client),
   ].forEach(runner.addCommand);
   await runner.run(arguments).catchError((error) {
-    client.close();
-    if (error is! UsageException) {
-      throw error;
-    }
+    if (error is! UsageException) throw error;
     print(error);
-    exit(1);
-  });
-  client.close();
+  }).whenComplete(() => client.close());
 }
 
 Future<void> reportErrors(ErrorList errors) async => errors.forEach(print);
