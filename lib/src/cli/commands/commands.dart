@@ -28,34 +28,27 @@ abstract class TrelloCommand extends Command {
 
   int _next_parameter_index = 0;
 
-  Either<Failure, String> nextParameter(String description) {
-    if (parameters.length <= _next_parameter_index) {
-      return Left(UsageFailure(usage: '$description not given'));
-    }
-    String next = parameters[_next_parameter_index];
-    _next_parameter_index++;
-    return Right(next);
-  }
+  Either<Failure, String> nextParameter(String description) =>
+      parameters.length <= _next_parameter_index
+          ? Left(UsageFailure(usage: '$description not given'))
+          : Right(parameters[_next_parameter_index++]);
 
   String tabulateObject<T extends Enum>(
     TrelloObject<T> object,
     List<T> fields,
-  ) {
-    return tabular(
-        fields.map((field) => [field.name, object.getValue(field)]).toList(),
-        rowDividers: []);
-  }
+  ) =>
+      tabular(
+          fields.map((field) => [field.name, object.getValue(field)]).toList(),
+          rowDividers: []);
 
   String tabulateObjects<T extends Enum>(
     List<TrelloObject<T>> objects,
     List<T> fields,
-  ) {
-    List<List<String>> data = [
-      fields.map((field) => field.name).toList(),
-      ...objects.map(objectFieldValuesAsStringList(fields))
-    ];
-    return tabular(data);
-  }
+  ) =>
+      tabular([
+        fields.map((field) => field.name).toList(),
+        ...objects.map(objectFieldValuesAsStringList(fields))
+      ]);
 
   List<String> Function(TrelloObject<T>)
       objectFieldValuesAsStringList<T extends Enum>(List<T> fields) =>
