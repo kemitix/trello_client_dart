@@ -4,9 +4,6 @@ import 'package:tabular/tabular.dart';
 
 import '../../../trello_sdk.dart';
 
-export 'board_module.dart';
-export 'member_module.dart';
-
 abstract class TrelloCommand extends Command {
   final String _name;
   final String _description;
