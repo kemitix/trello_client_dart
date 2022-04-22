@@ -1,7 +1,7 @@
 import 'package:args/command_runner.dart';
 
-import '../../../trello_sdk.dart';
-import 'commands.dart';
+import '../../../../trello_sdk.dart';
+import '../commands.dart';
 import 'list_cards_list_command.dart';
 
 class ListModule extends Command {

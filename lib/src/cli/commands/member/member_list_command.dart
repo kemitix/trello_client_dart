@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import '../../../trello_sdk.dart';
+import '../../../../trello_sdk.dart';
 import 'member_module.dart';
 
 class ListMemberBoardsCommand extends MemberCommand {

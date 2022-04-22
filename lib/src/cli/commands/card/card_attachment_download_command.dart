@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:dartz/dartz.dart';
 
-import '../../../trello_sdk.dart';
+import '../../../../trello_sdk.dart';
 import 'card_module.dart';
 
 /// download-attachment $CARD_ID $ATTACHMENT_ID $FILE_NAME

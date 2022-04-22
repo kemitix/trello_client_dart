@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import '../../../trello_sdk.dart';
+import '../../../../trello_sdk.dart';
 import 'board_module.dart';
 
 class ListListsCommand extends BoardCommand {

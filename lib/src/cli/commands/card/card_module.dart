@@ -1,12 +1,12 @@
 import 'package:args/command_runner.dart';
 import 'package:dartz/dartz.dart';
 
-import '../../../trello_sdk.dart';
+import '../../../../trello_sdk.dart';
+import '../commands.dart';
 import 'card_attachment_download_command.dart';
 import 'card_attachment_get_command.dart';
 import 'card_attachments_list_command.dart';
 import 'card_get_command.dart';
-import 'commands.dart';
 
 class CardModule extends Command {
   @override

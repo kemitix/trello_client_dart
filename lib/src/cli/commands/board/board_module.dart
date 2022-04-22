@@ -1,8 +1,8 @@
 import 'package:args/command_runner.dart';
 
-import '../../../trello_sdk.dart';
+import '../../../../trello_sdk.dart';
+import '../commands.dart';
 import 'board_lists_list_command.dart';
-import 'commands.dart';
 
 class BoardModule extends Command {
   @override
