@@ -99,7 +99,7 @@ class GetAttachmentCommand extends CardCommand {
 
   @override
   FutureOr<void> run() async => (await Either.sequenceFuture(
-          Either.map2(cardId, attachmentId, doGetAttachment)))
+          Either.lift2(doGetAttachment)(cardId, attachmentId)))
       .flatMap(id)
       .map((attachment) => tabulateObject(attachment, fields))
       .fold(
