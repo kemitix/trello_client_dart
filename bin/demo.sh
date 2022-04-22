@@ -13,21 +13,32 @@ CARD="5dc1b58de65da8806ebabba8"
 ATTACHMENT="5dc1b58ee65da8806ebabbc7"
 FILE_NAME="larkspur.rtf"
 
-echo "member get:"
+function label() {
+  echo -e "\n> $1:\n"
+}
+
+label "member get"
 $TRELLO member get $MEMBER
-echo "member list-boards:"
+
+label "member list-boards"
 $TRELLO member list-boards $MEMBER
-echo "board list-lists:"
+
+label "board list-lists"
 $TRELLO board list-lists $BOARD
-echo "list list-cards:"
+
+label "list list-cards"
 $TRELLO list list-cards $LIST
-echo "card get"
+
+label "card get"
 $TRELLO card get $CARD
-echo "card list-attachments:"
+
+label "card list-attachments"
 $TRELLO card list-attachments $CARD
-echo "card get-attachment"
+
+label "card get-attachment"
 $TRELLO card get-attachment $CARD $ATTACHMENT
-echo "card download-attachment:"
+
+label "card download-attachment"
 $TRELLO card download-attachment $CARD $ATTACHMENT $FILE_NAME
 ls -l $FILE_NAME
 rm $FILE_NAME
