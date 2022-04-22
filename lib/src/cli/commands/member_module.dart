@@ -1,9 +1,9 @@
-import 'dart:async';
-
 import 'package:args/command_runner.dart';
 
 import '../../../trello_sdk.dart';
 import 'commands.dart';
+import 'member_get_command.dart';
+import 'member_list_command.dart';
 
 class MemberModule extends Command {
   @override
@@ -28,55 +28,5 @@ abstract class MemberCommand extends TrelloCommand {
       usageException('Member Id was not given');
     }
     return MemberId(parameters.first);
-  }
-}
-
-class GetMemberCommand extends MemberCommand {
-  GetMemberCommand(TrelloClient client) : super('get', 'Get a Member', client);
-
-  final List<MemberFields> fields = [
-    MemberFields.username,
-    MemberFields.email,
-    MemberFields.fullName,
-    MemberFields.initials,
-    MemberFields.url,
-    MemberFields.status,
-    MemberFields.memberType,
-    MemberFields.confirmed,
-    MemberFields.bio,
-  ];
-
-  @override
-  FutureOr<void> run() async {
-    (await client.member(memberId).get())
-        .map((member) => tabulateObject(member, fields))
-        .fold(
-          (failure) => print(failure),
-          (table) => print(table),
-        );
-  }
-}
-
-class ListMemberBoardsCommand extends MemberCommand {
-  ListMemberBoardsCommand(TrelloClient client)
-      : super('list-boards', 'Get Boards that Member belongs to', client);
-
-  final List<BoardFields> fields = [
-    BoardFields.id,
-    BoardFields.name,
-    BoardFields.pinned,
-    BoardFields.closed,
-    BoardFields.starred,
-    BoardFields.shortUrl,
-  ];
-
-  @override
-  FutureOr<void> run() async {
-    (await client.member(memberId).getBoards(fields: fields))
-        .map((boards) => tabulateObjects(boards, fields))
-        .fold(
-          (failure) => print(failure),
-          (table) => print(table),
-        );
   }
 }

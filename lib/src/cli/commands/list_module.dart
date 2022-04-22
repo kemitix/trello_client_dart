@@ -1,9 +1,8 @@
-import 'dart:async';
-
 import 'package:args/command_runner.dart';
 
 import '../../../trello_sdk.dart';
 import 'commands.dart';
+import 'list_cards_list_command.dart';
 
 class ListModule extends Command {
   @override
@@ -12,7 +11,7 @@ class ListModule extends Command {
   final String description = 'Trello Lists';
 
   ListModule(TrelloClient client) {
-    <Command>[ListCardsCommand(client)].forEach(addSubcommand);
+    [ListCardsCommand(client)].forEach(addSubcommand);
   }
 }
 
@@ -24,27 +23,5 @@ abstract class ListCommand extends TrelloCommand {
       usageException('List Id was not given');
     }
     return ListId(parameters.first);
-  }
-}
-
-class ListCardsCommand extends ListCommand {
-  ListCardsCommand(TrelloClient client)
-      : super('list-cards', 'Get Cards in a List', client);
-
-  final List<CardFields> fields = [
-    CardFields.id,
-    CardFields.name,
-    CardFields.pos,
-    CardFields.due,
-  ];
-
-  @override
-  FutureOr<void> run() async {
-    (await client.list(listId).getCards(fields: fields))
-        .map((r) => tabulateObjects(r, fields))
-        .fold(
-          (failure) => print(failure),
-          (table) => print(table),
-        );
   }
 }

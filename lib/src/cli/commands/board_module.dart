@@ -1,8 +1,7 @@
-import 'dart:async';
-
 import 'package:args/command_runner.dart';
 
 import '../../../trello_sdk.dart';
+import 'board_lists_list_command.dart';
 import 'commands.dart';
 
 class BoardModule extends Command {
@@ -25,28 +24,5 @@ abstract class BoardCommand extends TrelloCommand {
       usageException('Board Id was nto given');
     }
     return BoardId(parameters.first);
-  }
-}
-
-class ListListsCommand extends BoardCommand {
-  ListListsCommand(TrelloClient client)
-      : super('list-lists', 'Get Lists on a Board', client);
-
-  final List<ListFields> fields = [
-    ListFields.id,
-    ListFields.name,
-    ListFields.pos,
-    ListFields.closed,
-    ListFields.subscribed,
-  ];
-
-  @override
-  FutureOr<void> run() async {
-    (await client.board(boardId).getLists(fields: fields))
-        .map((lists) => tabulateObjects(lists, fields))
-        .fold(
-          (failure) => print(failure),
-          (table) => print(table),
-        );
   }
 }
