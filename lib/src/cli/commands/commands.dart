@@ -17,18 +17,20 @@ abstract class TrelloCommand extends Command {
 
   @override
   String get name => _name;
+
   @override
   String get description => _description;
+
   TrelloClient get client => _client;
 
   List<String> get parameters => argResults!.rest;
 
-  int _next_parameter_index = 0;
+  int _nextParameterIndex = 0;
 
   Either<Failure, String> nextParameter(String description) =>
-      parameters.length <= _next_parameter_index
+      parameters.length <= _nextParameterIndex
           ? Left(UsageFailure(usage: '$description not given'))
-          : Right(parameters[_next_parameter_index++]);
+          : Right(parameters[_nextParameterIndex++]);
 
   String tabulateObject<T extends Enum>(
     TrelloObject<T> object,
