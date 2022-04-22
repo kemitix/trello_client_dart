@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:args/command_runner.dart';
 
 import '../../../trello_sdk.dart';
-import '../cli.dart';
+import 'commands.dart';
 
 class MemberModule extends Command {
   @override

@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:args/command_runner.dart';
-import 'package:trello_sdk/trello_cli.dart';
+
+import '../../../trello_sdk.dart';
+import 'commands.dart';
 
 class BoardModule extends Command {
   @override

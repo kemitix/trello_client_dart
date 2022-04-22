@@ -2,8 +2,6 @@ import 'dart:io';
 
 import 'package:args/command_runner.dart';
 import 'package:dartz/dartz.dart';
-import 'package:trello_sdk/src/cli/commands/card_module.dart';
-import 'package:trello_sdk/src/cli/commands/list_module.dart';
 import 'package:trello_sdk/trello_cli.dart';
 
 typedef Error = String;
