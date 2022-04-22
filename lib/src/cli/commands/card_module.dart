@@ -119,7 +119,7 @@ class DownloadAttachmentCommand extends CardCommand {
 
   @override
   FutureOr<void> run() async => (await Either.sequenceFuture(
-          Either.map3(cardId, attachmentId, fileName, doDownload)))
+          Either.lift3(doDownload)(cardId, attachmentId, fileName)))
       .flatMap(id)
       .fold(
         (failure) => print('ERROR: ${failure.message}'),
