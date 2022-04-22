@@ -55,8 +55,8 @@ class DioHttpClient extends HttpClient {
           ));
       var dioResponse = DioHttpResponse(response);
       return Right(dioResponse);
-    } catch (e) {
-      return Left(Failure());
+    } on DioError catch (e) {
+      return Left(HttpClientFailure(message: e.response.toString()));
     }
   }
 
@@ -87,9 +87,8 @@ class DioHttpClient extends HttpClient {
       //   // response.data is List<int> type
       raf.writeFromSync(response.data);
       return Right(await raf.close());
-    } catch (e) {
-      //TODO put the error into the Failure
-      return Left(Failure());
+    } on DioError catch (e) {
+      return Left(HttpClientFailure(message: e.response.toString()));
     }
   }
 }

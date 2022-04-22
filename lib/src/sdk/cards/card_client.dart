@@ -22,7 +22,7 @@ class CardClient {
   /// Get a card by its ID
   ///
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-id-get
-  Future<Either<Failure, TrelloCard?>> get({List<CardFields>? fields}) async =>
+  Future<Either<Failure, TrelloCard>> get({List<CardFields>? fields}) async =>
       (await _client.get<dynamic>(
         '/1/cards/$_cardId',
         queryParameters: {
@@ -30,6 +30,8 @@ class CardClient {
         },
       ))
           .map((response) => response.data)
+          .filter((r) => r != null,
+              () => ResourceNotFoundFailure(resource: 'Card ID: $_cardId'))
           .map((data) => TrelloCard(data, fields ?? [CardFields.all]));
 
   /// Get Attachments on a Card

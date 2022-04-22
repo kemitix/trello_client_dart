@@ -4,7 +4,6 @@ import 'package:args/command_runner.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../../trello_sdk.dart';
-import '../../sdk/http_client.dart';
 import '../cli.dart';
 
 class CardModule extends Command {
@@ -27,11 +26,14 @@ abstract class CardCommand extends TrelloCommand {
   CardCommand(String name, String description, TrelloClient client)
       : super(name, description, client);
 
-  CardId get cardId => CardId(nextParameter('Card Id'));
+  Either<Failure, CardId> get cardId =>
+      nextParameter('Card Id').map((id) => CardId(id));
 
-  AttachmentId get attachmentId => AttachmentId(nextParameter('Attachment Id'));
+  Either<Failure, AttachmentId> get attachmentId =>
+      nextParameter('Attachment Id').map((id) => AttachmentId(id));
 
-  FileName get fileName => FileName(nextParameter('File name'));
+  Either<Failure, FileName> get fileName =>
+      nextParameter('File name').map((fileName) => FileName(fileName));
 }
 
 class GetCardCommand extends CardCommand {
@@ -45,16 +47,17 @@ class GetCardCommand extends CardCommand {
   ];
 
   @override
-  FutureOr<void> run() async {
-    (await client.card(cardId).get())
-        .flatMap<TrelloCard>((maybeCard) =>
-            (maybeCard == null ? Left(Failure()) : Right(maybeCard)))
-        .map((card) => tabulateObject(card, fields))
-        .fold(
-          (failure) => print(failure),
-          (table) => print(table),
-        );
-  }
+  FutureOr<void> run() async =>
+      (await Either.sequenceFuture(cardId.map(doGetCard)))
+          .flatMap(id)
+          .map((card) => tabulateObject(card, fields))
+          .fold(
+            (failure) => print(failure.message),
+            (table) => print(table),
+          );
+
+  Future<Either<Failure, TrelloCard>> doGetCard(cardId) =>
+      client.card(cardId).get();
 }
 
 class ListAttachmentsCommand extends CardCommand {
@@ -69,14 +72,17 @@ class ListAttachmentsCommand extends CardCommand {
   ];
 
   @override
-  FutureOr<void> run() async {
-    (await client.card(cardId).getAttachments(fields: fields))
-        .map((attachments) => tabulateObjects(attachments, fields))
-        .fold(
-          (failure) => print(failure),
-          (table) => print(table),
-        );
-  }
+  FutureOr<void> run() async => (await getAttachments())
+      .map((attachments) => tabulateObjects(attachments, fields))
+      .fold(
+        (failure) => print(failure),
+        (table) => print(table),
+      );
+
+  Future<Either<Failure, List<TrelloAttachment>>> getAttachments() async =>
+      (await Either.sequenceFuture(cardId.map(
+              (cardId) => client.card(cardId).getAttachments(fields: fields))))
+          .flatMap(id);
 }
 
 class GetAttachmentCommand extends CardCommand {
@@ -92,14 +98,18 @@ class GetAttachmentCommand extends CardCommand {
   ];
 
   @override
-  FutureOr<void> run() async {
-    (await client.card(cardId).attachment(attachmentId).get(fields: fields))
-        .map((attachment) => tabulateObject(attachment, fields))
-        .fold(
-          (failure) => print(failure),
-          (table) => print(table),
-        );
-  }
+  FutureOr<void> run() async => (await Either.sequenceFuture(
+          Either.map2(cardId, attachmentId, doGetAttachment)))
+      .flatMap(id)
+      .map((attachment) => tabulateObject(attachment, fields))
+      .fold(
+        (failure) => print(failure),
+        (table) => print(table),
+      );
+
+  Future<Either<Failure, TrelloAttachment>> doGetAttachment(
+          CardId cardId, AttachmentId attachmentId) async =>
+      client.card(cardId).attachment(attachmentId).get(fields: fields);
 }
 
 /// download-attachment $CARD_ID $ATTACHMENT_ID $FILE_NAME
@@ -108,7 +118,15 @@ class DownloadAttachmentCommand extends CardCommand {
       : super('download-attachment', 'Download an Attachment file', client);
 
   @override
-  FutureOr<void> run() async {
-    await client.card(cardId).attachment(attachmentId).download(fileName);
-  }
+  FutureOr<void> run() async => (await Either.sequenceFuture(
+          Either.map3(cardId, attachmentId, fileName, doDownload)))
+      .flatMap(id)
+      .fold(
+        (failure) => print('ERROR: ${failure.message}'),
+        (r) => print("Download complete"),
+      );
+
+  Future<Either<Failure, void>> doDownload(
+          CardId cardId, AttachmentId attachmentId, FileName fileName) =>
+      client.card(cardId).attachment(attachmentId).download(fileName);
 }

@@ -1,4 +1,5 @@
 import 'package:args/command_runner.dart';
+import 'package:dartz/dartz.dart';
 import 'package:tabular/tabular.dart';
 
 import '../../../trello_sdk.dart';
@@ -25,15 +26,15 @@ abstract class TrelloCommand extends Command {
 
   List<String> get parameters => argResults!.rest;
 
-  int _parameter_index = 0;
+  int _next_parameter_index = 0;
 
-  String nextParameter(String description) {
-    if (parameters.length < -_parameter_index) {
-      usageException('$description not given');
+  Either<Failure, String> nextParameter(String description) {
+    if (parameters.length <= _next_parameter_index) {
+      return Left(UsageFailure(usage: '$description not given'));
     }
-    String next = parameters[_parameter_index];
-    _parameter_index++;
-    return next;
+    String next = parameters[_next_parameter_index];
+    _next_parameter_index++;
+    return Right(next);
   }
 
   String tabulateObject<T extends Enum>(
