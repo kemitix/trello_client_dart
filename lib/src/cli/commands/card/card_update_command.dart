@@ -14,12 +14,13 @@ class UpdateCardCommand extends CardCommand {
     );
   }
 
-  FutureOr<void> run() async => (await unwrapFuture(cardId
+  FutureOr<void> run() async => (await cardId
           .map((cardId) => cardClient(cardId))
-          .map((cardClient) async => (await unwrapFuture(
-              (await getOriginalCard(cardClient))
-                  .map((card) => updateCard(card, getUpdates()))
-                  .map((card) => putCard(cardClient, card)))))))
+          .map((cardClient) async => (await getOriginalCard(cardClient))
+              .map((card) => updateCard(card, getUpdates()))
+              .map((card) => putCard(cardClient, card))
+              .unwrapFuture())
+          .unwrapFuture())
       .map((r) => "Updated")
       .collapse(printOutput);
 

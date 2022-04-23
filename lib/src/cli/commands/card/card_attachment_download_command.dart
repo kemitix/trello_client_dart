@@ -12,7 +12,7 @@ class DownloadAttachmentCommand extends CardCommand {
 
   @override
   FutureOr<void> run() async =>
-      (await unwrapFuture(_download(cardId, attachmentId, fileName)))
+      (await _download(cardId, attachmentId, fileName).unwrapFuture())
           .map((r) => 'Download complete')
           .collapse(printOutput);
 

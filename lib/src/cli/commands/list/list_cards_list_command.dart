@@ -18,7 +18,7 @@ class ListCardsCommand extends ListCommand {
 
   @override
   FutureOr<void> run() async =>
-      (await unwrapFuture(listId.map(listClient).map(getCards)))
+      (await listId.map(listClient).map(getCards).unwrapFuture())
           .map((cards) => tabulateObjects(cards, fields))
           .collapse(printOutput);
 

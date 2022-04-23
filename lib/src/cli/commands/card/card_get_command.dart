@@ -16,7 +16,7 @@ class GetCardCommand extends CardCommand {
   ];
 
   @override
-  FutureOr<void> run() async => (await unwrapFuture(cardId.map(doGetCard)))
+  FutureOr<void> run() async => (await cardId.map(doGetCard).unwrapFuture())
       .map((card) => tabulateObject(card, fields))
       .collapse(printOutput);
 

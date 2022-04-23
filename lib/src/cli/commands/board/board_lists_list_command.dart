@@ -19,7 +19,7 @@ class ListListsCommand extends BoardCommand {
 
   @override
   FutureOr<void> run() async =>
-      (await unwrapFuture(boardId.map(boardClient).map(getLists)))
+      (await boardId.map(boardClient).map(getLists).unwrapFuture())
           .map((lists) => tabulateObjects(lists, fields))
           .collapse(printOutput);
 

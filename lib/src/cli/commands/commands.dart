@@ -63,8 +63,4 @@ abstract class TrelloCommand extends Command {
         (failure) => print('ERROR: ${parent!.name} $name - $failure'),
         (output) => print(output),
       );
-
-  Future<Either<Failure, T>> unwrapFuture<T>(
-          Either<Failure, Future<Either<Failure, T>>> fn) async =>
-      (await Either.sequenceFuture(fn)).flatMap(id);
 }

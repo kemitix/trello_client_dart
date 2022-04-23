@@ -18,7 +18,7 @@ class ListAttachmentsCommand extends CardCommand {
 
   @override
   FutureOr<void> run() async =>
-      (await unwrapFuture(cardId.map(_getAttachments)))
+      (await cardId.map(_getAttachments).unwrapFuture())
           .map((attachments) => tabulateObjects(attachments, fields))
           .collapse(printOutput);
 
