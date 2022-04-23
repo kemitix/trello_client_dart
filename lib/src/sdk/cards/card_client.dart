@@ -30,7 +30,7 @@ class CardClient {
         },
       ))
           .map((response) => response.data)
-          .filter((r) => r != null,
+          .filter((data) => data != null,
               () => ResourceNotFoundFailure(resource: 'Card ID: $_cardId'))
           .map((data) => TrelloCard(data, fields ?? [CardFields.all]));
 
