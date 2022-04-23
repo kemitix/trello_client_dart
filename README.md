@@ -174,12 +174,12 @@ This list of API actions was retrieved from the [Trello Reference REST API](http
 |:------:|:--------------------------------------|----------------------------------------------|-----------------------------------------------|----------------------------------------------|
 |        | Create a new Card                     |                                              |                                               |                                              |
 |   ✔    | Get a Card                            | .get()                                       | get ID                                        | GET /1/cards/{id}                            |
-|   ✔    | Update a Card                         | .put(card)                                   | update [options] [flags]                      | PUT /1/cards/{id}                                             |
 |        | Delete a Card                         |                                              |                                               |                                              |
 |        | Get a field on a Card                 |                                              |                                               |                                              |
 |        | Get Actions on a Card                 |                                              |                                               |                                              |
-|   ✔    | Get Attachments on a Card             | .getAttachments()                            | list-attachments ID                           | GET /1/cards/{id}/attachments                |
 |        | Create Attachment On Card             |                                              |                                               |                                              |
+|   ✔    | Update a Card                         | .put(card)                                   | update ID [options] [flags]                   | PUT /1/cards/{id}                            |
+|   ✔    | Get Attachments on a Card             | .attachments()                               | list-attachments ID                           | GET /1/cards/{id}/attachments                |
 |   ✔    | Get an Attachment on a Card           | .attachment(idAttachment).get()              | get-attachment ID ATTACHMENT_ID               | GET /1/cards/{id}/attachments/{idAttachment} |
 |   ✔    | Dowload an Attachment on a Card       | .attachment(idAttachment).download(filename) | download-attachment ID ATTACHMENT_ID FILENAME | ...                                          |
 |        | Delete an Attachment on a Card        |                                              |                                               |                                              |

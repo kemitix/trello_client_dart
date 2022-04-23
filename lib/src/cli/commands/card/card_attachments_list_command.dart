@@ -23,5 +23,5 @@ class ListAttachmentsCommand extends CardCommand {
           .collapse(printOutput);
 
   Future<Either<Failure, List<TrelloAttachment>>> _getAttachments(cardId) =>
-      client.card(cardId).getAttachments(fields: fields);
+      client.card(cardId).attachments(fields: fields);
 }
