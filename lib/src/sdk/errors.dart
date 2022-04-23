@@ -6,6 +6,11 @@ abstract class Failure {
   late final String _message;
 
   String get message => _message;
+
+  @override
+  String toString() {
+    return 'Failure: $_message';
+  }
 }
 
 class HttpClientFailure extends Failure {

@@ -20,7 +20,7 @@ class ListListsCommand extends BoardCommand {
     (await client.board(boardId).getLists(fields: fields))
         .map((lists) => tabulateObjects(lists, fields))
         .fold(
-          (failure) => print(failure.message),
+          (failure) => print(failure),
           (table) => print(table),
         );
   }
