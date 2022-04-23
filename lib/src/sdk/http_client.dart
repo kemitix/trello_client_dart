@@ -25,6 +25,13 @@ abstract class HttpClient {
     Map<String, String>? headers,
     void Function(int, int)? onReceiveProgress,
   });
+
+  Future<Either<Failure, HttpResponse<T>>> put<T>(
+    String path, {
+    data,
+    Map<String, String>? queryParameters,
+    Map<String, String>? headers,
+  });
 }
 
 class DioHttpClient extends HttpClient {
@@ -49,6 +56,27 @@ class DioHttpClient extends HttpClient {
   }) async {
     try {
       var response = await _dio.get<T>(path,
+          queryParameters: queryParameters,
+          options: Options(
+            headers: headers,
+          ));
+      var dioResponse = DioHttpResponse(response);
+      return Right(dioResponse);
+    } on DioError catch (e) {
+      return Left(HttpClientFailure(message: e.response.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, HttpResponse<T>>> put<T>(
+    String path, {
+    data,
+    Map<String, String>? queryParameters,
+    Map<String, String>? headers,
+  }) async {
+    try {
+      var response = await _dio.put<T>(path,
+          data: data,
           queryParameters: queryParameters,
           options: Options(
             headers: headers,
