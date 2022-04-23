@@ -1,4 +1,5 @@
 import 'package:args/command_runner.dart';
+import 'package:dartz/dartz.dart';
 
 import '../../../../trello_sdk.dart';
 import '../commands.dart';
@@ -18,10 +19,7 @@ class ListModule extends Command {
 abstract class ListCommand extends TrelloCommand {
   ListCommand(String name, String description, TrelloClient client)
       : super(name, description, client);
-  ListId get listId {
-    if (parameters.isEmpty) {
-      usageException('List Id was not given');
-    }
-    return ListId(parameters.first);
-  }
+
+  Either<Failure, ListId> get listId =>
+      nextParameter('List Id').map((id) => ListId(id));
 }
