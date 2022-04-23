@@ -20,7 +20,7 @@ class ListAttachmentsCommand extends CardCommand {
   FutureOr<void> run() async => (await getAttachments())
       .map((attachments) => tabulateObjects(attachments, fields))
       .fold(
-        (failure) => print(failure),
+        (failure) => print('ERROR: ${parent!.name} $name - $failure'),
         (table) => print(table),
       );
 

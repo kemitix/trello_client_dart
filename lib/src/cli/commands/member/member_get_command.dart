@@ -23,7 +23,7 @@ class GetMemberCommand extends MemberCommand {
     (await client.member(memberId).get())
         .map((member) => tabulateObject(member, fields))
         .fold(
-          (failure) => print(failure),
+          (failure) => print('ERROR: ${parent!.name} $name - $failure'),
           (table) => print(table),
         );
   }

@@ -15,7 +15,7 @@ class DownloadAttachmentCommand extends CardCommand {
           Either.lift3(doDownload)(cardId, attachmentId, fileName)))
       .flatMap(id)
       .fold(
-        (failure) => print(failure),
+        (failure) => print('ERROR: ${parent!.name} $name - $failure'),
         (r) => print("Download complete"),
       );
 

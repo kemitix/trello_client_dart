@@ -21,7 +21,7 @@ class GetCardCommand extends CardCommand {
           .flatMap(id)
           .map((card) => tabulateObject(card, fields))
           .fold(
-            (failure) => print(failure),
+            (failure) => print('ERROR: ${parent!.name} $name - $failure'),
             (table) => print(table),
           );
 

@@ -21,7 +21,7 @@ class ListMemberBoardsCommand extends MemberCommand {
     (await client.member(memberId).getBoards(fields: fields))
         .map((boards) => tabulateObjects(boards, fields))
         .fold(
-          (failure) => print(failure),
+          (failure) => print('ERROR: ${parent!.name} $name - $failure'),
           (table) => print(table),
         );
   }

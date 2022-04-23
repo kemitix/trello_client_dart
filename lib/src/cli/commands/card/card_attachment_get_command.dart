@@ -23,7 +23,7 @@ class GetAttachmentCommand extends CardCommand {
       .flatMap(id)
       .map((attachment) => tabulateObject(attachment, fields))
       .fold(
-        (failure) => print(failure),
+        (failure) => print('ERROR: ${parent!.name} $name - $failure'),
         (table) => print(table),
       );
 

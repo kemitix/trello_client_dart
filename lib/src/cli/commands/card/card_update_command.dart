@@ -25,7 +25,7 @@ class UpdateCardCommand extends CardCommand {
               .flatMap(id))))
       .flatMap(id)
       .fold(
-        (failure) => print(failure),
+        (failure) => print('ERROR: ${parent!.name} $name - $failure'),
         (card) => print("Updated"),
       );
 
