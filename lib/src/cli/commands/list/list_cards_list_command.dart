@@ -18,13 +18,8 @@ class ListCardsCommand extends ListCommand {
 
   @override
   FutureOr<void> run() async =>
-      (await Either.sequenceFuture(listId.map(listClient).map(getCards)))
-          .flatMap(id)
-          .map((cards) => tabulateObjects(cards, fields))
-          .fold(
-            (failure) => print('ERROR: ${parent!.name} $name - $failure'),
-            (table) => print(table),
-          );
+      printOutput((await unwrapFuture(listId.map(listClient).map(getCards)))
+          .map((cards) => tabulateObjects(cards, fields)));
 
   Future<Either<Failure, List<TrelloCard>>> getCards(ListClient listClient) =>
       listClient.getCards(fields: fields);

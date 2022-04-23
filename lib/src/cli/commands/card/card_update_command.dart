@@ -16,18 +16,13 @@ class UpdateCardCommand extends CardCommand {
     );
   }
 
-  FutureOr<void> run() async => (await Either.sequenceFuture(cardId
+  FutureOr<void> run() async => printOutput((await unwrapFuture(cardId
           .map((cardId) => cardClient(cardId))
-          .map((cardClient) async => (await Either.sequenceFuture(
-                  (await getOriginalCard(cardClient))
-                      .map((card) => updateCard(card, getUpdates()))
-                      .map((card) => putCard(cardClient, card))))
-              .flatMap(id))))
-      .flatMap(id)
-      .fold(
-        (failure) => print('ERROR: ${parent!.name} $name - $failure'),
-        (card) => print("Updated"),
-      );
+          .map((cardClient) async => (await unwrapFuture(
+              (await getOriginalCard(cardClient))
+                  .map((card) => updateCard(card, getUpdates()))
+                  .map((card) => putCard(cardClient, card)))))))
+      .map((r) => "Updated"));
 
   TrelloCard updateCard(TrelloCard original, Map<String, String> updates) {
     var copy = original.raw;

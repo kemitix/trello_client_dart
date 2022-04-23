@@ -17,12 +17,7 @@ class ListMemberBoardsCommand extends MemberCommand {
   ];
 
   @override
-  FutureOr<void> run() async {
-    (await client.member(memberId).getBoards(fields: fields))
-        .map((boards) => tabulateObjects(boards, fields))
-        .fold(
-          (failure) => print('ERROR: ${parent!.name} $name - $failure'),
-          (table) => print(table),
-        );
-  }
+  FutureOr<void> run() async =>
+      printOutput((await client.member(memberId).getBoards(fields: fields))
+          .map((boards) => tabulateObjects(boards, fields)));
 }

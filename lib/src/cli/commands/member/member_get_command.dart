@@ -20,11 +20,7 @@ class GetMemberCommand extends MemberCommand {
 
   @override
   FutureOr<void> run() async {
-    (await client.member(memberId).get())
-        .map((member) => tabulateObject(member, fields))
-        .fold(
-          (failure) => print('ERROR: ${parent!.name} $name - $failure'),
-          (table) => print(table),
-        );
+    printOutput((await client.member(memberId).get())
+        .map((member) => tabulateObject(member, fields)));
   }
 }

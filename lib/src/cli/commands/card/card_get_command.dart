@@ -17,13 +17,8 @@ class GetCardCommand extends CardCommand {
 
   @override
   FutureOr<void> run() async =>
-      (await Either.sequenceFuture(cardId.map(doGetCard)))
-          .flatMap(id)
-          .map((card) => tabulateObject(card, fields))
-          .fold(
-            (failure) => print('ERROR: ${parent!.name} $name - $failure'),
-            (table) => print(table),
-          );
+      printOutput((await unwrapFuture(cardId.map(doGetCard)))
+          .map((card) => tabulateObject(card, fields)));
 
   Future<Either<Failure, TrelloCard>> doGetCard(cardId) =>
       client.card(cardId).get();
