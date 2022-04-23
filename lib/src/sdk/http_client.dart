@@ -46,7 +46,10 @@ class DioHttpClient extends HttpClient {
   }
 
   @override
-  void close() => {_dio.close(), _dioDownloader.close()};
+  void close() {
+    _dio.close();
+    _dioDownloader.close();
+  }
 
   @override
   Future<Either<Failure, HttpResponse<T>>> get<T>(
