@@ -87,7 +87,7 @@ class DioHttpClient extends HttpClient {
       var dioResponse = DioHttpResponse(response);
       return Right(dioResponse);
     } on DioError catch (e) {
-      return Left(HttpClientFailure(message: e.response.toString()));
+      return Left(HttpClientFailure(message: e.message));
     }
   }
 
