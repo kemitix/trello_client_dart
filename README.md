@@ -76,7 +76,7 @@ trello card update $CARD_ID --name "New Card Title" --dueComplete
 - [ ] Add a Member to a Card
 
 ```bash
-trello card add-member $CARD_ID --member $MEMBER_ID
+trello card add-member $CARD_ID $MEMBER_ID
 ```
 
 - [ ] Remove a Member from a Card
@@ -174,46 +174,46 @@ This list of API actions was retrieved from the [Trello Reference REST API](http
 |:------:|:--------------------------------------|----------------------------------------------|-----------------------------------------------|----------------------------------------------|
 |        | Create a new Card                     |                                              |                                               |                                              |
 |   ✔    | Get a Card                            | .get()                                       | get ID                                        | GET /1/cards/{id}                            |
-|        | Delete a Card                         |                                              |                                               |                                              |
-|        | Get a field on a Card                 |                                              |                                               |                                              |
-|        | Get Actions on a Card                 |                                              |                                               |                                              |
-|        | Create Attachment On Card             |                                              |                                               |                                              |
 |   ✔    | Update a Card                         | .put(card)                                   | update ID [options] [flags]                   | PUT /1/cards/{id}                            |
+|        | Delete a Card                         | .delete()                                    | delete ID                                     |                                              |
+|        | Get a field on a Card                 | .getField(field)                             |                                               |                                              |
+|        | Get Actions on a Card                 | .actions()                                   |                                               |                                              |
 |   ✔    | Get Attachments on a Card             | .attachments()                               | list-attachments ID                           | GET /1/cards/{id}/attachments                |
+|        | Create Attachment On Card             | .createAttachment(...)                       |                                               |                                              |
 |   ✔    | Get an Attachment on a Card           | .attachment(idAttachment).get()              | get-attachment ID ATTACHMENT_ID               | GET /1/cards/{id}/attachments/{idAttachment} |
 |   ✔    | Dowload an Attachment on a Card       | .attachment(idAttachment).download(filename) | download-attachment ID ATTACHMENT_ID FILENAME | ...                                          |
-|        | Delete an Attachment on a Card        |                                              |                                               |                                              |
-|        | Get the Board the Card is on          |                                              |                                               |                                              |
-|        | Get checkItems on a Card              |                                              |                                               |                                              |
-|        | Get Checklists on a Card              |                                              |                                               |                                              |
-|        | Create Checklist on a Card            |                                              |                                               |                                              |
-|        | Get checkItem on a Card               |                                              |                                               |                                              |
-|        | Update a checkItem on a Card          |                                              |                                               |                                              |
-|        | Delete checkItem on a Card            |                                              |                                               |                                              |
-|        | Get the List of a Card                |                                              |                                               |                                              |
-|        | Get the Members of a Card             |                                              |                                               |                                              |
-|        | Get Members who have voted on a Card  |                                              |                                               |                                              |
-|        | Add Member vote to Card               |                                              |                                               |                                              |
-|        | Get pluginData on a Card              |                                              |                                               |                                              |
-|        | Get Stickers on a Card                |                                              |                                               |                                              |
-|        | Add a Sticker to a Card               |                                              |                                               |                                              |
-|        | Get a Sticker on a Card               |                                              |                                               |                                              |
-|        | Update a Sticker on a Card            |                                              |                                               |                                              |
-|        | Delete a Sticker on a Card            |                                              |                                               |                                              |
-|        | Update Comment Action on a Card       |                                              |                                               |                                              |
-|        | Delete a comment on a Card            |                                              |                                               |                                              |
-|        | Update Custom Field item on Card      |                                              |                                               |                                              |
-|        | Get Custom Field Items for a Card     |                                              |                                               |                                              |
-|        | Add a new comment to a Card           |                                              |                                               |                                              |
-|        | Add a Label to a Card                 |                                              |                                               |                                              |
-|        | Add a Member to a Card                |                                              |                                               |                                              |
-|        | Create a new Label on a Card          |                                              |                                               |                                              |
-|        | Mark a Card's Notifications as read   |                                              |                                               |                                              |
-|        | Remove a Label from a Card            |                                              |                                               |                                              |
-|        | Remove a Member from a Card           |                                              |                                               |                                              |
-|        | Remove a Member's Vote on a Card      |                                              |                                               |                                              |
-|        | Update Checkitem on Checklist on Card |                                              |                                               |                                              |
-|        | Delete a Checklist on a Card          |                                              |                                               |                                              |
+|        | Delete an Attachment on a Card        | .attachment(idAttachment).delete()           |                                               |                                              |
+|        | Get the Board the Card is on          | .board()                                     |                                               |                                              |
+|        | Get checkItems on a Card              | .checkItems()                                |                                               |                                              |
+|        | Get Checklists on a Card              | .checkLists()                                |                                               |                                              |
+|        | Create Checklist on a Card            | .createCheckList(...)                        |                                               |                                              |
+|        | Get checkItem on a Card               | .checkItem(idCheckItem).get()                |                                               |                                              |
+|        | Update a checkItem on a Card          | .checkItem(idCheckItem).update(checkitem)    |                                               |                                              |
+|        | Delete checkItem on a Card            | .checkItem(idCheckItem).delete()             |                                               |                                              |
+|        | Get the List of a Card                | .list()                                      |                                               |                                              |
+|        | Get the Members of a Card             | .members()                                   |                                               |                                              |
+|        | Get Members who have voted on a Card  | .membersVoted()                              |                                               |                                              |
+|        | Add Member vote to Card               | .addMemberVote(idMember)                     |                                               |                                              |
+|        | Get pluginData on a Card              | .pluginData()                                |                                               |                                              |
+|        | Get Stickers on a Card                | .stickers()                                  |                                               |                                              |
+|        | Add a Sticker to a Card               | .createSticker()                             |                                               |                                              |
+|        | Get a Sticker on a Card               | .sticker(idSticker).get()                    |                                               |                                              |
+|        | Update a Sticker on a Card            | .sticker(idSticker).put(sticker)             |                                               |                                              |
+|        | Delete a Sticker on a Card            | .sticker(idSticker).delete()                 |                                               |                                              |
+|        | Update Comment Action on a Card       | .comment(idComment).put(comment)             |                                               |                                              |
+|        | Delete a comment on a Card            | .comment(idComment).delete()                 |                                               |                                              |
+|        | Update Custom Field item on Card      | .customField(idField).put(customField)       |                                               |                                              |
+|        | Get Custom Field Items for a Card     | .customFields()                              |                                               |                                              |
+|        | Add a new comment to a Card           | .addComment(...)                             |                                               |                                              |
+|        | Add a Label to a Card                 | .addLabel(...)                               |                                               |                                              |
+|        | Add a Member to a Card                | .addMember(idMember)                         | add-member ID MEMBER_ID                       | POST /1/cards/{id}/idMembers                 |
+|        | Create a new Label on a Card          | .createLabel(...)                            |                                               |                                              |
+|        | Mark a Card's Notifications as read   | .readNotifications()                         |                                               |                                              |
+|        | Remove a Label from a Card            | .removeLabel(idLabel)                        |                                               |                                              |
+|        | Remove a Member from a Card           | .removeMember(idMember)                      |                                               |                                              |
+|        | Remove a Member's Vote on a Card      | .removeMemberVote(idMember)                  |                                               |                                              |
+|        | Update Checkitem on Checklist on Card | .checkList(idCheckList).updateCheckItem(...) |                                               |                                              |
+|        | Delete a Checklist on a Card          | .checkList(idCheckList).delete()             |                                               |                                              |
 
 ### Checklists
 
