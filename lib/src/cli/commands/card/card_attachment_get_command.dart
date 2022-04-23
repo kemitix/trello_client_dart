@@ -18,14 +18,17 @@ class GetAttachmentCommand extends CardCommand {
   ];
 
   @override
-  FutureOr<void> run() async => (await Either.sequenceFuture(
-          Either.lift2(doGetAttachment)(cardId, attachmentId)))
-      .flatMap(id)
-      .map((attachment) => tabulateObject(attachment, fields))
-      .fold(
-        (failure) => print('ERROR: ${parent!.name} $name - $failure'),
-        (table) => print(table),
-      );
+  FutureOr<void> run() async =>
+      (await unwrapFuture(_getAttachment(cardId, attachmentId)))
+          .map((attachment) => tabulateObject(attachment, fields))
+          .fold(
+            (failure) => print('ERROR: ${parent!.name} $name - $failure'),
+            (table) => print(table),
+          );
+
+  Function2<Either<Failure, CardId>, Either<Failure, AttachmentId>,
+          Either<Failure, Future<Either<Failure, TrelloAttachment>>>>
+      get _getAttachment => Either.lift2(doGetAttachment);
 
   Future<Either<Failure, TrelloAttachment>> doGetAttachment(
           CardId cardId, AttachmentId attachmentId) async =>

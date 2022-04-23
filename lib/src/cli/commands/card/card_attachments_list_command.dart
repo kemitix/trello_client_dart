@@ -17,15 +17,10 @@ class ListAttachmentsCommand extends CardCommand {
   ];
 
   @override
-  FutureOr<void> run() async => (await getAttachments())
-      .map((attachments) => tabulateObjects(attachments, fields))
-      .fold(
-        (failure) => print('ERROR: ${parent!.name} $name - $failure'),
-        (table) => print(table),
-      );
+  FutureOr<void> run() async =>
+      printOutput((await unwrapFuture(cardId.map(_getAttachments)))
+          .map((attachments) => tabulateObjects(attachments, fields)));
 
-  Future<Either<Failure, List<TrelloAttachment>>> getAttachments() async =>
-      (await Either.sequenceFuture(cardId.map(
-              (cardId) => client.card(cardId).getAttachments(fields: fields))))
-          .flatMap(id);
+  Future<Either<Failure, List<TrelloAttachment>>> _getAttachments(cardId) =>
+      client.card(cardId).getAttachments(fields: fields);
 }

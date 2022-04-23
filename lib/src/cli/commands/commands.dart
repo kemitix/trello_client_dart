@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:args/command_runner.dart';
 import 'package:dartz/dartz.dart';
 import 'package:tabular/tabular.dart';
@@ -56,4 +58,13 @@ abstract class TrelloCommand extends Command {
   String Function(T) fieldValueAsString<T extends Enum>(
           TrelloObject<T> object) =>
       (field) => object.getValue(field).toString();
+
+  FutureOr<void> printOutput(Either<Failure, String> either) => either.fold(
+        (failure) => print('ERROR: ${parent!.name} $name - $failure'),
+        (output) => print(output),
+      );
+
+  Future<Either<Failure, T>> unwrapFuture<T>(
+          Either<Failure, Future<Either<Failure, T>>> fn) async =>
+      (await Either.sequenceFuture(fn)).flatMap(id);
 }
