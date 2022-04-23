@@ -11,9 +11,10 @@ class DownloadAttachmentCommand extends CardCommand {
       : super('download-attachment', 'Download an Attachment file', client);
 
   @override
-  FutureOr<void> run() async => printOutput(
+  FutureOr<void> run() async =>
       (await unwrapFuture(_download(cardId, attachmentId, fileName)))
-          .map((r) => 'Download complete'));
+          .map((r) => 'Download complete')
+          .collapse(printOutput);
 
   Function3<
           Either<Failure, CardId>,

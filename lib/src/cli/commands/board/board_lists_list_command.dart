@@ -19,8 +19,9 @@ class ListListsCommand extends BoardCommand {
 
   @override
   FutureOr<void> run() async =>
-      printOutput((await unwrapFuture(boardId.map(boardClient).map(getLists)))
-          .map((lists) => tabulateObjects(lists, fields)));
+      (await unwrapFuture(boardId.map(boardClient).map(getLists)))
+          .map((lists) => tabulateObjects(lists, fields))
+          .collapse(printOutput);
 
   Future<Either<Failure, List<TrelloList>>> getLists(BoardClient boardClient) =>
       boardClient.getLists(fields: fields);

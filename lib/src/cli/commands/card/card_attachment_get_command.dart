@@ -21,10 +21,7 @@ class GetAttachmentCommand extends CardCommand {
   FutureOr<void> run() async =>
       (await unwrapFuture(_getAttachment(cardId, attachmentId)))
           .map((attachment) => tabulateObject(attachment, fields))
-          .fold(
-            (failure) => print('ERROR: ${parent!.name} $name - $failure'),
-            (table) => print(table),
-          );
+          .collapse(printOutput);
 
   Function2<Either<Failure, CardId>, Either<Failure, AttachmentId>,
           Either<Failure, Future<Either<Failure, TrelloAttachment>>>>

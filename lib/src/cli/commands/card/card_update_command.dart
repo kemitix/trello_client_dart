@@ -1,11 +1,9 @@
 import 'dart:async';
 
 import 'package:dartz/dartz.dart';
-import 'package:trello_sdk/src/cli/cli.dart';
-import 'package:trello_sdk/src/sdk/cards/card_client.dart';
-import 'package:trello_sdk/src/sdk/cards/card_models.dart';
-import 'package:trello_sdk/src/sdk/client.dart';
-import 'package:trello_sdk/src/sdk/errors.dart';
+
+import '../../../../trello_sdk.dart';
+import 'card_module.dart';
 
 class UpdateCardCommand extends CardCommand {
   UpdateCardCommand(TrelloClient client)
@@ -16,13 +14,14 @@ class UpdateCardCommand extends CardCommand {
     );
   }
 
-  FutureOr<void> run() async => printOutput((await unwrapFuture(cardId
+  FutureOr<void> run() async => (await unwrapFuture(cardId
           .map((cardId) => cardClient(cardId))
           .map((cardClient) async => (await unwrapFuture(
               (await getOriginalCard(cardClient))
                   .map((card) => updateCard(card, getUpdates()))
                   .map((card) => putCard(cardClient, card)))))))
-      .map((r) => "Updated"));
+      .map((r) => "Updated")
+      .collapse(printOutput);
 
   TrelloCard updateCard(TrelloCard original, Map<String, String> updates) {
     var copy = original.raw;
