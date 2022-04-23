@@ -60,4 +60,9 @@ class CardClient {
               .map((item) =>
                   TrelloAttachment(item, fields ?? [AttachmentFields.all]))
               .toList());
+
+  Future<Either<Failure, TrelloCard>> put(TrelloCard card) async =>
+      (await _client.put('/1/cards/$_cardId', data: card))
+          .map((response) => response.data)
+          .map((data) => TrelloCard(data, [CardFields.all]));
 }

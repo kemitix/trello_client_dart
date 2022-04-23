@@ -19,7 +19,7 @@ class ListCardsCommand extends ListCommand {
     (await client.list(listId).getCards(fields: fields))
         .map((r) => tabulateObjects(r, fields))
         .fold(
-          (failure) => print(failure),
+          (failure) => print(failure.message),
           (table) => print(table),
         );
   }

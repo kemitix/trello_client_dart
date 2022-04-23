@@ -7,6 +7,9 @@ class TrelloCard extends TrelloObject<CardFields> {
   TrelloCard(source, List<CardFields> fields)
       : super(source, fields, all: fields.contains(CardFields.all));
 
+  factory TrelloCard.fromJson(Map<String, dynamic> json) =>
+      TrelloCard(json, [CardFields.all]);
+
   CardId get id => CardId(getValue(CardFields.id));
   CardBadges get badges => getValue(CardFields.badges);
   //List<?> get checkItemStates => getValue(CardFields.checkItemStates);

@@ -9,7 +9,11 @@ abstract class TrelloObject<T extends Enum> {
     _all = all;
   }
 
+  Map<String, dynamic> toJson() => raw;
+
   Map<String, dynamic> get raw => _source;
+
+  List<T> get fields => _fields;
 
   //@protected
   V getValue<V>(T field) {

@@ -8,13 +8,21 @@ TRELLO="dart run ./bin/trello.dart"
 
 function trello() {
   label "trello $*"
-  $TRELLO $*
+  case $# in
+  1) $TRELLO "$1"  ;;
+  2) $TRELLO "$1" "$2"  ;;
+  3) $TRELLO "$1" "$2" "$3"  ;;
+  4) $TRELLO "$1" "$2" "$3" "$4"  ;;
+  5) $TRELLO "$1" "$2" "$3" "$4" "$5"  ;;
+  *) echo "ERROR: unexpected number of parameters: $#" ; exit 1;;
+  esac
 }
 
 MEMBER="kemitix"
 BOARD="5eccb96b04b4dc5666c64b7c"
 LIST="5de68ade15e1dc10b583219e"
 CARD="5dc1b58de65da8806ebabba8"
+MUTABLE_CARD="61b32a083270082adf87ffb1"
 ATTACHMENT="5dc1b58ee65da8806ebabbc7"
 FILE_NAME="larkspur.rtf"
 
@@ -39,3 +47,7 @@ trello card get-attachment $CARD $ATTACHMENT
 trello card download-attachment $CARD $ATTACHMENT $FILE_NAME
 ls -l $FILE_NAME
 rm $FILE_NAME
+
+trello card update $MUTABLE_CARD --name "$(date --iso-8601=seconds)"
+
+trello card get $MUTABLE_CARD

@@ -7,6 +7,7 @@ import 'card_attachment_download_command.dart';
 import 'card_attachment_get_command.dart';
 import 'card_attachments_list_command.dart';
 import 'card_get_command.dart';
+import 'card_update_command.dart';
 
 class CardModule extends Command {
   @override
@@ -21,6 +22,7 @@ class CardModule extends Command {
       ListAttachmentsCommand(client),
       GetAttachmentCommand(client),
       DownloadAttachmentCommand(client),
+      UpdateCardCommand(client),
     ].forEach(addSubcommand);
   }
 }
