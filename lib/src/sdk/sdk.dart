@@ -2,7 +2,7 @@ export 'boards/boards.dart';
 export 'cards/cards.dart';
 export 'client.dart';
 export 'errors.dart';
-export 'extensions/either_extension.dart';
+export 'extensions/either_extensions.dart';
 export 'lists/lists.dart';
 export 'members/members.dart';
 export 'misc.dart';
