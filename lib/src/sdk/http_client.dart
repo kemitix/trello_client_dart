@@ -66,7 +66,7 @@ class DioHttpClient extends HttpClient {
       var dioResponse = DioHttpResponse(response);
       return Right(dioResponse);
     } on DioError catch (e) {
-      return Left(HttpClientFailure(message: e.response.toString()));
+      return Left(HttpClientFailure(message: 'GET $path - ${e.message}'));
     }
   }
 
@@ -87,7 +87,7 @@ class DioHttpClient extends HttpClient {
       var dioResponse = DioHttpResponse(response);
       return Right(dioResponse);
     } on DioError catch (e) {
-      return Left(HttpClientFailure(message: e.message));
+      return Left(HttpClientFailure(message: 'PUT $path - ${e.message}'));
     }
   }
 
@@ -119,7 +119,8 @@ class DioHttpClient extends HttpClient {
       raf.writeFromSync(response.data);
       return Right(await raf.close());
     } on DioError catch (e) {
-      return Left(HttpClientFailure(message: e.response.toString()));
+      return Left(
+          HttpClientFailure(message: '(download) GET $path - ${e.message}'));
     }
   }
 }
