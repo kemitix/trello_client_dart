@@ -67,10 +67,10 @@ trello card list-attachments $CARD_ID
 trello card download-attachment $CARD_ID $ATTACHMENT_ID $OUTPUT_FILE_NAME
 ```
 
-- [ ] Update a Card
+- [x] Update a Card
 
 ```bash
-trello card update $CARD_ID --title "New Card Title"
+trello card update $CARD_ID --name "New Card Title" --dueComplete
 ```
 
 - [ ] Add a Member to a Card
@@ -174,7 +174,7 @@ This list of API actions was retrieved from the [Trello Reference REST API](http
 |:------:|:--------------------------------------|----------------------------------------------|-----------------------------------------------|----------------------------------------------|
 |        | Create a new Card                     |                                              |                                               |                                              |
 |   ✔    | Get a Card                            | .get()                                       | get ID                                        | GET /1/cards/{id}                            |
-|        | Update a Card                         |                                              |                                               |                                              |
+|   ✔    | Update a Card                         | .put(card)                                   | update [options] [flags]                      | PUT /1/cards/{id}                                             |
 |        | Delete a Card                         |                                              |                                               |                                              |
 |        | Get a field on a Card                 |                                              |                                               |                                              |
 |        | Get Actions on a Card                 |                                              |                                               |                                              |
