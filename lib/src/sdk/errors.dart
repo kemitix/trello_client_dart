@@ -20,3 +20,8 @@ class ResourceNotFoundFailure extends Failure {
 class UsageFailure extends Failure {
   UsageFailure({required String usage}) : super(message: usage);
 }
+
+class NotImplementedFailure extends Failure {
+  NotImplementedFailure({required String function})
+      : super(message: 'Function not implmented: $function');
+}
