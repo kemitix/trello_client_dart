@@ -1,4 +1,5 @@
 import 'package:args/command_runner.dart';
+import 'package:dartz/dartz.dart';
 
 import '../../../../trello_sdk.dart';
 import '../commands.dart';
@@ -19,10 +20,6 @@ abstract class BoardCommand extends TrelloCommand {
   BoardCommand(String name, String description, TrelloClient client)
       : super(name, description, client);
 
-  BoardId get boardId {
-    if (parameters.isEmpty) {
-      usageException('Board Id was nto given');
-    }
-    return BoardId(parameters.first);
-  }
+  Either<Failure, BoardId> get boardId =>
+      nextParameter('Board Id').map((id) => BoardId(id));
 }

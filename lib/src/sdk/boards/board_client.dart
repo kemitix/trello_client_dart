@@ -31,6 +31,7 @@ class BoardClient {
           'fields': asCsv(fields),
         },
       ))
+          .leftMap((failure) => failure.withContext({'boardId': _id.value}))
           .map((response) => response.data ?? [])
           .map((items) => items
               .map((item) => TrelloList(item, fields))
