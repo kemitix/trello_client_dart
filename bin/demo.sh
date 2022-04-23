@@ -6,6 +6,11 @@ cd "$(dirname $(dirname $0))"
 
 TRELLO="dart run ./bin/trello.dart"
 
+function trello() {
+  label "trello $*"
+  $TRELLO $*
+}
+
 MEMBER="kemitix"
 BOARD="5eccb96b04b4dc5666c64b7c"
 LIST="5de68ade15e1dc10b583219e"
@@ -14,31 +19,23 @@ ATTACHMENT="5dc1b58ee65da8806ebabbc7"
 FILE_NAME="larkspur.rtf"
 
 function label() {
-  echo -e "\n> $1:\n"
+  echo -e "\n> $1\n"
 }
 
-label "member get"
-$TRELLO member get $MEMBER
+trello member get $MEMBER
 
-label "member list-boards"
-$TRELLO member list-boards $MEMBER
+trello member list-boards $MEMBER
 
-label "board list-lists"
-$TRELLO board list-lists $BOARD
+trello board list-lists $BOARD
 
-label "list list-cards"
-$TRELLO list list-cards $LIST
+trello list list-cards $LIST
 
-label "card get"
-$TRELLO card get $CARD
+trello card get $CARD
 
-label "card list-attachments"
-$TRELLO card list-attachments $CARD
+trello card list-attachments $CARD
 
-label "card get-attachment"
-$TRELLO card get-attachment $CARD $ATTACHMENT
+trello card get-attachment $CARD $ATTACHMENT
 
-label "card download-attachment"
-$TRELLO card download-attachment $CARD $ATTACHMENT $FILE_NAME
+trello card download-attachment $CARD $ATTACHMENT $FILE_NAME
 ls -l $FILE_NAME
 rm $FILE_NAME
