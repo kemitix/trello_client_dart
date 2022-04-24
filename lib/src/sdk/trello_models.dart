@@ -1,6 +1,7 @@
 /// 'default' is a reserved word, so is here in uppercase
 /// use the names in lowercase to get correct form
 enum BoardBackgrounds { all, custom, DEFAULT, none, premium }
+
 enum BoardsInvited {
   all,
   closed,
@@ -12,6 +13,7 @@ enum BoardsInvited {
   starred,
   unpinned
 }
+
 enum BoardsInvitedFields {
   all,
   id,
@@ -36,9 +38,15 @@ enum AllOrNone { all, none }
 
 typedef NestedActionsQueryParamsActions = String;
 typedef NestedBoardsQueryParamsBoards = String;
+
 enum NestedCardQueryParametersCards { all, closed, none, open, visible }
+
 typedef NestedNotificationsQueryParametersNotifications = String;
+
 enum Organizations { all, members, none, public }
+
 enum OrganizationFields { all, id, name }
+
 enum OrganizationsInvited { all, members, none, public }
+
 enum OrganizationsInvitedFields { all, id, name }
