@@ -18,6 +18,12 @@ class AddMemberToCardCommand extends CardCommand {
           .map((_) => "Added member")
           .collapse(printOutput);
 
-  Future<Either<Failure, void>> _addMember(CardId cardId, MemberId memberId) =>
-      client.card(cardId).addMember(memberId);
+  Future<Either<Failure, void>> _addMember(
+          CardId cardId, MemberId memberId) async =>
+      ((await client.card(cardId).get(fields: [CardFields.idMembers]))
+              .map((card) => card.idMembers)
+              .where((idMembers) => !idMembers.contains(memberId.value),
+                  () => AlreadyAppliedFailure(action: description))
+              .map((_) => (client.card(cardId).addMember(memberId))))
+          .unwrapFuture();
 }

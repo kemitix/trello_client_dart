@@ -26,6 +26,11 @@ abstract class TrelloObject<T extends Enum> {
     throw AssertionError('Attempt to access field not retrieved: $fieldName');
   }
 
+  List<String> getValueAsListString(T field) =>
+      (getValue(field) as List<dynamic>)
+          .map((value) => value.toString())
+          .toList();
+
   @protected
   DateTime? toDateTime(String? value) {
     if (value == null) return null;

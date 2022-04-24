@@ -50,3 +50,12 @@ class NotImplementedFailure extends Failure {
     Map<String, String>? context,
   }) : super(message: 'Function not implemented: $function', context: context);
 }
+
+class AlreadyAppliedFailure extends Failure {
+  AlreadyAppliedFailure({
+    required String action,
+    Map<String, String>? context,
+  }) : super(
+            message: "Can't $action as it is already applied",
+            context: context);
+}

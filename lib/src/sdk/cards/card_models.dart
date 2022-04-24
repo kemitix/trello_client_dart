@@ -22,11 +22,13 @@ class TrelloCard extends TrelloObject<CardFields> {
   bool get dueComplete => getValue(CardFields.dueComplete);
   String get idAttachmentCover => getValue(CardFields.idAttachmentCover);
   String get idBoard => getValue(CardFields.idBoard);
-  List<String> get idChecklists => getValue(CardFields.idChecklists);
-  List<String> get idLabels => getValue(CardFields.idLabels);
+  List<String> get idChecklists =>
+      getValueAsListString(CardFields.idChecklists);
+  List<String> get idLabels => getValueAsListString(CardFields.idLabels);
   String get idList => getValue(CardFields.idList);
-  List<String> get idMembers => getValue(CardFields.idMembers);
-  List<String> get idMembersVoted => getValue(CardFields.idMembersVoted);
+  List<String> get idMembers => getValueAsListString(CardFields.idMembers);
+  List<String> get idMembersVoted =>
+      getValueAsListString(CardFields.idMembersVoted);
   int get idShort => getValue(CardFields.idShort);
   List<CardLabel> get labels => getValue(CardFields.labels);
   bool get manualCoverAttachment => getValue(CardFields.manualCoverAttachment);
