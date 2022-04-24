@@ -14,10 +14,10 @@ class AddMemberToCardCommand extends CardCommand {
 
   @override
   FutureOr<void> run() async =>
-      (await Either.map2(cardId, memberId, _addMember))
+      (await Either.map2(cardId, memberId, _addMember).unwrapFuture())
           .map((_) => "Added member")
           .collapse(printOutput);
 
-  _addMember(CardId cardId, MemberId memberId) =>
+  Future<Either<Failure, void>> _addMember(CardId cardId, MemberId memberId) =>
       client.card(cardId).addMember(memberId);
 }
