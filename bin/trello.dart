@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
@@ -7,13 +8,24 @@ import 'package:trello_sdk/trello_cli.dart';
 typedef Error = String;
 typedef ErrorList = List<Error>;
 
-Future<void> main(List<String> arguments) async =>
-    await authentication().map(trelloClient).fold<Future<void>>(
+Future<void> main(List<String> arguments) =>
+    authentication().map(trelloClient).fold<Future<void>>(
           (errors) => reportErrors(errors),
           (client) => runApp(client, arguments),
         );
 
-Future<void> runApp(TrelloClient client, List<String> arguments) async {
+Future<void> runApp(TrelloClient client, List<String> arguments) =>
+    _runner(client)
+        .run(arguments)
+        .catchError(_handleError)
+        .whenComplete(() => client.close());
+
+void _handleError(error) {
+  if (error is! UsageException) throw error;
+  print(error);
+}
+
+CommandRunner _runner(TrelloClient client) {
   var runner = CommandRunner('trello', "A CLI for Trello");
   [
     MemberModule(client),
@@ -21,10 +33,7 @@ Future<void> runApp(TrelloClient client, List<String> arguments) async {
     ListModule(client),
     CardModule(client),
   ].forEach(runner.addCommand);
-  await runner.run(arguments).catchError((error) {
-    if (error is! UsageException) throw error;
-    print(error);
-  }).whenComplete(() => client.close());
+  return runner;
 }
 
 Future<void> reportErrors(ErrorList errors) async => errors.forEach(print);
