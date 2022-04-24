@@ -61,8 +61,27 @@ class CardClient {
                   TrelloAttachment(item, fields ?? [AttachmentFields.all]))
               .toList());
 
+  /// Update a Card
+  ///
+  /// PUT /1/cards/{id}
+  ///
+  /// Update a card
+  ///
+  /// https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-id-put
   Future<Either<Failure, TrelloCard>> put(TrelloCard card) async =>
       (await _client.put('/1/cards/$_cardId', data: card))
           .map((response) => response.data)
           .map((data) => TrelloCard(data, [CardFields.all]));
+
+  /// Add a Member to a Card
+  ///
+  /// POST /1/cards/{id}/idMembers
+  ///
+  /// Add a member to a card
+  ///
+  /// https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-id-idmembers-post
+  Future<Either<Failure, void>> addMember(MemberId memberId) =>
+      _client.post('/1/cards/$_cardId/idMembers', queryParameters: {
+        'value': memberId.value,
+      });
 }

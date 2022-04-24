@@ -73,7 +73,7 @@ trello card download-attachment $CARD_ID $ATTACHMENT_ID $OUTPUT_FILE_NAME
 trello card update $CARD_ID --name "New Card Title" --dueComplete
 ```
 
-- [ ] Add a Member to a Card
+- [x] Add a Member to a Card
 
 ```bash
 trello card add-member $CARD_ID $MEMBER_ID
@@ -82,7 +82,7 @@ trello card add-member $CARD_ID $MEMBER_ID
 - [ ] Remove a Member from a Card
 
 ```bash
-trello card remove-member $CARD_ID --member $MEMBER_ID
+trello card remove-member $CARD_ID $MEMBER_ID
 ```
 
 ## API Coverage
@@ -206,7 +206,7 @@ This list of API actions was retrieved from the [Trello Reference REST API](http
 |        | Get Custom Field Items for a Card     | .customFields()                              |                                               |                                              |
 |        | Add a new comment to a Card           | .addComment(...)                             |                                               |                                              |
 |        | Add a Label to a Card                 | .addLabel(...)                               |                                               |                                              |
-|        | Add a Member to a Card                | .addMember(idMember)                         | add-member ID MEMBER_ID                       | POST /1/cards/{id}/idMembers                 |
+|   ✔    | Add a Member to a Card                | .addMember(idMember)                         | add-member ID MEMBER_ID                       | POST /1/cards/{id}/idMembers                 |
 |        | Create a new Label on a Card          | .createLabel(...)                            |                                               |                                              |
 |        | Mark a Card's Notifications as read   | .readNotifications()                         |                                               |                                              |
 |        | Remove a Label from a Card            | .removeLabel(idLabel)                        |                                               |                                              |

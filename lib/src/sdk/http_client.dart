@@ -32,6 +32,13 @@ abstract class HttpClient {
     Map<String, String>? queryParameters,
     Map<String, String>? headers,
   });
+
+  Future<Either<Failure, HttpResponse<T>>> post<T>(
+    String path, {
+    data,
+    Map<String, String>? queryParameters,
+    Map<String, String>? headers,
+  });
 }
 
 class DioHttpClient extends HttpClient {
@@ -88,6 +95,25 @@ class DioHttpClient extends HttpClient {
       return Right(dioResponse);
     } on DioError catch (e) {
       return Left(HttpClientFailure(message: 'PUT $path - ${e.message}'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, HttpResponse<T>>> post<T>(
+    String path, {
+    data,
+    Map<String, String>? queryParameters,
+    Map<String, String>? headers,
+  }) async {
+    try {
+      var response = await _dio.post<T>(path,
+          data: data,
+          queryParameters: queryParameters,
+          options: Options(headers: headers));
+      var dioResponse = DioHttpResponse(response);
+      return Right(dioResponse);
+    } on DioError catch (e) {
+      return Left(HttpClientFailure(message: 'POST $path - ${e.message}'));
     }
   }
 

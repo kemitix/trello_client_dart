@@ -13,6 +13,7 @@ class GetCardCommand extends CardCommand {
     CardFields.name,
     CardFields.pos,
     CardFields.due,
+    CardFields.idMembers,
   ];
 
   @override

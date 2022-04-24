@@ -19,6 +19,7 @@ function trello() {
 }
 
 MEMBER="kemitix"
+MEMBER_ID="5d999fc87ac5a442f45cb8eb"
 BOARD="5eccb96b04b4dc5666c64b7c"
 LIST="5de68ade15e1dc10b583219e"
 CARD="5dc1b58de65da8806ebabba8"
@@ -49,5 +50,9 @@ ls -l $FILE_NAME
 rm $FILE_NAME
 
 trello card update $MUTABLE_CARD --name "$(date --iso-8601=seconds)"
+
+trello card get $MUTABLE_CARD
+
+trello card add-member $MUTABLE_CARD $MEMBER_ID
 
 trello card get $MUTABLE_CARD

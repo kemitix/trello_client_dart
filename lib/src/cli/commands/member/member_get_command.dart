@@ -7,6 +7,7 @@ class GetMemberCommand extends MemberCommand {
   GetMemberCommand(TrelloClient client) : super('get', 'Get a Member', client);
 
   final List<MemberFields> fields = [
+    MemberFields.id,
     MemberFields.username,
     MemberFields.email,
     MemberFields.fullName,
