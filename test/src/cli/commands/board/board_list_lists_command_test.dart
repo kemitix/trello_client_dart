@@ -27,7 +27,7 @@ void main() {
       headers: dioHttpHeadersForResponseBody,
     );
     var testClient = testTrelloClient(
-        baseUrl: '/foo',
+        baseUrl: 'example.com',
         queryParameters: {'bar': 'baz'},
         authentication: authentication,
         responses: <ResponseBody>[response]);
@@ -38,8 +38,10 @@ void main() {
     expect(testClient.fetchHistory.length, 1);
     var requestOptions = testClient.fetchHistory[0].head;
     expect(requestOptions.method, 'GET');
+    expect(requestOptions.baseUrl, 'example.com');
     expect(requestOptions.path, '/1/boards/$boardId/lists');
     expect(requestOptions.queryParameters, {
+      'bar': 'baz',
       'cards': 'all',
       'card_fields': 'all',
       'filter': 'all',
