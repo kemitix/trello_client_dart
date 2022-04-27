@@ -27,14 +27,7 @@ class TrelloClient {
   late final Function1<ListId, ListClient> _list;
   late final Function1<CardId, CardClient> _card;
 
-  TrelloClient(TrelloAuthentication authentication) {
-    _httpClient = DioHttpClient(
-      baseUrl: 'https://api.trello.com',
-      queryParameters: {
-        'key': authentication.key,
-        'token': authentication.token,
-      },
-    );
+  TrelloClient(this._httpClient, TrelloAuthentication authentication) {
     _memberId = authentication.memberId;
     _member = (id) => MemberClient(_httpClient, id);
     _board = (id) => BoardClient(_httpClient, id);

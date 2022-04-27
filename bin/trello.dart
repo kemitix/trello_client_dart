@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:args/command_runner.dart';
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
+import 'package:trello_sdk/src/sdk/http_client.dart';
 import 'package:trello_sdk/trello_cli.dart';
 
 typedef Error = String;
@@ -15,7 +17,7 @@ Future<void> main(List<String> arguments) =>
         );
 
 Future<void> runApp(TrelloClient client, List<String> arguments) =>
-    _runner(client)
+    runner(client)
         .run(arguments)
         .catchError(_handleError)
         .whenComplete(() => client.close());
@@ -23,17 +25,6 @@ Future<void> runApp(TrelloClient client, List<String> arguments) =>
 void _handleError(error) {
   if (error is! UsageException) throw error;
   print(error);
-}
-
-CommandRunner _runner(TrelloClient client) {
-  var runner = CommandRunner('trello', "A CLI for Trello");
-  [
-    MemberModule(client),
-    BoardModule(client),
-    ListModule(client),
-    CardModule(client),
-  ].forEach(runner.addCommand);
-  return runner;
 }
 
 Future<void> reportErrors(ErrorList errors) async => errors.forEach(print);
@@ -60,5 +51,18 @@ Either<ErrorList, TrelloAuthentication> authentication() {
   return Right(TrelloAuthentication.of(memberId, key, token));
 }
 
-TrelloClient trelloClient(TrelloAuthentication authentication) =>
-    TrelloClient(authentication);
+TrelloClient trelloClient(TrelloAuthentication authentication) => TrelloClient(
+    DioHttpClient(
+      baseUrl: 'https://api.trello.com',
+      queryParameters: {
+        'key': authentication.key,
+        'token': authentication.token,
+      },
+      dioFactory: (String baseUrl, Map<String, String> queryParameters) {
+        return Dio(BaseOptions(
+          baseUrl: baseUrl,
+          queryParameters: queryParameters,
+        ));
+      },
+    ),
+    authentication);
