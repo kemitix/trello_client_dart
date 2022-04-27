@@ -34,8 +34,10 @@ class DioAdapterMock implements HttpClientAdapter {
       get fetchHistory => _fetchHistory;
 }
 
-Dio mockDio(DioAdapterMock dioAdapterMock) {
-  final Dio dio = Dio();
+Dio mockDio(String baseUrl, Map<String, String> queryParameters,
+    DioAdapterMock dioAdapterMock) {
+  final Dio dio =
+      Dio(BaseOptions(baseUrl: baseUrl, queryParameters: queryParameters));
   dio.httpClientAdapter = dioAdapterMock;
   return dio;
 }
@@ -63,7 +65,8 @@ TestTrelloClient testTrelloClient({
       DioHttpClient(
         baseUrl: baseUrl,
         queryParameters: queryParameters,
-        dioFactory: (baseUrl, queryParameters) => mockDio(adapterMock),
+        dioFactory: (baseUrl, queryParameters) =>
+            mockDio(baseUrl, queryParameters, adapterMock),
       ),
       authentication);
 
