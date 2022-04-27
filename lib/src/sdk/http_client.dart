@@ -44,11 +44,14 @@ abstract class HttpClient {
 class DioHttpClient extends HttpClient {
   late final Dio _dio;
   late final Dio _dioDownloader;
-  DioHttpClient(
-      {required String baseUrl, required Map<String, String> queryParameters}) {
-    _dio = Dio(BaseOptions(baseUrl: baseUrl, queryParameters: queryParameters));
+  DioHttpClient({
+    required String baseUrl,
+    required Map<String, String> queryParameters,
+    required Dio Function(String, Map<String, String>) dioFactory,
+  }) {
+    _dio = dioFactory(baseUrl, queryParameters);
     //_dio.interceptors.add(CurlLoggerDioInterceptor());
-    _dioDownloader = Dio(BaseOptions(queryParameters: queryParameters));
+    _dioDownloader = dioFactory('', queryParameters);
     //_dioDownloader.interceptors.add(CurlLoggerDioInterceptor());
   }
 
@@ -65,12 +68,12 @@ class DioHttpClient extends HttpClient {
     Map<String, String>? headers,
   }) async {
     try {
-      var response = await _dio.get<T>(path,
+      Response<T> response = await _dio.get<T>(path,
           queryParameters: queryParameters,
           options: Options(
             headers: headers,
           ));
-      var dioResponse = DioHttpResponse(response);
+      DioHttpResponse<T> dioResponse = DioHttpResponse(response);
       return Right(dioResponse);
     } on DioError catch (e) {
       return Left(HttpClientFailure(message: 'GET $path - ${e.message}'));
