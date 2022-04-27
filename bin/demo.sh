@@ -4,7 +4,8 @@ set -e
 
 cd "$(dirname $(dirname $0))"
 
-TRELLO="dart run ./bin/trello.dart"
+dart compile exe --output ./trello bin/trello.dart
+TRELLO="./trello"
 
 function trello() {
   label "trello $*"
