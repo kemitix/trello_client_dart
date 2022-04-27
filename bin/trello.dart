@@ -58,11 +58,10 @@ TrelloClient trelloClient(TrelloAuthentication authentication) => TrelloClient(
         'key': authentication.key,
         'token': authentication.token,
       },
-      dioFactory: (String baseUrl, Map<String, String> queryParameters) {
-        return Dio(BaseOptions(
-          baseUrl: baseUrl,
-          queryParameters: queryParameters,
-        ));
-      },
+      dioFactory: (String baseUrl, Map<String, String> queryParameters) =>
+          Dio(BaseOptions(
+        baseUrl: baseUrl,
+        queryParameters: queryParameters,
+      )),
     ),
     authentication);
