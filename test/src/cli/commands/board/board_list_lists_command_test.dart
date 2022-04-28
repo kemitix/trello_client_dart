@@ -31,7 +31,7 @@ void main() {
     //then
     Tuple2(1, 2);
     expect(testClient.fetchHistory.length, 1);
-    var requestOptions = testClient.fetchHistory[0].a;
+    var requestOptions = testClient.fetchHistory[0].head;
     expect(requestOptions.method, 'GET');
     expect(requestOptions.baseUrl, 'example.com');
     expect(requestOptions.path, '/1/boards/$boardId/lists');

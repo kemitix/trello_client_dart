@@ -1,10 +1,17 @@
-typedef Function1<A, B> = B Function(A a);
-typedef Function2<A, B, C> = C Function(A a, B b);
-typedef Function3<A, B, C, D> = D Function(A a, B b, C c);
-
-class Tuple3<A, B, C> {
-  Tuple3(this.a, this.b, this.c);
-  final A a;
-  final B b;
-  final C c;
-}
+/// Returns the given `a`.
+///
+/// Same as `id`.
+///
+/// Shortcut function to return the input parameter:
+/// ```dart
+/// final either = Either<String, int>.of(10);
+///
+/// /// Without using `identity`, you must write a function to return
+/// /// the input parameter `(l) => l`.
+/// final noId = either.match((l) => l, (r) => '$r');
+///
+/// /// Using `identity`/`id`, the function just returns its input parameter.
+/// final withIdentity = either.match(identity, (r) => '$r');
+/// final withId = either.match(id, (r) => '$r');
+/// ```
+T identity<T>(T a) => a;
