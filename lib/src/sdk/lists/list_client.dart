@@ -1,5 +1,3 @@
-import 'package:fpdart/fpdart.dart';
-
 import '../../../trello_sdk.dart';
 import '../http_client.dart';
 

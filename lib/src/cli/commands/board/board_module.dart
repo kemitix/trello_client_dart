@@ -1,5 +1,4 @@
 import 'package:args/command_runner.dart';
-import 'package:fpdart/fpdart.dart';
 
 import '../../../../trello_sdk.dart';
 import '../commands.dart';

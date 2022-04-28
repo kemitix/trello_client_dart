@@ -1,4 +1,3 @@
-import 'package:fpdart/fpdart.dart';
 import 'package:progress_bar/progress_bar.dart';
 
 import '../../../trello_sdk.dart';

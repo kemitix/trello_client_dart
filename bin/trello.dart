@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:args/command_runner.dart';
 import 'package:dio/dio.dart';
-import 'package:fpdart/fpdart.dart';
 import 'package:trello_sdk/src/sdk/http_client.dart';
 import 'package:trello_sdk/trello_cli.dart';
 
