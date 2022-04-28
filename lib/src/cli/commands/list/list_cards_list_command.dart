@@ -15,11 +15,11 @@ class ListCardsCommand extends ListCommand {
   ];
 
   @override
-  FutureOr<void> run() async => (await TaskEither.flatten(
-              TaskEither.fromEither(listId.map(_listClient).map(_getCardsTE)))
-          .map((cards) => tabulateObjects(cards, fields))
-          .run())
-      .collapse(printOutput);
+  FutureOr<void> run() async =>
+      (await taskEitherFlatE(listId.map(_listClient).map(_getCardsTE))
+              .map((cards) => tabulateObjects(cards, fields))
+              .run())
+          .collapse(printOutput);
 
   TaskEither<Failure, List<TrelloCard>> _getCardsTE(ListClient listClient) =>
       listClient.getCards(fields: fields);
