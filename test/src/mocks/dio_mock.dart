@@ -1,8 +1,8 @@
 import 'dart:typed_data';
 
-import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:trello_sdk/src/sdk/client.dart';
+import 'package:trello_sdk/src/sdk/fp/fp_types.dart';
 import 'package:trello_sdk/src/sdk/http_client.dart';
 
 class DioAdapterMock implements HttpClientAdapter {

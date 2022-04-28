@@ -1,7 +1,5 @@
 import 'dart:async';
 
-import 'package:dartz/dartz.dart';
-
 import '../../../../trello_sdk.dart';
 import 'card_module.dart';
 
@@ -17,10 +15,10 @@ class GetCardCommand extends CardCommand {
   ];
 
   @override
-  FutureOr<void> run() async => (await cardId.map(doGetCard).unwrapFuture())
-      .map((card) => tabulateObject(card, fields))
-      .collapse(printOutput);
+  FutureOr<void> run() async =>
+      (await TaskEither.fromEither(cardId).flatMap(_getCard).run())
+          .map((card) => tabulateObject(card, fields))
+          .collapse(printOutput);
 
-  Future<Either<Failure, TrelloCard>> doGetCard(cardId) =>
-      client.card(cardId).get();
+  TaskEither<Failure, TrelloCard> _getCard(cardId) => client.card(cardId).get();
 }

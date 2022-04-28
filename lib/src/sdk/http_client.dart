@@ -1,7 +1,8 @@
+import 'dart:async';
 import 'dart:io';
 
-import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:fpdart/fpdart.dart';
 
 import '../../trello_sdk.dart';
 
@@ -12,13 +13,13 @@ abstract class HttpResponse<T> {
 abstract class HttpClient {
   void close();
 
-  Future<Either<Failure, HttpResponse<T>>> get<T>(
+  TaskEither<Failure, HttpResponse<T>> get<T>(
     String path, {
     Map<String, String>? queryParameters,
     Map<String, String>? headers,
   });
 
-  Future<Either<Failure, void>> download(
+  TaskEither<Failure, void> download(
     String path,
     FileName fileName, {
     Map<String, String>? queryParameters,
@@ -26,14 +27,14 @@ abstract class HttpClient {
     void Function(int, int)? onReceiveProgress,
   });
 
-  Future<Either<Failure, HttpResponse<T>>> put<T>(
+  TaskEither<Failure, HttpResponse<T>> put<T>(
     String path, {
     data,
     Map<String, String>? queryParameters,
     Map<String, String>? headers,
   });
 
-  Future<Either<Failure, HttpResponse<T>>> post<T>(
+  TaskEither<Failure, HttpResponse<T>> post<T>(
     String path, {
     data,
     Map<String, String>? queryParameters,
@@ -62,96 +63,81 @@ class DioHttpClient extends HttpClient {
   }
 
   @override
-  Future<Either<Failure, HttpResponse<T>>> get<T>(
+  TaskEither<Failure, HttpResponse<T>> get<T>(
     String path, {
     Map<String, String>? queryParameters,
     Map<String, String>? headers,
-  }) async {
-    try {
-      Response<T> response = await _dio.get<T>(path,
+  }) =>
+      TaskEither.fromTask(Task(() => _dio.get<T>(path,
           queryParameters: queryParameters,
           options: Options(
             headers: headers,
-          ));
-      DioHttpResponse<T> dioResponse = DioHttpResponse(response);
-      return Right(dioResponse);
-    } on DioError catch (e) {
-      return Left(HttpClientFailure(message: 'GET $path - ${e.message}'));
-    }
-  }
+          )))).bimap(
+        (l) => HttpClientFailure(message: 'GET $path - ${l.message}'),
+        (r) => DioHttpResponse(r),
+      );
 
   @override
-  Future<Either<Failure, HttpResponse<T>>> put<T>(
+  TaskEither<Failure, HttpResponse<T>> put<T>(
     String path, {
     data,
     Map<String, String>? queryParameters,
     Map<String, String>? headers,
-  }) async {
-    try {
-      var response = await _dio.put<T>(path,
+  }) =>
+      TaskEither.fromTask(Task(() => _dio.put<T>(path,
           data: data,
           queryParameters: queryParameters,
           options: Options(
             headers: headers,
-          ));
-      var dioResponse = DioHttpResponse(response);
-      return Right(dioResponse);
-    } on DioError catch (e) {
-      return Left(HttpClientFailure(message: 'PUT $path - ${e.message}'));
-    }
-  }
+          )))).bimap(
+        (l) => HttpClientFailure(message: 'PUT $path - ${l.message}'),
+        (r) => DioHttpResponse(r),
+      );
 
   @override
-  Future<Either<Failure, HttpResponse<T>>> post<T>(
+  TaskEither<Failure, HttpResponse<T>> post<T>(
     String path, {
     data,
     Map<String, String>? queryParameters,
     Map<String, String>? headers,
-  }) async {
-    try {
-      var response = await _dio.post<T>(path,
+  }) =>
+      TaskEither.fromTask(Task(() => _dio.post<T>(path,
           data: data,
           queryParameters: queryParameters,
-          options: Options(headers: headers));
-      var dioResponse = DioHttpResponse(response);
-      return Right(dioResponse);
-    } on DioError catch (e) {
-      return Left(HttpClientFailure(message: 'POST $path - ${e.message}'));
-    }
-  }
+          options: Options(headers: headers)))).bimap(
+        (l) => HttpClientFailure(message: 'POST $path - ${l.message}'),
+        (r) => DioHttpResponse(r),
+      );
 
   @override
-  Future<Either<Failure, void>> download(
+  TaskEither<Failure, FutureOr<void>> download(
     String path,
     FileName fileName, {
     Map<String, String>? queryParameters,
     Map<String, String>? headers,
     void Function(int, int)? onReceiveProgress,
-  }) async {
-    try {
-      var response = await _dioDownloader.get(
-        path, onReceiveProgress: onReceiveProgress,
-        queryParameters: queryParameters,
-        //Received data with List<int>
-        options: Options(
-          responseType: ResponseType.bytes,
-          followRedirects: false,
-          validateStatus: (status) {
-            return status != null && status < 500;
-          },
-          headers: headers,
-        ),
+  }) =>
+      TaskEither.fromTask(Task(() => _dioDownloader.get(
+            path, onReceiveProgress: onReceiveProgress,
+            queryParameters: queryParameters,
+            //Received data with List<int>
+            options: Options(
+              responseType: ResponseType.bytes,
+              followRedirects: false,
+              validateStatus: (status) {
+                return status != null && status < 500;
+              },
+              headers: headers,
+            ),
+          ))).bimap(
+        (l) =>
+            HttpClientFailure(message: '(download) GET $path - ${l.message}'),
+        (r) {
+          var f = File(fileName.value).openSync(mode: FileMode.write);
+          f.writeFromSync(r.data);
+          return f.close();
+        },
       );
-      File file = File(fileName.value);
-      var raf = file.openSync(mode: FileMode.write);
-      //   // response.data is List<int> type
-      raf.writeFromSync(response.data);
-      return Right(await raf.close());
-    } on DioError catch (e) {
-      return Left(
-          HttpClientFailure(message: '(download) GET $path - ${e.message}'));
-    }
-  }
 }
 
 class CurlLoggerDioInterceptor extends Interceptor {
