@@ -29,8 +29,9 @@ void main() {
     //when
     await commandRunner.run(['board', 'list-lists', boardId]);
     //then
+    Tuple2(1, 2);
     expect(testClient.fetchHistory.length, 1);
-    var requestOptions = testClient.fetchHistory[0].head;
+    var requestOptions = testClient.fetchHistory[0].a;
     expect(requestOptions.method, 'GET');
     expect(requestOptions.baseUrl, 'example.com');
     expect(requestOptions.path, '/1/boards/$boardId/lists');

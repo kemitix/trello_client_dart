@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart';
+import 'package:fpdart/fpdart.dart';
 
 import '../../../trello_sdk.dart';
 import '../http_client.dart';
@@ -16,12 +16,12 @@ class ListClient {
   /// List the cards in a list
   ///
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-lists/#api-lists-id-cards-get
-  Future<Either<Failure, List<TrelloCard>>> getCards(
-          {List<CardFields>? fields}) async =>
-      (await _client.get<List<dynamic>>(
-        '/1/lists/${_id}/cards',
-        queryParameters: {},
-      ))
+  TaskEither<Failure, List<TrelloCard>> getCards({List<CardFields>? fields}) =>
+      _client
+          .get<List<dynamic>>(
+            '/1/lists/${_id}/cards',
+            queryParameters: {},
+          )
           .map((response) => response.data ?? [])
           .map((items) => items
               .map((item) => TrelloCard(item, fields ?? [CardFields.all]))

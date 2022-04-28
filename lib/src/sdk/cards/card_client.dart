@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart';
+import 'package:fpdart/fpdart.dart';
 
 import '../../../trello_sdk.dart';
 import '../http_client.dart';
@@ -22,17 +22,17 @@ class CardClient {
   /// Get a card by its ID
   ///
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-id-get
-  Future<Either<Failure, TrelloCard>> get({List<CardFields>? fields}) async =>
-      (await _client.get<dynamic>(
+  TaskEither<Failure, TrelloCard> get({List<CardFields>? fields}) => _client
+      .get<dynamic>(
         '/1/cards/$_cardId',
         queryParameters: {
           'fields': asCsv(fields ?? [CardFields.all]),
         },
-      ))
-          .map((response) => response.data)
-          .filter((data) => data != null,
-              () => ResourceNotFoundFailure(resource: 'Card ID: $_cardId'))
-          .map((data) => TrelloCard(data, fields ?? [CardFields.all]));
+      )
+      .map((response) => response.data)
+      .filterOrElse((data) => data != null,
+          (data) => ResourceNotFoundFailure(resource: 'Card ID: $_cardId'))
+      .map((data) => TrelloCard(data, fields ?? [CardFields.all]));
 
   /// Get Attachments on a Card
   ///
@@ -41,20 +41,21 @@ class CardClient {
   /// List the attachments on a card
   ///
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-id-attachments-get
-  Future<Either<Failure, List<TrelloAttachment>>> attachments({
+  TaskEither<Failure, List<TrelloAttachment>> attachments({
     AttachmentFilter filter = AttachmentFilter.falsE,
     List<AttachmentFields>? fields,
-  }) async =>
-      (await _client.get<List<dynamic>>('/1/cards/$_cardId/attachments',
+  }) =>
+      _client
+          .get<List<dynamic>>('/1/cards/$_cardId/attachments',
               queryParameters: {
-            'filter': filter.name.toLowerCase(),
-            'fields': asCsv(fields ?? [AttachmentFields.all]),
-          },
+                'filter': filter.name.toLowerCase(),
+                'fields': asCsv(fields ?? [AttachmentFields.all]),
+              },
               headers: {
-            'Authorization':
-                'OAuth oauth_consumer_key="${_authentication.key}", '
-                    'oauth_token="${_authentication.token}"',
-          }))
+                'Authorization':
+                    'OAuth oauth_consumer_key="${_authentication.key}", '
+                        'oauth_token="${_authentication.token}"',
+              })
           .map((response) => response.data ?? [])
           .map((items) => items
               .map((item) =>
@@ -68,10 +69,10 @@ class CardClient {
   /// Update a card
   ///
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-id-put
-  Future<Either<Failure, TrelloCard>> put(TrelloCard card) async =>
-      (await _client.put('/1/cards/$_cardId', data: card))
-          .map((response) => response.data)
-          .map((data) => TrelloCard(data, [CardFields.all]));
+  TaskEither<Failure, TrelloCard> put(TrelloCard card) => _client
+      .put('/1/cards/$_cardId', data: card)
+      .map((response) => response.data)
+      .map((data) => TrelloCard(data, [CardFields.all]));
 
   /// Add a Member to a Card
   ///
@@ -80,7 +81,7 @@ class CardClient {
   /// Add a member to a card
   ///
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-id-idmembers-post
-  Future<Either<Failure, void>> addMember(MemberId memberId) =>
+  TaskEither<Failure, void> addMember(MemberId memberId) =>
       _client.post('/1/cards/$_cardId/idMembers', queryParameters: {
         'value': memberId.value,
       });

@@ -1,5 +1,4 @@
-import 'package:dartz/dartz.dart';
-
+import '../../trello_sdk.dart';
 import 'boards/boards.dart';
 import 'cards/cards.dart';
 import 'http_client.dart';

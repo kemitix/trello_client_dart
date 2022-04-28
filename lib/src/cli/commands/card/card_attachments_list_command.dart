@@ -1,7 +1,5 @@
 import 'dart:async';
 
-import 'package:dartz/dartz.dart';
-
 import '../../../../trello_sdk.dart';
 import 'card_module.dart';
 
@@ -18,10 +16,10 @@ class ListAttachmentsCommand extends CardCommand {
 
   @override
   FutureOr<void> run() async =>
-      (await cardId.map(_getAttachments).unwrapFuture())
+      (await TaskEither.fromEither(cardId).flatMap(_getAttachments).run())
           .map((attachments) => tabulateObjects(attachments, fields))
           .collapse(printOutput);
 
-  Future<Either<Failure, List<TrelloAttachment>>> _getAttachments(cardId) =>
+  TaskEither<Failure, List<TrelloAttachment>> _getAttachments(cardId) =>
       client.card(cardId).attachments(fields: fields);
 }

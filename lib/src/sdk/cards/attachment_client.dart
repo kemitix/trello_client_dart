@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:progress_bar/progress_bar.dart';
 
 import '../../../trello_sdk.dart';
@@ -19,10 +19,10 @@ class AttachmentClient {
   /// Get a specific Attachment on a Card.
   ///
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-id-attachments-idattachment-get
-  Future<Either<Failure, TrelloAttachment>> get(
-          {List<AttachmentFields>? fields}) async =>
-      (await _client.get<Map<String, dynamic>>(
-              '/1/cards/$_cardId/attachments/$_attachmentId'))
+  TaskEither<Failure, TrelloAttachment> get({List<AttachmentFields>? fields}) =>
+      _client
+          .get<Map<String, dynamic>>(
+              '/1/cards/$_cardId/attachments/$_attachmentId')
           .map((response) => response.data)
           .map((data) =>
               TrelloAttachment(data, fields ?? [AttachmentFields.all]));
@@ -32,10 +32,9 @@ class AttachmentClient {
   /// GET (url from 'Get an Attachment on a Card')
   ///
   /// Download an attachment and save it to disk.
-  Future<Either<Failure, void>> download(FileName fileName) async =>
-      (await get(fields: [AttachmentFields.url, AttachmentFields.bytes])).fold(
-        (failure) => Left(failure),
-        (attachment) async => await _client.download(
+  TaskEither<Failure, void> download(FileName fileName) =>
+      get(fields: [AttachmentFields.url, AttachmentFields.bytes]).flatMap(
+        (attachment) => _client.download(
           attachment.url,
           fileName,
           headers: {

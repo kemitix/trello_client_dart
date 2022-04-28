@@ -1,7 +1,5 @@
 import 'dart:async';
 
-import 'package:dartz/dartz.dart';
-
 import '../../../../trello_sdk.dart';
 import 'card_module.dart';
 
@@ -42,17 +40,25 @@ class UpdateCardCommand extends CardCommand {
 - size        : normal, full (Determines whether to show the card name on the cover, or below it)''');
   }
 
-  FutureOr<void> run() async => (await cardId
-          .map((cardId) => cardClient(cardId))
-          .map((cardClient) async => (await getOriginalCard(cardClient))
-              .map((card) => updateCard(card, getUpdates()))
-              .map((card) => putCard(cardClient, card))
-              .unwrapFuture())
-          .unwrapFuture())
+  FutureOr<void> run() async => cardId
+      .map(_cardClient)
+      .map(_updateCardTE)
       .map((r) => "Updated")
       .collapse(printOutput);
 
-  TrelloCard updateCard(TrelloCard original, Map<String, String> updates) {
+  TaskEither<Failure, TrelloCard> _updateCardTE(cardClient) =>
+      TaskEither.flatten(_getOriginalCardTE(cardClient)
+          .map((card) => _updateCard(card, _getUpdates()))
+          .map((card) => _putCardTE(cardClient, card)));
+
+  TaskEither<Failure, TrelloCard> _putCardTE(
+          CardClient cardClient, TrelloCard card) =>
+      cardClient.put(card);
+
+  TaskEither<Failure, TrelloCard> _getOriginalCardTE(CardClient cardClient) =>
+      cardClient.get();
+
+  TrelloCard _updateCard(TrelloCard original, Map<String, String> updates) {
     var copy = original.raw;
     updates.keys.forEach((key) {
       copy.update(key, (value) => updates[key]);
@@ -60,7 +66,9 @@ class UpdateCardCommand extends CardCommand {
     return TrelloCard(copy, original.fields);
   }
 
-  Map<String, String> getUpdates() {
+  CardClient _cardClient(CardId cardId) => client.card(cardId);
+
+  Map<String, String> _getUpdates() {
     var updates = <String, String>{};
     [
       'name',
@@ -86,14 +94,4 @@ class UpdateCardCommand extends CardCommand {
     });
     return updates;
   }
-
-  Future<Either<Failure, TrelloCard>> putCard(
-          CardClient cardClient, TrelloCard card) async =>
-      cardClient.put(card);
-
-  CardClient cardClient(CardId cardId) => client.card(cardId);
-
-  Future<Either<Failure, TrelloCard>> getOriginalCard(
-          CardClient cardClient) async =>
-      cardClient.get();
 }

@@ -1,3 +1,4 @@
+export 'fp/fp.dart';
 export 'boards/boards.dart';
 export 'cards/cards.dart';
 export 'client.dart';
