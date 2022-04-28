@@ -9,11 +9,10 @@ class DownloadAttachmentCommand extends CardCommand {
       : super('download-attachment', 'Download an Attachment file', client);
 
   @override
-  FutureOr<void> run() async => (await TaskEither.flatten(
-              TaskEither.fromEither(_download(cardId, attachmentId, fileName)))
-          .run())
-      .map((_) => "Download complete")
-      .collapse(printOutput);
+  FutureOr<void> run() async =>
+      (await taskEitherFlatE(_download(cardId, attachmentId, fileName)).run())
+          .map((_) => "Download complete")
+          .collapse(printOutput);
 
   Function3<Either<Failure, CardId>, Either<Failure, AttachmentId>,
           Either<Failure, FileName>, Either<Failure, TaskEither<Failure, void>>>

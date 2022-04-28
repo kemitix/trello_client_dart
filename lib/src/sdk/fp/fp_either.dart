@@ -34,3 +34,6 @@ Either<L, D> map3either<L, A, A2 extends A, B, B2 extends B, C, C2 extends C,
         D Function(A a, B b, C c) fun) =>
     fa.fold(left,
         (a) => fb.fold(left, (b) => fc.fold(left, (c) => right(fun(a, b, c)))));
+
+TaskEither<L, R> taskEitherFlatE<L, R>(Either<L, TaskEither<L, R>> input) =>
+    TaskEither.flatten(TaskEither.fromEither(input));
