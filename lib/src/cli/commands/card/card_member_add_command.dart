@@ -18,7 +18,7 @@ class AddMemberToCardCommand extends CardCommand {
           .then((value) => value.collapse(printOutput));
 
   TaskEither<Failure, void> _addMember(CardId cardId, MemberId memberId) =>
-      client
+      TaskEither.flatten(client
           .card(cardId)
           .get(fields: [CardFields.idMembers])
           .map((card) => card.idMembers)
@@ -26,5 +26,5 @@ class AddMemberToCardCommand extends CardCommand {
             (idMembers) => !idMembers.contains(memberId.value),
             (idMembers) => AlreadyAppliedFailure(action: description),
           )
-          .map((_) => client.card(cardId).addMember(memberId));
+          .map((_) => client.card(cardId).addMember(memberId)));
 }
