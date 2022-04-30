@@ -1,3 +1,4 @@
+export 'authentication.dart';
 export 'commands/board/board_module.dart';
 export 'commands/card/card_module.dart';
 export 'commands/commands.dart';

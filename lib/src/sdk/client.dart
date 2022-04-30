@@ -1,11 +1,9 @@
-import '../../trello_sdk.dart';
-import 'boards/boards.dart';
-import 'cards/cards.dart';
-import 'http_client.dart';
-import 'lists/lists.dart';
-import 'members/members.dart';
+import 'package:equatable/equatable.dart';
 
-class TrelloAuthentication {
+import '../../trello_sdk.dart';
+import 'http_client.dart';
+
+class TrelloAuthentication extends Equatable {
   final String _key;
   String get key => _key;
 
@@ -16,6 +14,9 @@ class TrelloAuthentication {
   MemberId get memberId => _memberId;
 
   TrelloAuthentication.of(this._memberId, this._key, this._token);
+
+  @override
+  List<Object?> get props => [memberId, key, token];
 }
 
 class TrelloClient {
@@ -46,9 +47,12 @@ class TrelloClient {
   }
 }
 
-abstract class StringValue {
+abstract class StringValue extends Equatable {
   final String value;
   StringValue(this.value);
+
+  @override
+  List<Object?> get props => [value];
 
   @override
   String toString() {

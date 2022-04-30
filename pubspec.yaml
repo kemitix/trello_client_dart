@@ -12,6 +12,7 @@ dependencies:
   tabular: ^0.6.3+1
   progress_bar: ^1.0.0
   dartz: ^0.10.1
+  equatable: ^2.0.3
 
 dev_dependencies:
   lints: ^1.0.1
