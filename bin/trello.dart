@@ -6,14 +6,24 @@ import 'package:dio/dio.dart';
 import 'package:trello_sdk/src/sdk/http_client.dart';
 import 'package:trello_sdk/trello_cli.dart';
 
-typedef Error = String;
-typedef ErrorList = List<Error>;
+class MyInputs {
+  final List<String> _args;
+  final Environment _env;
+  MyInputs(this._env, this._args);
+  Environment get env => _env;
+  List<String> get args => _args;
+}
 
-Future<void> main(List<String> arguments) =>
-    authentication().map(trelloClient).fold<Future<void>>(
-          (errors) => reportErrors(errors),
-          (client) => runApp(client, arguments),
-        );
+Future<void> main(List<String> arguments) {
+  final myInputs = MyInputs(Platform.environment, arguments);
+  return authentication()
+      .run(myInputs.env)
+      .map(trelloClient)
+      .fold<Future<void>>(
+        (error) async => print(error),
+        (client) => runApp(client, arguments),
+      );
+}
 
 Future<void> runApp(TrelloClient client, List<String> arguments) =>
     runner(client)
@@ -24,30 +34,6 @@ Future<void> runApp(TrelloClient client, List<String> arguments) =>
 void _handleError(error) {
   if (error is! UsageException) throw error;
   print(error);
-}
-
-Future<void> reportErrors(ErrorList errors) async => errors.forEach(print);
-
-Either<ErrorList, TrelloAuthentication> authentication() {
-  var userEnv = 'TRELLO_USERNAME';
-  var keyEnv = 'TRELLO_KEY';
-  var tokenEnv = 'TRELLO_SECRET';
-  var e = <String>[];
-  void testEnvironment(String key) {
-    if (!Platform.environment.keys.contains(key)) {
-      e.add('Environment no set $key');
-    }
-  }
-
-  testEnvironment(userEnv);
-  testEnvironment(keyEnv);
-  testEnvironment(tokenEnv);
-  if (e.isNotEmpty) return Left(e);
-
-  var memberId = MemberId(Platform.environment[userEnv]!);
-  var key = Platform.environment[keyEnv]!;
-  var token = Platform.environment[tokenEnv]!;
-  return Right(TrelloAuthentication.of(memberId, key, token));
 }
 
 TrelloClient trelloClient(TrelloAuthentication authentication) => TrelloClient(
