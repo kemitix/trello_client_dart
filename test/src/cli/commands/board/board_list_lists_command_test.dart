@@ -1,47 +1,20 @@
-import 'dart:convert';
-
-import 'package:dio/dio.dart';
 import 'package:test/test.dart';
 import 'package:trello_sdk/trello_cli.dart';
 
-import '../../../mocks/dio_mock.dart';
+import '../../cli_commons.dart';
 
 void main() {
-  var authentication =
-      TrelloAuthentication.of(MemberId("_memberId"), "_key", "_token");
-
-  var env = <String, String>{
-    'TRELLO_USERNAME': 'foo',
-    'TRELLO_KEY': 'bar',
-    'TRELLO_SECRET': 'baz',
-  };
-
   test('requests lists', () async {
     //given
     var boardId = 'my-board-id';
     var args = 'board list-lists $boardId'.split(' ');
-    var response = ResponseBody.fromString(
-      jsonEncode([]),
-      200,
-      headers: {
-        Headers.contentTypeHeader: [Headers.jsonContentType],
-      },
-    );
-    TestTrelloClient testClient = testTrelloClient(
-        baseUrl: 'example.com',
-        queryParameters: {'bar': 'baz'},
-        authentication: authentication,
-        responses: <ResponseBody>[response]);
-
-    TrelloClient clientFactory(TrelloAuthentication _) =>
-        testClient.trelloClient;
-
+    var fakeTrelloClient = createFakeTrelloClient(createResponse(body: []));
     //when
-    await app().run(EnvArgsEnvironment(env, args, clientFactory));
+    await app().run(EnvArgsEnvironment(validEnvironment, args,
+        (TrelloAuthentication _) => fakeTrelloClient.trelloClient));
     //then
-    Tuple2(1, 2);
-    expect(testClient.fetchHistory.length, 1);
-    var requestOptions = testClient.fetchHistory[0].head;
+    expect(fakeTrelloClient.fetchHistory.length, 1);
+    var requestOptions = fakeTrelloClient.fetchHistory[0].head;
     expect(requestOptions.method, 'GET');
     expect(requestOptions.baseUrl, 'example.com');
     expect(requestOptions.path, '/1/boards/$boardId/lists');
