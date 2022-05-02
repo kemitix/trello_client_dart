@@ -4,27 +4,40 @@ import 'package:dio/dio.dart';
 import '../../trello_cli.dart';
 import '../sdk/http_client.dart';
 
-class AppEnvironment {
-  AppEnvironment(this._env, this._args);
+class EnvArgsEnvironment {
+  EnvArgsEnvironment(this._env, this._args);
 
-  final List<String> _args;
   final Environment _env;
+  final List<String> _args;
 
   Environment get env => _env;
   List<String> get args => _args;
 }
 
-Reader<AppEnvironment, Future<void>> app() =>
-    Reader((e) => authentication(e.env).map(trelloClient).fold(
+class ArgsClientEnvironment {
+  ArgsClientEnvironment(this._args, this._client);
+
+  final List<String> _args;
+  final TrelloClient _client;
+
+  List<String> get args => _args;
+  TrelloClient get client => _client;
+}
+
+Reader<EnvArgsEnvironment, Future<void>> app() =>
+    Reader((envArgsEnv) => authentication(envArgsEnv.env)
+        .map(trelloClient)
+        .map((client) => ArgsClientEnvironment(envArgsEnv.args, client))
+        .fold(
           (errors) async => errors.forEach(print),
-          (client) => runApp(client, e.args),
+          (argsClientEnv) => runApp().run(argsClientEnv),
         ));
 
-Future<void> runApp(TrelloClient client, List<String> arguments) =>
-    runner(client)
-        .run(arguments)
+Reader<ArgsClientEnvironment, Future<void>> runApp() =>
+    Reader((argsClientEnv) => runner(argsClientEnv.client)
+        .run(argsClientEnv.args)
         .catchError(_handleError)
-        .whenComplete(() => client.close());
+        .whenComplete(() => argsClientEnv.client.close()));
 
 void _handleError(error) {
   if (error is! UsageException) throw error;
