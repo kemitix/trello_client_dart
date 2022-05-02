@@ -1,17 +1,18 @@
 import 'package:args/command_runner.dart';
-import 'package:dio/dio.dart';
 
 import '../../trello_cli.dart';
-import '../sdk/http_client.dart';
 
 class EnvArgsEnvironment {
-  EnvArgsEnvironment(this._env, this._args);
+  EnvArgsEnvironment(this._env, this._args, this._clientFactory);
 
   final Environment _env;
   final List<String> _args;
+  final TrelloClient Function(TrelloAuthentication) _clientFactory;
 
   Environment get env => _env;
   List<String> get args => _args;
+  TrelloClient Function(TrelloAuthentication) get clientFactory =>
+      _clientFactory;
 }
 
 class ArgsClientEnvironment {
@@ -26,7 +27,7 @@ class ArgsClientEnvironment {
 
 Reader<EnvArgsEnvironment, Future<void>> app() =>
     Reader((envArgsEnv) => authentication(envArgsEnv.env)
-        .map(trelloClient)
+        .map((auth) => envArgsEnv.clientFactory(auth))
         .map((client) => ArgsClientEnvironment(envArgsEnv.args, client))
         .fold(
           (errors) async => errors.forEach(print),
@@ -43,18 +44,3 @@ void _handleError(error) {
   if (error is! UsageException) throw error;
   print(error);
 }
-
-TrelloClient trelloClient(TrelloAuthentication authentication) => TrelloClient(
-    DioHttpClient(
-      baseUrl: 'https://api.trello.com',
-      queryParameters: {
-        'key': authentication.key,
-        'token': authentication.token,
-      },
-      dioFactory: (String baseUrl, Map<String, String> queryParameters) =>
-          Dio(BaseOptions(
-        baseUrl: baseUrl,
-        queryParameters: queryParameters,
-      )),
-    ),
-    authentication);
