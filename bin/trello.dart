@@ -6,5 +6,6 @@ Future<void> main(List<String> arguments) async {
   await app().run(EnvArgsEnvironment(
     Platform.environment,
     arguments,
+    trelloClient,
   ));
 }

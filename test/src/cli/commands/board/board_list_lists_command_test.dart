@@ -10,9 +10,16 @@ void main() {
   var authentication =
       TrelloAuthentication.of(MemberId("_memberId"), "_key", "_token");
 
+  var env = <String, String>{
+    'TRELLO_USERNAME': 'foo',
+    'TRELLO_KEY': 'bar',
+    'TRELLO_SECRET': 'baz',
+  };
+
   test('requests lists', () async {
     //given
     var boardId = 'my-board-id';
+    var args = 'board list-lists $boardId'.split(' ');
     var response = ResponseBody.fromString(
       jsonEncode([]),
       200,
@@ -20,14 +27,17 @@ void main() {
         Headers.contentTypeHeader: [Headers.jsonContentType],
       },
     );
-    var testClient = testTrelloClient(
+    TestTrelloClient testClient = testTrelloClient(
         baseUrl: 'example.com',
         queryParameters: {'bar': 'baz'},
         authentication: authentication,
         responses: <ResponseBody>[response]);
-    var commandRunner = runner(testClient.trelloClient);
+
+    TrelloClient clientFactory(TrelloAuthentication _) =>
+        testClient.trelloClient;
+
     //when
-    await commandRunner.run(['board', 'list-lists', boardId]);
+    await app().run(EnvArgsEnvironment(env, args, clientFactory));
     //then
     Tuple2(1, 2);
     expect(testClient.fetchHistory.length, 1);
