@@ -1,24 +1,45 @@
 // authentication
 
+import 'package:equatable/equatable.dart';
+import 'package:trello_sdk/src/cli/runner.dart';
+import 'package:verify/verify.dart';
+
 import '../../trello_cli.dart';
 
-typedef Error = String;
-typedef ErrorList = List<Error>;
+typedef Errors = List<dynamic>;
 
-Reader<Environment, Either<Error, String>> _getEnv(String name) =>
-    Reader((env) => right<Error, String>(name)
-        .map((r) => env[r])
-        .where((r) => r != null, () => 'Environment not set $name')
-        .map((r) => r!));
+Either<Errors, TrelloAuthentication> authentication(Environment e) {
+  Function1<String, Validator<Environment>> environmentIsSet = (String key) =>
+      (Environment e) =>
+          e.keys.contains(key) ? Right(e) : Left([EnvironmentError(key)]);
 
-Function3<Either<Error, MemberId>, Either<Error, String>, Either<Error, String>,
-        Either<Error, TrelloAuthentication>> _authenticator =
-    Either.lift3<Error, MemberId, String, String, TrelloAuthentication>(
-        (memberId, key, secret) =>
-            TrelloAuthentication.of(memberId, key, secret));
+  Validator<Environment> validator = Verify.all<Environment>([
+    'USERNAME',
+    'KEY',
+    'SECRET'
+  ].map((v) => 'TRELLO_$v').map((key) => environmentIsSet(key)).toList());
 
-Reader<Environment, Either<Error, TrelloAuthentication>> authentication() =>
-    Reader((env) => _authenticator(
-        _getEnv('TRELLO_USERNAME').run(env).map((id) => MemberId(id)),
-        _getEnv('TRELLO_KEY').run(env),
-        _getEnv('TRELLO_SECRET').run(env)));
+  Either<List<ValidationError>, Environment> verified =
+      validator.verify<ValidationError>(e);
+  // FIXME this appears to be a bug in the 'verify' implementation that is losing all the errors
+  // all we get is an empty list of errors.
+  return verified
+      .map((e) => TrelloAuthentication.of(
+            MemberId(e['TRELLO_USERNAME']!),
+            e['TRELLO_KEY']!,
+            e['TRELLO_SECRET']!,
+          ))
+      .leftMap((l) => l.map((ve) => ve.errorDescription).toList());
+}
+
+class EnvironmentError extends ValidationError with EquatableMixin {
+  @override
+  String get errorDescription => 'Environment not set $_key';
+
+  EnvironmentError(this._key);
+
+  final String _key;
+
+  @override
+  List<Object?> get props => [_key];
+}

@@ -14,13 +14,11 @@ class AppEnvironment {
   List<String> get args => _args;
 }
 
-Reader<AppEnvironment, Future<void>> app() {
-  return Reader(
-      (e) => authentication().run(e.env).map(trelloClient).fold<Future<void>>(
-            (error) async => print(error),
-            (client) => runApp(client, e.args),
-          ));
-}
+Reader<AppEnvironment, Future<void>> app() =>
+    Reader((e) => authentication(e.env).map(trelloClient).fold(
+          (errors) async => errors.forEach(print),
+          (client) => runApp(client, e.args),
+        ));
 
 Future<void> runApp(TrelloClient client, List<String> arguments) =>
     runner(client)

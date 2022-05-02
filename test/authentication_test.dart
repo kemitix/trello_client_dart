@@ -5,13 +5,17 @@ import 'package:trello_sdk/src/sdk/members/member_models.dart';
 
 void main() {
   test('no env set', () {
-    authentication().run({}).fold(
-      (l) => expect(l, 'Environment not set TRELLO_USERNAME'),
+    authentication({}).fold(
+      (l) => expect(l, [
+        'Environment not set TRELLO_USERNAME',
+        'Environment not set TRELLO_KEY',
+        'Environment not set TRELLO_SECRET',
+      ]),
       (r) => fail("should have failed"),
     );
   });
   test('all env are set', () {
-    authentication().run({
+    authentication({
       'TRELLO_USERNAME': 'username',
       'TRELLO_KEY': 'key',
       'TRELLO_SECRET': 'secret',
@@ -22,29 +26,29 @@ void main() {
     );
   });
   test('key and secret set, but not username', () {
-    authentication().run({
+    authentication({
       'TRELLO_KEY': 'key',
       'TRELLO_SECRET': 'secret',
     }).fold(
-      (l) => expect(l, 'Environment not set TRELLO_USERNAME'),
+      (l) => expect(l, ['Environment not set TRELLO_USERNAME']),
       (r) => fail("should have failed"),
     );
   });
   test('username and secret set, but not key', () {
-    authentication().run({
+    authentication({
       'TRELLO_USERNAME': 'username',
       'TRELLO_SECRET': 'secret',
     }).fold(
-      (l) => expect(l, 'Environment not set TRELLO_KEY'),
+      (l) => expect(l, ['Environment not set TRELLO_KEY']),
       (r) => fail("should have failed"),
     );
   });
   test('username and key set, but not secret', () {
-    authentication().run({
+    authentication({
       'TRELLO_USERNAME': 'username',
       'TRELLO_KEY': 'key',
     }).fold(
-      (l) => expect(l, 'Environment not set TRELLO_SECRET'),
+      (l) => expect(l, ['Environment not set TRELLO_SECRET']),
       (r) => fail("should have failed"),
     );
   });
