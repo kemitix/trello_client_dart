@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:trello_sdk/src/sdk/client.dart';
 import 'package:trello_sdk/src/sdk/fp/fp.dart';
 import 'package:trello_sdk/src/sdk/http_client.dart';
+import 'package:trello_sdk/src/sdk/sdk.dart';
 
 class DioAdapterMock implements HttpClientAdapter {
   final List<Tuple3<RequestOptions, Stream<Uint8List>?, Future<dynamic>?>>
@@ -46,12 +47,16 @@ class TestTrelloClient {
   TestTrelloClient(
     this._client,
     this._dioAdapterMock,
+    this._fakeFileWriter,
   );
   final TrelloClient _client;
   final DioAdapterMock _dioAdapterMock;
+  final FakeFileWriter _fakeFileWriter;
   TrelloClient get trelloClient => _client;
   List<Tuple3<RequestOptions, Stream<Uint8List>?, Future<dynamic>?>>
       get fetchHistory => _dioAdapterMock.fetchHistory;
+  List<Tuple2<FileName, dynamic>> get filesWritten =>
+      _fakeFileWriter.filesWritten;
 }
 
 TestTrelloClient testTrelloClient({
@@ -61,14 +66,22 @@ TestTrelloClient testTrelloClient({
   required List<ResponseBody> responses,
 }) {
   var adapterMock = DioAdapterMock(responses);
+  var fakeFileWriter = FakeFileWriter();
   var client = TrelloClient(
       DioHttpClient(
-        baseUrl: baseUrl,
-        queryParameters: queryParameters,
-        dioFactory: (baseUrl, queryParameters) =>
-            mockDio(baseUrl, queryParameters, adapterMock),
-      ),
+          baseUrl: baseUrl,
+          queryParameters: queryParameters,
+          dioFactory: (baseUrl, queryParameters) =>
+              mockDio(baseUrl, queryParameters, adapterMock),
+          fileWriter: fakeFileWriter.fileWriter),
       authentication);
 
-  return TestTrelloClient(client, adapterMock);
+  return TestTrelloClient(client, adapterMock, fakeFileWriter);
+}
+
+class FakeFileWriter {
+  List<Tuple2<FileName, dynamic>> filesWritten = [];
+  Future<void> Function(FileName, dynamic) _fileWriter() =>
+      (fn, d) async => filesWritten.add(Tuple2(fn, d));
+  Future<void> Function(FileName, dynamic) get fileWriter => _fileWriter();
 }

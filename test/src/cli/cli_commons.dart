@@ -24,7 +24,7 @@ ResponseBody createResponse(
     int statusCode = 200,
     String contentType = Headers.jsonContentType}) {
   return ResponseBody.fromString(
-    jsonEncode(body),
+    body is String ? body : jsonEncode(body),
     statusCode,
     headers: {
       Headers.contentTypeHeader: [contentType],

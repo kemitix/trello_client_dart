@@ -1,6 +1,9 @@
+import 'dart:typed_data';
+
 import 'package:test/test.dart';
 import 'package:trello_sdk/src/cli/app.dart';
 import 'package:trello_sdk/src/sdk/client.dart';
+import 'package:trello_sdk/trello_cli.dart';
 
 import '../../cli_commons.dart';
 
@@ -10,7 +13,8 @@ void main() {
   var fileName = 'my-file-name';
   var attachmentResult = {'url': 'my-url', 'bytes': 2};
   var attachmentResponse = createResponse(body: attachmentResult);
-  var fileContentResponse = createResponse(body: 'file content');
+  var fileContent = '{file: "content"}';
+  var fileContentResponse = createResponse(body: fileContent);
   var fakeTrelloClient = createFakeTrelloClient([
     attachmentResponse,
     fileContentResponse,
@@ -42,4 +46,15 @@ void main() {
       () async => expect(fakePrinter.output, [
             'Download complete',
           ]));
+  test('one file written',
+      () async => expect(fakeTrelloClient.filesWritten.length, 1));
+  test(
+      'write to correct file',
+      () async =>
+          expect(fakeTrelloClient.filesWritten[0].head, FileName(fileName)));
+  test(
+      'write correct file content',
+      () async => expect(
+          String.fromCharCodes(fakeTrelloClient.filesWritten[0].tail),
+          fileContent));
 }

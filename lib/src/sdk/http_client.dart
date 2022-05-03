@@ -44,15 +44,19 @@ abstract class HttpClient {
 class DioHttpClient extends HttpClient {
   late final Dio _dio;
   late final Dio _dioDownloader;
+  late Future<void> Function(FileName fileName, dynamic data) _fileWriter;
+
   DioHttpClient({
     required String baseUrl,
     required Map<String, String> queryParameters,
     required Dio Function(String, Map<String, String>) dioFactory,
+    Future<void> Function(FileName fileName, dynamic data)? fileWriter,
   }) {
     _dio = dioFactory(baseUrl, queryParameters);
     //_dio.interceptors.add(CurlLoggerDioInterceptor());
     _dioDownloader = dioFactory('', queryParameters);
     //_dioDownloader.interceptors.add(CurlLoggerDioInterceptor());
+    _fileWriter = fileWriter != null ? fileWriter : defaultFileWriter;
   }
 
   @override
@@ -132,11 +136,15 @@ class DioHttpClient extends HttpClient {
         (l) =>
             HttpClientFailure(message: '(download) GET $path - ${l.message}'),
         (r) {
-          var f = File(fileName.value).openSync(mode: FileMode.write);
-          f.writeFromSync(r.data);
-          return f.close();
+          return _fileWriter(fileName, r.data);
         },
       );
+
+  Future<void> defaultFileWriter(FileName fileName, dynamic data) {
+    var f = File(fileName.value).openSync(mode: FileMode.write);
+    f.writeFromSync(data);
+    return f.close();
+  }
 }
 
 class CurlLoggerDioInterceptor extends Interceptor {
