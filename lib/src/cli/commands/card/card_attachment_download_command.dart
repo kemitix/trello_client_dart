@@ -6,7 +6,8 @@ import '../../cli.dart';
 /// download-attachment $CARD_ID $ATTACHMENT_ID $FILE_NAME
 class DownloadAttachmentCommand extends CardCommand {
   DownloadAttachmentCommand(CommandEnvironment commandEnvironment)
-      : super('download-attachment', 'Download an Attachment file', commandEnvironment);
+      : super('download-attachment', 'Download an Attachment file',
+            commandEnvironment);
 
   @override
   FutureOr<void> run() async =>

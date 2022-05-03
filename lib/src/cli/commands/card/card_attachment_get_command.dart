@@ -5,7 +5,8 @@ import '../../cli.dart';
 
 class GetAttachmentCommand extends CardCommand {
   GetAttachmentCommand(CommandEnvironment commandEnvironment)
-      : super('get-attachment', 'Get an Attachment on a Card', commandEnvironment);
+      : super('get-attachment', 'Get an Attachment on a Card',
+            commandEnvironment);
 
   final List<AttachmentFields> fields = [
     AttachmentFields.id,

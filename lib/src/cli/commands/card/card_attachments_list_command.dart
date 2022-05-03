@@ -5,7 +5,8 @@ import '../../cli.dart';
 
 class ListAttachmentsCommand extends CardCommand {
   ListAttachmentsCommand(CommandEnvironment commandEnvironment)
-      : super('list-attachments', 'List Attachments on a Card', commandEnvironment);
+      : super('list-attachments', 'List Attachments on a Card',
+            commandEnvironment);
 
   final List<AttachmentFields> fields = [
     AttachmentFields.id,

@@ -20,7 +20,8 @@ class MemberModule extends Command {
 }
 
 abstract class MemberCommand extends TrelloCommand {
-  MemberCommand(String name, String description, CommandEnvironment commandEnvironment)
+  MemberCommand(
+      String name, String description, CommandEnvironment commandEnvironment)
       : super(name, description, commandEnvironment);
 
   MemberId get memberId {

@@ -16,7 +16,8 @@ class BoardModule extends Command {
 }
 
 abstract class BoardCommand extends TrelloCommand {
-  BoardCommand(String name, String description, CommandEnvironment commandEnvironment)
+  BoardCommand(
+      String name, String description, CommandEnvironment commandEnvironment)
       : super(name, description, commandEnvironment);
 
   Either<Failure, BoardId> get boardId =>

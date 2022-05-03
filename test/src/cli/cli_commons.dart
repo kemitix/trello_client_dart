@@ -34,5 +34,6 @@ ResponseBody createResponse(
 
 class FakePrinter {
   final List<String> output = [];
-  void Function(Object) get printer => (Object s) => output.addAll(s.toString().split('\n'));
+  void Function(Object) get printer =>
+      (Object s) => output.addAll(s.toString().split('\n'));
 }

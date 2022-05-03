@@ -32,20 +32,21 @@ class ArgsClientEnvironment {
 Reader<EnvArgsEnvironment, Future<void>> app() =>
     Reader((envArgsEnv) => authentication(envArgsEnv.env)
         .map((auth) => envArgsEnv.clientFactory(auth))
-        .map((client) => ArgsClientEnvironment(envArgsEnv.args, client, envArgsEnv.printer))
+        .map((client) =>
+            ArgsClientEnvironment(envArgsEnv.args, client, envArgsEnv.printer))
         .fold(
           (errors) async => errors.forEach(_handleError(envArgsEnv)),
           (argsClientEnv) => runApp().run(argsClientEnv),
         ));
 
 void Function(dynamic) _handleError(EnvArgsEnvironment envArgsEnvironment) =>
-        (dynamic error) => envArgsEnvironment.printer(error);
+    (dynamic error) => envArgsEnvironment.printer(error);
 
 Reader<ArgsClientEnvironment, Future<void>> runApp() =>
-    Reader((argsClientEnv) => runner(CommandEnvironment(argsClientEnv.client, argsClientEnv.printer))
-        .run(argsClientEnv.args)
-        .catchError((error) {
+    Reader((argsClientEnv) =>
+        runner(CommandEnvironment(argsClientEnv.client, argsClientEnv.printer))
+            .run(argsClientEnv.args)
+            .catchError((error) {
           if (error is! UsageException) throw error;
           argsClientEnv.printer(error);
-        })
-        .whenComplete(() => argsClientEnv.client.close()));
+        }).whenComplete(() => argsClientEnv.client.close()));
