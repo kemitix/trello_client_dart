@@ -11,14 +11,6 @@ var validEnvironment = <String, String>{
   'TRELLO_SECRET': 'baz',
 };
 
-TestTrelloClient createFakeTrelloClient(List<ResponseBody> responses) =>
-    testTrelloClient(
-        baseUrl: 'example.com',
-        queryParameters: {},
-        authentication:
-            TrelloAuthentication.of(MemberId("_memberId"), "_key", "_token"),
-        responses: responses);
-
 ResponseBody createResponse(
     {required Object body,
     int statusCode = 200,
