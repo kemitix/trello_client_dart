@@ -8,7 +8,7 @@ void main() {
     //given
     var boardId = 'my-board-id';
     var args = 'board list-lists $boardId'.split(' ');
-    var fakeTrelloClient = createFakeTrelloClient(createResponse(body: []));
+    var fakeTrelloClient = createFakeTrelloClient([createResponse(body: [])]);
     //when
     await app().run(EnvArgsEnvironment(validEnvironment, args,
         (TrelloAuthentication _) => fakeTrelloClient.trelloClient));
@@ -19,7 +19,6 @@ void main() {
     expect(requestOptions.baseUrl, 'example.com');
     expect(requestOptions.path, '/1/boards/$boardId/lists');
     expect(requestOptions.queryParameters, {
-      'bar': 'baz',
       'cards': 'all',
       'card_fields': 'all',
       'filter': 'all',
