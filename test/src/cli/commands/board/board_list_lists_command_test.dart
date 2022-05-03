@@ -4,25 +4,30 @@ import 'package:trello_sdk/trello_cli.dart';
 import '../../cli_commons.dart';
 
 void main() {
-  test('requests lists', () async {
-    //given
-    var boardId = 'my-board-id';
-    var args = 'board list-lists $boardId'.split(' ');
-    var fakeTrelloClient = createFakeTrelloClient([createResponse(body: [])]);
-    //when
-    await app().run(EnvArgsEnvironment(validEnvironment, args,
-        (TrelloAuthentication _) => fakeTrelloClient.trelloClient));
-    //then
-    expect(fakeTrelloClient.fetchHistory.length, 1);
-    var requestOptions = fakeTrelloClient.fetchHistory[0].head;
-    expect(requestOptions.method, 'GET');
-    expect(requestOptions.baseUrl, 'example.com');
-    expect(requestOptions.path, '/1/boards/$boardId/lists');
-    expect(requestOptions.queryParameters, {
-      'cards': 'all',
-      'card_fields': 'all',
-      'filter': 'all',
-      'fields': 'id,name,pos,closed,subscribed',
-    });
-  });
+  var boardId = 'my-board-id';
+  var args = 'board list-lists $boardId'.split(' ');
+  var fakeTrelloClient = createFakeTrelloClient([createResponse(body: [])]);
+  setUpAll(() async => await app().run(EnvArgsEnvironment(validEnvironment,
+      args, (TrelloAuthentication _) => fakeTrelloClient.trelloClient)));
+  test('there was only one request',
+      () => expect(fakeTrelloClient.fetchHistory.length, 1));
+  test('request was a GET',
+      () => expect(fakeTrelloClient.fetchHistory[0].head.method, 'GET'));
+  test(
+      'request baseUrl',
+      () =>
+          expect(fakeTrelloClient.fetchHistory[0].head.baseUrl, 'example.com'));
+  test(
+      'request path',
+      () => expect(fakeTrelloClient.fetchHistory[0].head.path,
+          '/1/boards/$boardId/lists'));
+  test(
+      'requests query parameters',
+      () async =>
+          expect(fakeTrelloClient.fetchHistory[0].head.queryParameters, {
+            'cards': 'all',
+            'card_fields': 'all',
+            'filter': 'all',
+            'fields': 'id,name,pos,closed,subscribed',
+          }));
 }
