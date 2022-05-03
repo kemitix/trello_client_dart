@@ -5,7 +5,8 @@ import '../../cli.dart';
 
 class ListMemberBoardsCommand extends MemberCommand {
   ListMemberBoardsCommand(CommandEnvironment commandEnvironment)
-      : super('list-boards', 'Get Boards that Member belongs to', commandEnvironment);
+      : super('list-boards', 'Get Boards that Member belongs to',
+            commandEnvironment);
 
   final List<BoardFields> fields = [
     BoardFields.id,

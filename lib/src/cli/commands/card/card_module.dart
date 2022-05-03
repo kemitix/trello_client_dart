@@ -29,7 +29,8 @@ class CardModule extends Command {
 }
 
 abstract class CardCommand extends TrelloCommand {
-  CardCommand(String name, String description, CommandEnvironment commandEnvironment)
+  CardCommand(
+      String name, String description, CommandEnvironment commandEnvironment)
       : super(name, description, commandEnvironment);
 
   Either<Failure, CardId> get cardId =>

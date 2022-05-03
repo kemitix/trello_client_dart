@@ -6,13 +6,17 @@ import '../../cli_commons.dart';
 void main() {
   var boardId = 'my-board-id';
   var args = 'board list-lists $boardId'.split(' ');
-  var fakeTrelloClient = createFakeTrelloClient([createResponse(body: [{
-      'id': 'my-list-id',
-      'name': 'my-list-name',
-      'pos': 1024,
-      'closed': false,
-      'subscribed': true,
-    }])]);
+  var fakeTrelloClient = createFakeTrelloClient([
+    createResponse(body: [
+      {
+        'id': 'my-list-id',
+        'name': 'my-list-name',
+        'pos': 1024,
+        'closed': false,
+        'subscribed': true,
+      }
+    ])
+  ]);
   var fetchHistory = fakeTrelloClient.fetchHistory;
   var fakePrinter = FakePrinter();
   setUpAll(() async => await app().run(EnvArgsEnvironment(validEnvironment,
@@ -31,9 +35,11 @@ void main() {
             'filter': 'all',
             'fields': 'id,name,pos,closed,subscribed',
           }));
-  test('output', () async => expect(fakePrinter.output, [
-    'id         | name         |  pos | closed | subscribed',
-    '-----------|--------------|------|--------|-----------',
-    'my-list-id | my-list-name | 1024 | false  | true      ',
-  ]));
+  test(
+      'output',
+      () async => expect(fakePrinter.output, [
+            'id         | name         |  pos | closed | subscribed',
+            '-----------|--------------|------|--------|-----------',
+            'my-list-id | my-list-name | 1024 | false  | true      ',
+          ]));
 }

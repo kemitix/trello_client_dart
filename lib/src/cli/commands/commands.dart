@@ -69,9 +69,8 @@ abstract class TrelloCommand extends Command {
           TrelloObject<T> object) =>
       (field) => object.getValue(field).toString();
 
-  FutureOr<void> printOutput(Either<Failure, String> either) =>
-      either.fold(
-            (failure) => e.printer('ERROR: ${parent!.name} $name - $failure'),
-            (output) => e.printer(output),
+  FutureOr<void> printOutput(Either<Failure, String> either) => either.fold(
+        (failure) => e.printer('ERROR: ${parent!.name} $name - $failure'),
+        (output) => e.printer(output),
       );
 }

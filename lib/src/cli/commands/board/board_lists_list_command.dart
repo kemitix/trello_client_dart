@@ -3,8 +3,6 @@ import 'dart:async';
 import '../../../../trello_sdk.dart';
 import '../../cli.dart';
 
-
-
 class ListListsCommand extends BoardCommand {
   ListListsCommand(CommandEnvironment commandEnvironment)
       : super('list-lists', 'Get Lists on a Board', commandEnvironment);
