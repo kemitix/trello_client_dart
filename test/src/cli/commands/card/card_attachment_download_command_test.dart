@@ -15,25 +15,25 @@ void main() {
     attachmentResponse,
     fileContentResponse,
   ]);
+  var fetchHistory = fakeTrelloClient.fetchHistory;
   setUpAll(() async => await app().run(EnvArgsEnvironment(
       validEnvironment,
       'card download-attachment $cardId $attachmentId $fileName'.split(' '),
       (TrelloAuthentication _) => fakeTrelloClient.trelloClient)));
-  test('there were two API calls',
-      () => expect(fakeTrelloClient.fetchHistory.length, 2));
+  test('there were two API calls', () => expect(fetchHistory.length, 2));
   test('first request was a GET',
-      () => expect(fakeTrelloClient.fetchHistory[0].head.method, 'GET'));
+      () => expect(fetchHistory[0].head.method, 'GET'));
   test(
       'first request path',
-      () => expect(fakeTrelloClient.fetchHistory[0].head.path,
+      () => expect(fetchHistory[0].head.path,
           '/1/cards/$cardId/attachments/$attachmentId'));
   test('first request has no query parameters',
-      () => expect(fakeTrelloClient.fetchHistory[0].head.queryParameters, {}));
+      () => expect(fetchHistory[0].head.queryParameters, {}));
   test('second request was a GET',
-      () => expect(fakeTrelloClient.fetchHistory[1].head.method, 'GET'));
+      () => expect(fetchHistory[1].head.method, 'GET'));
   test('second request has no base URL',
-      () => expect(fakeTrelloClient.fetchHistory[1].head.baseUrl, ''));
-  test('second request path',
-      () => expect(fakeTrelloClient.fetchHistory[1].head.path, 'my-url'));
+      () => expect(fetchHistory[1].head.baseUrl, ''));
+  test(
+      'second request path', () => expect(fetchHistory[1].head.path, 'my-url'));
   //TODO test correct output is written to the correct file
 }
