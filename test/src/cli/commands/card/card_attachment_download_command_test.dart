@@ -16,11 +16,11 @@ void main() {
     fileContentResponse,
   ]);
   var fetchHistory = fakeTrelloClient.fetchHistory;
-  var output = <String>[];
+  var fakePrinter = FakePrinter();
   setUpAll(() async => await app().run(EnvArgsEnvironment(
       validEnvironment,
       'card download-attachment $cardId $attachmentId $fileName'.split(' '),
-      (_) => fakeTrelloClient.trelloClient, (s) => output.add(s.toString()))));
+      (_) => fakeTrelloClient.trelloClient, fakePrinter.printer)));
   test('there were two API calls', () => expect(fetchHistory.length, 2));
   test('first request was a GET',
       () => expect(fetchHistory[0].head.method, 'GET'));
@@ -36,5 +36,7 @@ void main() {
       () => expect(fetchHistory[1].head.baseUrl, ''));
   test(
       'second request path', () => expect(fetchHistory[1].head.path, 'my-url'));
-  //TODO test correct output is written to the correct file
+  test('output', () async => expect(fakePrinter.output, [
+    'Download complete',
+  ]));
 }
