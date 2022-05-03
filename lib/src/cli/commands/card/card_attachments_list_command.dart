@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import '../../../../trello_sdk.dart';
-import 'card_module.dart';
+import '../../cli.dart';
 
 class ListAttachmentsCommand extends CardCommand {
-  ListAttachmentsCommand(TrelloClient client)
-      : super('list-attachments', 'List Attachments on a Card', client);
+  ListAttachmentsCommand(CommandEnvironment commandEnvironment)
+      : super('list-attachments', 'List Attachments on a Card', commandEnvironment);
 
   final List<AttachmentFields> fields = [
     AttachmentFields.id,

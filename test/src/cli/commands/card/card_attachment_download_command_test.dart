@@ -16,10 +16,11 @@ void main() {
     fileContentResponse,
   ]);
   var fetchHistory = fakeTrelloClient.fetchHistory;
+  var output = <String>[];
   setUpAll(() async => await app().run(EnvArgsEnvironment(
       validEnvironment,
       'card download-attachment $cardId $attachmentId $fileName'.split(' '),
-      (TrelloAuthentication _) => fakeTrelloClient.trelloClient)));
+      (_) => fakeTrelloClient.trelloClient, (s) => output.add(s.toString()))));
   test('there were two API calls', () => expect(fetchHistory.length, 2));
   test('first request was a GET',
       () => expect(fetchHistory[0].head.method, 'GET'));

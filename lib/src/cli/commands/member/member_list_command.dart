@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import '../../../../trello_sdk.dart';
-import 'member_module.dart';
+import '../../cli.dart';
 
 class ListMemberBoardsCommand extends MemberCommand {
-  ListMemberBoardsCommand(TrelloClient client)
-      : super('list-boards', 'Get Boards that Member belongs to', client);
+  ListMemberBoardsCommand(CommandEnvironment commandEnvironment)
+      : super('list-boards', 'Get Boards that Member belongs to', commandEnvironment);
 
   final List<BoardFields> fields = [
     BoardFields.id,

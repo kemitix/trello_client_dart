@@ -5,13 +5,13 @@ import 'cli.dart';
 
 typedef Environment = Map<String, String>;
 
-CommandRunner runner(TrelloClient client) {
+CommandRunner runner(CommandEnvironment commandEnvironment) {
   var runner = CommandRunner('trello', "A CLI for Trello");
   [
-    MemberModule(client),
-    BoardModule(client),
-    ListModule(client),
-    CardModule(client),
+    MemberModule(commandEnvironment),
+    BoardModule(commandEnvironment),
+    ListModule(commandEnvironment),
+    CardModule(commandEnvironment),
   ].forEach(runner.addCommand);
   return runner;
 }

@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import '../../../../trello_sdk.dart';
-import 'list_module.dart';
+import '../../cli.dart';
 
 class ListCardsCommand extends ListCommand {
-  ListCardsCommand(TrelloClient client)
-      : super('list-cards', 'Get Cards in a List', client);
+  ListCardsCommand(CommandEnvironment commandEnvironment)
+      : super('list-cards', 'Get Cards in a List', commandEnvironment);
 
   final List<CardFields> fields = [
     CardFields.id,
