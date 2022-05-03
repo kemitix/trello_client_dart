@@ -2,18 +2,29 @@ import 'dart:async';
 
 import 'package:args/command_runner.dart';
 import 'package:tabular/tabular.dart';
+import 'package:trello_sdk/src/cli/app.dart';
 
 import '../../../trello_sdk.dart';
+
+class CommandEnvironment {
+  CommandEnvironment(this._client, this._printer);
+  final TrelloClient _client;
+  final void Function(Object s) _printer;
+  TrelloClient get client => _client;
+  void Function(Object s) get printer => _printer;
+}
 
 abstract class TrelloCommand extends Command {
   final String _name;
   final String _description;
-  final TrelloClient _client;
+  final CommandEnvironment _commandEnvironment;
+
+  CommandEnvironment get e => _commandEnvironment;
 
   TrelloCommand(
     this._name,
     this._description,
-    this._client,
+    this._commandEnvironment,
   );
 
   @override
@@ -22,7 +33,7 @@ abstract class TrelloCommand extends Command {
   @override
   String get description => _description;
 
-  TrelloClient get client => _client;
+  TrelloClient get client => _commandEnvironment.client;
 
   List<String> get parameters => argResults!.rest;
 
@@ -58,8 +69,9 @@ abstract class TrelloCommand extends Command {
           TrelloObject<T> object) =>
       (field) => object.getValue(field).toString();
 
-  FutureOr<void> printOutput(Either<Failure, String> either) => either.fold(
-        (failure) => print('ERROR: ${parent!.name} $name - $failure'),
-        (output) => print(output),
+  FutureOr<void> printOutput(Either<Failure, String> either) =>
+      either.fold(
+            (failure) => e.printer('ERROR: ${parent!.name} $name - $failure'),
+            (output) => e.printer(output),
       );
 }

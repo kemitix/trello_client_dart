@@ -1,10 +1,11 @@
 import 'dart:async';
 
 import '../../../../trello_sdk.dart';
-import 'member_module.dart';
+import '../../cli.dart';
 
 class GetMemberCommand extends MemberCommand {
-  GetMemberCommand(TrelloClient client) : super('get', 'Get a Member', client);
+  GetMemberCommand(CommandEnvironment commandEnvironment)
+      : super('get', 'Get a Member', commandEnvironment);
 
   final List<MemberFields> fields = [
     MemberFields.id,

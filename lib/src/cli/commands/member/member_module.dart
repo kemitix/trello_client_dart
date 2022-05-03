@@ -11,17 +11,17 @@ class MemberModule extends Command {
   @override
   final String description = 'Trello Members (users)';
 
-  MemberModule(TrelloClient client) {
+  MemberModule(CommandEnvironment commandEnvironment) {
     [
-      GetMemberCommand(client),
-      ListMemberBoardsCommand(client),
+      GetMemberCommand(commandEnvironment),
+      ListMemberBoardsCommand(commandEnvironment),
     ].forEach(addSubcommand);
   }
 }
 
 abstract class MemberCommand extends TrelloCommand {
-  MemberCommand(String name, String description, TrelloClient client)
-      : super(name, description, client);
+  MemberCommand(String name, String description, CommandEnvironment commandEnvironment)
+      : super(name, description, commandEnvironment);
 
   MemberId get memberId {
     if (parameters.isEmpty) {

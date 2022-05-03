@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import '../../../../trello_sdk.dart';
-import 'card_module.dart';
+import '../../cli.dart';
 
 class AddMemberToCardCommand extends CardCommand {
-  AddMemberToCardCommand(TrelloClient client)
-      : super('add-member', 'Add a Member to a Card', client);
+  AddMemberToCardCommand(CommandEnvironment commandEnvironment)
+      : super('add-member', 'Add a Member to a Card', commandEnvironment);
 
   Either<Failure, MemberId> get memberId =>
       nextParameter('Member Id').map((id) => MemberId(id));

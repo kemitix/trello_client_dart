@@ -10,14 +10,14 @@ class BoardModule extends Command {
   @override
   final String description = 'Trello Boards';
 
-  BoardModule(TrelloClient client) {
-    [ListListsCommand(client)].forEach(addSubcommand);
+  BoardModule(CommandEnvironment commandEnvironment) {
+    [ListListsCommand(commandEnvironment)].forEach(addSubcommand);
   }
 }
 
 abstract class BoardCommand extends TrelloCommand {
-  BoardCommand(String name, String description, TrelloClient client)
-      : super(name, description, client);
+  BoardCommand(String name, String description, CommandEnvironment commandEnvironment)
+      : super(name, description, commandEnvironment);
 
   Either<Failure, BoardId> get boardId =>
       nextParameter('Board Id').map((id) => BoardId(id));

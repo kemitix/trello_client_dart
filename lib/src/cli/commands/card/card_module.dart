@@ -16,21 +16,21 @@ class CardModule extends Command {
   @override
   final String description = 'Trello Cards';
 
-  CardModule(TrelloClient client) {
+  CardModule(CommandEnvironment commandEnvironment) {
     [
-      GetCardCommand(client),
-      ListAttachmentsCommand(client),
-      GetAttachmentCommand(client),
-      DownloadAttachmentCommand(client),
-      UpdateCardCommand(client),
-      AddMemberToCardCommand(client),
+      GetCardCommand(commandEnvironment),
+      ListAttachmentsCommand(commandEnvironment),
+      GetAttachmentCommand(commandEnvironment),
+      DownloadAttachmentCommand(commandEnvironment),
+      UpdateCardCommand(commandEnvironment),
+      AddMemberToCardCommand(commandEnvironment),
     ].forEach(addSubcommand);
   }
 }
 
 abstract class CardCommand extends TrelloCommand {
-  CardCommand(String name, String description, TrelloClient client)
-      : super(name, description, client);
+  CardCommand(String name, String description, CommandEnvironment commandEnvironment)
+      : super(name, description, commandEnvironment);
 
   Either<Failure, CardId> get cardId =>
       nextParameter('Card Id').map((id) => CardId(id));

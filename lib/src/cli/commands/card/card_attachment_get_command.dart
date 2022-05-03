@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import '../../../../trello_sdk.dart';
-import 'card_module.dart';
+import '../../cli.dart';
 
 class GetAttachmentCommand extends CardCommand {
-  GetAttachmentCommand(TrelloClient client)
-      : super('get-attachment', 'Get an Attachment on a Card', client);
+  GetAttachmentCommand(CommandEnvironment commandEnvironment)
+      : super('get-attachment', 'Get an Attachment on a Card', commandEnvironment);
 
   final List<AttachmentFields> fields = [
     AttachmentFields.id,

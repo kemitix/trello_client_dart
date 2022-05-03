@@ -8,8 +8,9 @@ void main() {
   var args = 'board list-lists $boardId'.split(' ');
   var fakeTrelloClient = createFakeTrelloClient([createResponse(body: [])]);
   var fetchHistory = fakeTrelloClient.fetchHistory;
+  var output = <String>[];
   setUpAll(() async => await app().run(EnvArgsEnvironment(validEnvironment,
-      args, (TrelloAuthentication _) => fakeTrelloClient.trelloClient)));
+      args, (_) => fakeTrelloClient.trelloClient, (s) => output.add(s.toString()))));
   test('there was only one request', () => expect(fetchHistory.length, 1));
   test('request was a GET', () => expect(fetchHistory[0].head.method, 'GET'));
   test('request baseUrl',
@@ -24,4 +25,5 @@ void main() {
             'filter': 'all',
             'fields': 'id,name,pos,closed,subscribed',
           }));
+  test('output', () async => expect(output, ['Hello, World!']));
 }

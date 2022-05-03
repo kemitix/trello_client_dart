@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import '../../../../trello_sdk.dart';
-import 'card_module.dart';
+import '../../cli.dart';
 
 class UpdateCardCommand extends CardCommand {
-  UpdateCardCommand(TrelloClient client)
-      : super('update', 'Update a Card', client) {
+  UpdateCardCommand(CommandEnvironment commandEnvironment)
+      : super('update', 'Update a Card', commandEnvironment) {
     argParser.addOption('name', help: 'The new name for the card');
     argParser.addOption('desc', help: 'The new description for the card');
     argParser.addFlag('closed',

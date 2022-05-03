@@ -7,5 +7,6 @@ Future<void> main(List<String> arguments) async {
     Platform.environment,
     arguments,
     trelloClient,
+    (Object s) => print(s)
   ));
 }

@@ -1,11 +1,13 @@
 import 'dart:async';
 
 import '../../../../trello_sdk.dart';
-import 'board_module.dart';
+import '../../cli.dart';
+
+
 
 class ListListsCommand extends BoardCommand {
-  ListListsCommand(TrelloClient client)
-      : super('list-lists', 'Get Lists on a Board', client);
+  ListListsCommand(CommandEnvironment commandEnvironment)
+      : super('list-lists', 'Get Lists on a Board', commandEnvironment);
 
   final List<ListFields> fields = [
     ListFields.id,
