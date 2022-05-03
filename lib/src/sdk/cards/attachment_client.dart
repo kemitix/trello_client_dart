@@ -1,5 +1,3 @@
-import 'package:progress_bar/progress_bar.dart';
-
 import '../../../trello_sdk.dart';
 import '../http_client.dart';
 
@@ -41,9 +39,6 @@ class AttachmentClient {
                 'OAuth oauth_consumer_key="${_authentication.key}", '
                     'oauth_token="${_authentication.token}"',
           },
-          onReceiveProgress: (downloaded, total) =>
-              ProgressBar(' [:bar] :percent :etas ', total: attachment.bytes)
-                  .update(downloaded / total),
         ),
       );
 }
