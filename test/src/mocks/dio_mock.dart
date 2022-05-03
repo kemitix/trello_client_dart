@@ -59,7 +59,7 @@ class TestTrelloClient {
       _fakeFileWriter.filesWritten;
 }
 
-TestTrelloClient testTrelloClient({
+TestTrelloClient fakeTrelloClient({
   required String baseUrl,
   required Map<String, String> queryParameters,
   required TrelloAuthentication authentication,

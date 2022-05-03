@@ -1,26 +1,38 @@
 import 'package:test/test.dart';
 import 'package:trello_sdk/trello_cli.dart';
 
+import '../../../mocks/dio_mock.dart';
 import '../../cli_commons.dart';
 
 void main() {
+  //given
   var boardId = 'my-board-id';
   var args = 'board list-lists $boardId'.split(' ');
-  var fakeTrelloClient = createFakeTrelloClient([
-    createResponse(body: [
-      {
-        'id': 'my-list-id',
-        'name': 'my-list-name',
-        'pos': 1024,
-        'closed': false,
-        'subscribed': true,
-      }
-    ])
-  ]);
-  var fetchHistory = fakeTrelloClient.fetchHistory;
+  var client = fakeTrelloClient(
+      baseUrl: 'example.com',
+      queryParameters: {},
+      authentication:
+          TrelloAuthentication.of(MemberId("_memberId"), "_key", "_token"),
+      responses: [
+        createResponse(body: [
+          {
+            'id': 'my-list-id',
+            'name': 'my-list-name',
+            'pos': 1024,
+            'closed': false,
+            'subscribed': true,
+          }
+        ])
+      ]);
   var fakePrinter = FakePrinter();
-  setUpAll(() async => await app().run(EnvArgsEnvironment(validEnvironment,
-      args, (_) => fakeTrelloClient.trelloClient, fakePrinter.printer)));
+  var environment = EnvArgsEnvironment(
+      validEnvironment, args, (_) => client.trelloClient, fakePrinter.printer);
+
+  //when
+  setUpAll(() => app().run(environment));
+
+  //then
+  var fetchHistory = client.fetchHistory;
   test('there was only one request', () => expect(fetchHistory.length, 1));
   test('request was a GET', () => expect(fetchHistory[0].head.method, 'GET'));
   test('request baseUrl',
