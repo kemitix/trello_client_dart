@@ -9,7 +9,6 @@ void main() {
   var boardId = 'my-board-id';
   var client = TestTrelloClient(
       baseUrl: 'example.com',
-      queryParameters: {},
       authentication:
           TrelloAuthentication.of(MemberId("_memberId"), "_key", "_token"),
       responses: [

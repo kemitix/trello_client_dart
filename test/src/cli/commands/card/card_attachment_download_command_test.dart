@@ -18,7 +18,6 @@ void main() {
   var fileContent = '{file: "content"}';
   var fileContentResponse = createResponse(body: fileContent);
   var client = TestTrelloClient(
-      queryParameters: {},
       authentication:
           TrelloAuthentication.of(MemberId("_memberId"), "_key", "_token"),
       responses: [

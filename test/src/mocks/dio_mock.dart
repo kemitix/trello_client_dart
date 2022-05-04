@@ -46,7 +46,7 @@ Dio mockDio(String baseUrl, Map<String, String> queryParameters,
 class TestTrelloClient {
   TestTrelloClient({
     String? baseUrl,
-    required Map<String, String> queryParameters,
+    Map<String, String>? queryParameters,
     required TrelloAuthentication authentication,
     required List<ResponseBody> responses,
   }) {
@@ -55,7 +55,7 @@ class TestTrelloClient {
     _client = TrelloClient(
         DioHttpClient(
             baseUrl: baseUrl ?? 'example.com',
-            queryParameters: queryParameters,
+            queryParameters: queryParameters ?? {},
             dioFactory: (baseUrl, queryParameters) =>
                 mockDio(baseUrl, queryParameters, _dioAdapterMock),
             fileWriter: _fileWriter.fileWriter),
