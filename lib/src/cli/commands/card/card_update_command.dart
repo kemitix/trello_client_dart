@@ -85,10 +85,8 @@ class UpdateCardCommand extends CardCommand {
       'location-name',
       'coordinates',
       'cover',
-    ].forEach((element) {
-      if (argResults!.wasParsed(element)) {
-        updates[element] = argResults![element].toString();
-      }
+    ].where((element) => argResults!.wasParsed(element)).forEach((element) {
+      updates[element] = argResults![element].toString();
     });
     return updates;
   }
