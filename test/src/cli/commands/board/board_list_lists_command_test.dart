@@ -7,7 +7,6 @@ import '../../cli_commons.dart';
 void main() {
   //given
   var boardId = 'my-board-id';
-  var args = 'board list-lists $boardId'.split(' ');
   var client = fakeTrelloClient(
       baseUrl: 'example.com',
       queryParameters: {},
@@ -24,9 +23,13 @@ void main() {
           }
         ])
       ]);
-  var fakePrinter = FakePrinter();
+  var printer = FakePrinter();
   var environment = EnvArgsEnvironment(
-      validEnvironment, args, (_) => client.trelloClient, fakePrinter.printer);
+    platformEnvironment: validEnvironment,
+    arguments: 'board list-lists $boardId'.split(' '),
+    clientFactory: (_) => client.trelloClient,
+    printer: printer.printer,
+  );
 
   //when
   setUpAll(() => app().run(environment));
@@ -49,7 +52,7 @@ void main() {
           }));
   test(
       'output',
-      () async => expect(fakePrinter.output, [
+      () async => expect(printer.output, [
             'id         | name         |  pos | closed | subscribed',
             '-----------|--------------|------|--------|-----------',
             'my-list-id | my-list-name | 1024 | false  | true      ',

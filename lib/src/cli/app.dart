@@ -3,12 +3,22 @@ import 'package:args/command_runner.dart';
 import '../../trello_cli.dart';
 
 class EnvArgsEnvironment {
-  EnvArgsEnvironment(this._env, this._args, this._clientFactory, this._printer);
+  EnvArgsEnvironment({
+    required Environment platformEnvironment,
+    required List<String> arguments,
+    required TrelloClient Function(TrelloAuthentication) clientFactory,
+    required void Function(Object) printer,
+  }) {
+    _env = platformEnvironment;
+    _args = arguments;
+    _clientFactory = clientFactory;
+    _printer = printer;
+  }
 
-  final Environment _env;
-  final List<String> _args;
-  final TrelloClient Function(TrelloAuthentication) _clientFactory;
-  final void Function(Object object) _printer;
+  late final Environment _env;
+  late final List<String> _args;
+  late final TrelloClient Function(TrelloAuthentication) _clientFactory;
+  late final void Function(Object object) _printer;
 
   Environment get env => _env;
   List<String> get args => _args;
