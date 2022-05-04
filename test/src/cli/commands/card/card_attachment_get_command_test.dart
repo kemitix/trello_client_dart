@@ -8,17 +8,13 @@ void main() {
   //given
   var cardId = 'my-card-id';
   var attachmentId = 'my-attachment-id';
-  var cardName = 'my-card-name';
-  var mimeType = 'my-mime-type';
-  var bytes = 100;
-  var url = 'my-url';
   var client = TestTrelloClient(responses: [
     createResponse(body: {
       'id': cardId,
-      'name': cardName,
-      'mimeType': mimeType,
-      'bytes': bytes,
-      'url': url,
+      'name': 'my-card-name',
+      'mimeType': 'my-mime-type',
+      'bytes': 100,
+      'url': 'my-url',
     })
   ]);
   var printer = FakePrinter();
