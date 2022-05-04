@@ -10,26 +10,26 @@ class UpdateCardCommand extends CardCommand {
     argParser.addOption('desc', help: 'The new description for the card');
     argParser.addFlag('closed',
         help: 'Whether the card should be archived (closed: true)');
-    argParser.addOption('idMembers',
+    argParser.addOption('member-ids',
         help: 'Comma-separated list of member IDs');
-    argParser.addOption('idAttachmentCover',
+    argParser.addOption('attachment-cover-id',
         help:
             'The ID of the image attachment the card should use as its cover, or blank for none');
-    argParser.addOption('idList',
+    argParser.addOption('list-id',
         help: 'The ID of the list the card should be in');
-    argParser.addOption('idLabels', help: 'Comma-separated list of label IDs');
-    argParser.addOption('idBoard',
+    argParser.addOption('label-ids', help: 'Comma-separated list of label IDs');
+    argParser.addOption('board-id',
         help: 'The ID of the board the card should be on');
     argParser.addOption('pos',
         help:
             'The position of the card in its list. top, bottom, or a positive float');
     argParser.addOption('due', help: 'When the card is due, or blank');
-    argParser.addFlag('dueComplete',
+    argParser.addFlag('due-complete',
         help: 'Whether the due date should be marked complete');
     argParser.addFlag('subscribed',
         help: 'Whether the member is should be subscribed to the card');
     argParser.addOption('address', help: 'For use with/by the Map View');
-    argParser.addOption('locationName', help: 'For use with/by the Map View');
+    argParser.addOption('location-name', help: 'For use with/by the Map View');
     argParser.addOption('coordinates',
         help: 'For use with/by the Map View. Should be latitude,longitude');
     argParser.addOption('cover', help: '''Updates the card\'s cover:
@@ -74,17 +74,17 @@ class UpdateCardCommand extends CardCommand {
       'name',
       'desc',
       'closed',
-      'idMembers',
-      'idAttachmentCover',
-      'idList',
-      'idLabels',
-      'idBoard',
+      'member-ids',
+      'aAttachment-cover-id',
+      'list-id',
+      'label-ids',
+      'board-id',
       'pos',
       'due',
-      'dueComplete',
+      'due-complete',
       'subscribed',
       'address',
-      'locationName',
+      'location-name',
       'coordinates',
       'cover',
     ].forEach((element) {
