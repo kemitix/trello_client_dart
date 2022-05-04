@@ -12,18 +12,15 @@ void main() {
   var mimeType = 'my-mime-type';
   var bytes = 100;
   var url = 'my-url';
-  var client = TestTrelloClient(
-      authentication:
-          TrelloAuthentication.of(MemberId("_memberId"), "_key", "_token"),
-      responses: [
-        createResponse(body: {
-          'id': cardId,
-          'name': cardName,
-          'mimeType': mimeType,
-          'bytes': bytes,
-          'url': url,
-        })
-      ]);
+  var client = TestTrelloClient(responses: [
+    createResponse(body: {
+      'id': cardId,
+      'name': cardName,
+      'mimeType': mimeType,
+      'bytes': bytes,
+      'url': url,
+    })
+  ]);
   var printer = FakePrinter();
   var environment = EnvArgsEnvironment(
     platformEnvironment: validEnvironment,
