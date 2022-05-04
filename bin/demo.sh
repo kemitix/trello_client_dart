@@ -15,7 +15,11 @@ function trello() {
   3) $TRELLO "$1" "$2" "$3"  ;;
   4) $TRELLO "$1" "$2" "$3" "$4"  ;;
   5) $TRELLO "$1" "$2" "$3" "$4" "$5"  ;;
-  *) echo "ERROR: unexpected number of parameters: $#" ; exit 1;;
+  6) $TRELLO "$1" "$2" "$3" "$4" "$5" "$6" ;;
+  7) $TRELLO "$1" "$2" "$3" "$4" "$5" "$6" "$7" ;;
+  8) $TRELLO "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8" ;;
+  9) $TRELLO "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9" ;;
+  *) echo "ERROR(demo): unexpected number of parameters: $#" ; exit 1;;
   esac
 }
 
