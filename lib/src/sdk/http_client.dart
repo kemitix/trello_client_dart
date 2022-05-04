@@ -56,7 +56,7 @@ class DioHttpClient extends HttpClient {
     //_dio.interceptors.add(CurlLoggerDioInterceptor());
     _dioDownloader = dioFactory('', queryParameters);
     //_dioDownloader.interceptors.add(CurlLoggerDioInterceptor());
-    _fileWriter = fileWriter != null ? fileWriter : defaultFileWriter;
+    _fileWriter = fileWriter ?? defaultFileWriter;
   }
 
   @override
