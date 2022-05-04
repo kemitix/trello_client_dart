@@ -74,7 +74,7 @@ class UpdateCardCommand extends CardCommand {
       'desc',
       'closed',
       'member-ids',
-      'aAttachment-cover-id',
+      'attachment-cover-id',
       'list-id',
       'label-ids',
       'board-id',
