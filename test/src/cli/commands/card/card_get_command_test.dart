@@ -8,7 +8,6 @@ void main() {
   //given
   var cardId = 'my-card-id';
   var client = TestTrelloClient(
-      queryParameters: {},
       authentication:
           TrelloAuthentication.of(MemberId("_memberId"), "_key", "_token"),
       responses: [
