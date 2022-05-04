@@ -60,9 +60,7 @@ class UpdateCardCommand extends CardCommand {
 
   TrelloCard _updateCard(TrelloCard original, Map<String, String> updates) {
     var copy = original.raw;
-    updates.keys.forEach((key) {
-      copy.update(key, (value) => updates[key]);
-    });
+    copy.addAll(updates);
     return TrelloCard(copy, original.fields);
   }
 
