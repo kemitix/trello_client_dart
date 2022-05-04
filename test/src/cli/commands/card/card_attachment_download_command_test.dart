@@ -17,13 +17,10 @@ void main() {
   var attachmentResponse = createResponse(body: attachmentResult);
   var fileContent = '{file: "content"}';
   var fileContentResponse = createResponse(body: fileContent);
-  var client = TestTrelloClient(
-      authentication:
-          TrelloAuthentication.of(MemberId("_memberId"), "_key", "_token"),
-      responses: [
-        attachmentResponse,
-        fileContentResponse,
-      ]);
+  var client = TestTrelloClient(responses: [
+    attachmentResponse,
+    fileContentResponse,
+  ]);
   var printer = FakePrinter();
   var environment = EnvArgsEnvironment(
     platformEnvironment: validEnvironment,

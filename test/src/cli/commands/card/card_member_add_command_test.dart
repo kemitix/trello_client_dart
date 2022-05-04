@@ -7,18 +7,15 @@ import '../../cli_commons.dart';
 void main() {
   //given
   var cardId = 'my-card-id';
-  var client = TestTrelloClient(
-      authentication:
-          TrelloAuthentication.of(MemberId("_memberId"), "_key", "_token"),
-      responses: [
-        createResponse(body: {
-          'id': 'my-card-id',
-          'pos': 'my-pos',
-          'name': 'my-card-name',
-          'due': '2022-05-05T09:45',
-          'idMembers': ['my-member-id'],
-        })
-      ]);
+  var client = TestTrelloClient(responses: [
+    createResponse(body: {
+      'id': 'my-card-id',
+      'pos': 'my-pos',
+      'name': 'my-card-name',
+      'due': '2022-05-05T09:45',
+      'idMembers': ['my-member-id'],
+    })
+  ]);
   var printer = FakePrinter();
   var environment = EnvArgsEnvironment(
     platformEnvironment: validEnvironment,

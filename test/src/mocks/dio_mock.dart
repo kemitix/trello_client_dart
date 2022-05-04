@@ -47,7 +47,7 @@ class TestTrelloClient {
   TestTrelloClient({
     String? baseUrl,
     Map<String, String>? queryParameters,
-    required TrelloAuthentication authentication,
+    TrelloAuthentication? authentication,
     required List<ResponseBody> responses,
   }) {
     _dioAdapterMock = DioAdapterMock(responses);
@@ -59,7 +59,8 @@ class TestTrelloClient {
             dioFactory: (baseUrl, queryParameters) =>
                 mockDio(baseUrl, queryParameters, _dioAdapterMock),
             fileWriter: _fileWriter.fileWriter),
-        authentication);
+        authentication ??
+            TrelloAuthentication.of(MemberId("_memberId"), "_key", "_token"));
   }
   late final TrelloClient _client;
   late final DioAdapterMock _dioAdapterMock;
