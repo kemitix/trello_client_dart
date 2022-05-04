@@ -39,10 +39,11 @@ void main() {
   var history = client.fetchHistory;
   test('there was 1 request', () => expect(history.length, 1));
   test('request was PUT', () => expect(history[0].head.method, 'PUT'));
-  test('request path',
-      () => expect(history[0].head.path, '/1/cards/$cardId'));
-  test('request content type', () => expect(history[0].head.headers[Headers.contentTypeHeader],
-      Headers.formUrlEncodedContentType));
+  test('request path', () => expect(history[0].head.path, '/1/cards/$cardId'));
+  test(
+      'request content type',
+      () => expect(history[0].head.headers[Headers.contentTypeHeader],
+          Headers.formUrlEncodedContentType));
   test('request has no query parameters',
       () => expect(history[0].head.queryParameters, {}));
   test('output', () => expect(printer.output, ['Updated']));
