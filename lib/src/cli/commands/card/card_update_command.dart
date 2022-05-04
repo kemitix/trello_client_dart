@@ -40,6 +40,7 @@ class UpdateCardCommand extends CardCommand {
 - size        : normal, full (Determines whether to show the card name on the cover, or below it)''');
   }
 
+  @override
   FutureOr<void> run() async => cardId
       .map(_cardClient)
       .map(_updateCardTE)
