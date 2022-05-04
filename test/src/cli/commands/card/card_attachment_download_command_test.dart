@@ -28,10 +28,12 @@ void main() {
       ]);
   var printer = FakePrinter();
   var environment = EnvArgsEnvironment(
-      validEnvironment,
-      'card download-attachment $cardId $attachmentId $fileName'.split(' '),
-      (_) => client.trelloClient,
-      printer.printer);
+    platformEnvironment: validEnvironment,
+    arguments:
+        'card download-attachment $cardId $attachmentId $fileName'.split(' '),
+    clientFactory: (_) => client.trelloClient,
+    printer: printer.printer,
+  );
 
   //when
   setUpAll(() => app().run(environment));
