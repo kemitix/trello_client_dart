@@ -12,7 +12,7 @@ void main() {
   var mimeType = 'my-mime-type';
   var bytes = 100;
   var url = 'my-url';
-  var client = fakeTrelloClient(
+  var client = TestTrelloClient(
       baseUrl: 'example.com',
       queryParameters: {},
       authentication:

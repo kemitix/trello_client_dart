@@ -44,39 +44,30 @@ Dio mockDio(String baseUrl, Map<String, String> queryParameters,
 }
 
 class TestTrelloClient {
-  TestTrelloClient(
-    this._client,
-    this._dioAdapterMock,
-    this._fakeFileWriter,
-  );
-  final TrelloClient _client;
-  final DioAdapterMock _dioAdapterMock;
-  final FakeFileWriter _fakeFileWriter;
+  TestTrelloClient({
+    required String baseUrl,
+    required Map<String, String> queryParameters,
+    required TrelloAuthentication authentication,
+    required List<ResponseBody> responses,
+  }) {
+    _dioAdapterMock = DioAdapterMock(responses);
+    _fileWriter = FakeFileWriter();
+    _client = TrelloClient(
+        DioHttpClient(
+            baseUrl: baseUrl,
+            queryParameters: queryParameters,
+            dioFactory: (baseUrl, queryParameters) =>
+                mockDio(baseUrl, queryParameters, _dioAdapterMock),
+            fileWriter: _fileWriter.fileWriter),
+        authentication);
+  }
+  late final TrelloClient _client;
+  late final DioAdapterMock _dioAdapterMock;
+  late final FakeFileWriter _fileWriter;
   TrelloClient get trelloClient => _client;
   List<Tuple3<RequestOptions, Stream<Uint8List>?, Future<dynamic>?>>
       get fetchHistory => _dioAdapterMock.fetchHistory;
-  List<Tuple2<FileName, dynamic>> get filesWritten =>
-      _fakeFileWriter.filesWritten;
-}
-
-TestTrelloClient fakeTrelloClient({
-  required String baseUrl,
-  required Map<String, String> queryParameters,
-  required TrelloAuthentication authentication,
-  required List<ResponseBody> responses,
-}) {
-  var adapterMock = DioAdapterMock(responses);
-  var fakeFileWriter = FakeFileWriter();
-  var client = TrelloClient(
-      DioHttpClient(
-          baseUrl: baseUrl,
-          queryParameters: queryParameters,
-          dioFactory: (baseUrl, queryParameters) =>
-              mockDio(baseUrl, queryParameters, adapterMock),
-          fileWriter: fakeFileWriter.fileWriter),
-      authentication);
-
-  return TestTrelloClient(client, adapterMock, fakeFileWriter);
+  List<Tuple2<FileName, dynamic>> get filesWritten => _fileWriter.filesWritten;
 }
 
 class FakeFileWriter {

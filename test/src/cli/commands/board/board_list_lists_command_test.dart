@@ -7,7 +7,7 @@ import '../../cli_commons.dart';
 void main() {
   //given
   var boardId = 'my-board-id';
-  var client = fakeTrelloClient(
+  var client = TestTrelloClient(
       baseUrl: 'example.com',
       queryParameters: {},
       authentication:

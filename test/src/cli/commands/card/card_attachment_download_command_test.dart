@@ -17,7 +17,7 @@ void main() {
   var attachmentResponse = createResponse(body: attachmentResult);
   var fileContent = '{file: "content"}';
   var fileContentResponse = createResponse(body: fileContent);
-  var client = fakeTrelloClient(
+  var client = TestTrelloClient(
       baseUrl: 'example.com',
       queryParameters: {},
       authentication:
