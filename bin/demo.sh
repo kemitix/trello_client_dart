@@ -44,7 +44,8 @@ trello card get $CARD
 trello card list-attachments $CARD
 trello card get-attachment $CARD $ATTACHMENT
 trello card download-attachment $CARD $ATTACHMENT $FILE_NAME ; ls -l $FILE_NAME ; rm $FILE_NAME
-trello card update $MUTABLE_CARD --name "$(date --iso-8601=seconds)"
+trello card get $MUTABLE_CARD
+trello card update $MUTABLE_CARD --name "$(date --iso-8601=seconds)" --member-ids ''
 trello card get $MUTABLE_CARD
 trello card add-member $MUTABLE_CARD $MEMBER_ID
 trello card get $MUTABLE_CARD
