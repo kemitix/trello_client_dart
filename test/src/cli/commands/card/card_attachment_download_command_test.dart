@@ -13,13 +13,13 @@ void main() {
   var cardId = 'my-card-id';
   var attachmentId = 'my-attachment-id';
   var fileName = 'my-file-name';
-  var attachmentResult = {'url': 'my-url', 'bytes': 2};
-  var attachmentResponse = createResponse(body: attachmentResult);
+  var getAttachmentResponse =
+      createResponse(body: {'url': 'my-url', 'bytes': 2});
   var fileContent = '{file: "content"}';
-  var fileContentResponse = createResponse(body: fileContent);
+  var downloadAttachmentResponse = createResponse(body: fileContent);
   var client = TestTrelloClient(responses: [
-    attachmentResponse,
-    fileContentResponse,
+    getAttachmentResponse,
+    downloadAttachmentResponse,
   ]);
   var printer = FakePrinter();
   var environment = EnvArgsEnvironment(
