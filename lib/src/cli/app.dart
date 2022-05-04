@@ -28,11 +28,19 @@ class EnvArgsEnvironment {
 }
 
 class ArgsClientEnvironment {
-  ArgsClientEnvironment(this._args, this._client, this._printer);
+  ArgsClientEnvironment({
+    required List<String> arguments,
+    required TrelloClient client,
+    required void Function(Object) printer,
+  }) {
+    _args = arguments;
+    _client = client;
+    _printer = printer;
+  }
 
-  final List<String> _args;
-  final TrelloClient _client;
-  final void Function(Object object) _printer;
+  late final List<String> _args;
+  late final TrelloClient _client;
+  late final void Function(Object object) _printer;
 
   List<String> get args => _args;
   TrelloClient get client => _client;
@@ -42,8 +50,10 @@ class ArgsClientEnvironment {
 Reader<EnvArgsEnvironment, Future<void>> app() =>
     Reader((envArgsEnv) => authentication(envArgsEnv.env)
         .map((auth) => envArgsEnv.clientFactory(auth))
-        .map((client) =>
-            ArgsClientEnvironment(envArgsEnv.args, client, envArgsEnv.printer))
+        .map((client) => ArgsClientEnvironment(
+            arguments: envArgsEnv.args,
+            client: client,
+            printer: envArgsEnv.printer))
         .fold(
           (errors) async => errors.forEach(_handleError(envArgsEnv)),
           (argsClientEnv) => runApp().run(argsClientEnv),
