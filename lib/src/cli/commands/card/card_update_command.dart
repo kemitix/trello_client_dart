@@ -41,16 +41,16 @@ class UpdateCardCommand extends CardCommand {
   }
 
   @override
-  FutureOr<void> run() async => cardId
-      .map(_cardClient)
-      .map(_updateCardTE)
-      .map((r) => "Updated")
-      .collapse(printOutput);
+  FutureOr<void> run() =>
+      taskEitherFlatE(cardId.map(_cardClient).map(_updateCardTE))
+          .map((r) => "Updated")
+          .run()
+          .then((value) => value.collapse(printOutput));
 
-  TaskEither<Failure, TrelloCard> _updateCardTE(cardClient) =>
-      TaskEither.flatten(_getOriginalCardTE(cardClient)
+  TaskEither<Failure, TrelloCard> _updateCardTE(CardClient cardClient) =>
+      _getOriginalCardTE(cardClient)
           .map((card) => _updateCard(card, _getUpdates()))
-          .map((card) => _putCardTE(cardClient, card)));
+          .flatMap((card) => _putCardTE(cardClient, card));
 
   TaskEither<Failure, TrelloCard> _putCardTE(
           CardClient cardClient, TrelloCard card) =>
