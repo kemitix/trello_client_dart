@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:dartx/dartx.dart';
+
 import '../../../../trello_sdk.dart';
 import '../../cli.dart';
 
@@ -48,46 +50,45 @@ class UpdateCardCommand extends CardCommand {
           .then((value) => value.collapse(printOutput));
 
   TaskEither<Failure, TrelloCard> _updateCardTE(CardClient cardClient) =>
-      _getOriginalCardTE(cardClient)
-          .map((card) => _updateCard(card, _getUpdates()))
-          .flatMap((card) => _putCardTE(cardClient, card));
+      _putCardTE(cardClient, _getUpdates());
 
   TaskEither<Failure, TrelloCard> _putCardTE(
-          CardClient cardClient, TrelloCard card) =>
-      cardClient.put(card);
+          CardClient cardClient, Map<String, String> updates) =>
+      cardClient.put(_formatUpdates(updates));
 
-  TaskEither<Failure, TrelloCard> _getOriginalCardTE(CardClient cardClient) =>
-      cardClient.get();
-
-  TrelloCard _updateCard(TrelloCard original, Map<String, String> updates) {
-    var copy = original.raw;
-    copy.addAll(updates);
-    return TrelloCard(copy, original.fields);
+  String _formatUpdates(Map<String, String> updates) {
+    //TODO translate updates into string
+    return updates.entries
+        .map((e) => '${e.key.urlEncode}=${e.value.urlEncode}')
+        .join('&');
+    //return 'name=2022-05-04T20%3A49%3A18%2B01%3A01';
   }
 
   CardClient _cardClient(CardId cardId) => client.card(cardId);
 
   Map<String, String> _getUpdates() {
     var updates = <String, String>{};
-    [
-      'name',
-      'desc',
-      'closed',
-      'member-ids',
-      'attachment-cover-id',
-      'list-id',
-      'label-ids',
-      'board-id',
-      'pos',
-      'due',
-      'due-complete',
-      'subscribed',
-      'address',
-      'location-name',
-      'coordinates',
-      'cover',
-    ].where((element) => argResults!.wasParsed(element)).forEach((element) {
-      updates[element] = argResults![element].toString();
+    var argToApi = <String, String>{
+      'name': 'name',
+      'desc': 'desc',
+      'closed': 'closed',
+      'member-ids': 'idMembers',
+      'attachment-cover-id': 'idAttachmentCover',
+      'list-id': 'idList',
+      'label-ids': 'idLabels',
+      'board-id': 'idBoard',
+      'pos': 'pos',
+      'due': 'due',
+      'due-complete': 'dueComplete',
+      'subscribed': 'subscribed',
+      'address': 'address',
+      'location-name': 'locationName',
+      'coordinates': 'coordinates',
+      'cover': 'cover',
+    };
+    argToApi.keys.where((key) => argResults!.wasParsed(key)).forEach((key) {
+      var api = argToApi[key]!;
+      updates[api] = argResults![key].toString();
     });
     return updates;
   }

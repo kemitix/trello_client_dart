@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+
 import '../../../trello_sdk.dart';
 import '../http_client.dart';
 
@@ -69,8 +71,10 @@ class CardClient {
   /// Update a card
   ///
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-id-put
-  TaskEither<Failure, TrelloCard> put(TrelloCard card) => _client
-      .put('/1/cards/$_cardId', data: card)
+  TaskEither<Failure, TrelloCard> put(String updates) => _client
+      .put('/1/cards/$_cardId', data: updates, headers: {
+        Headers.contentTypeHeader: Headers.formUrlEncodedContentType,
+      })
       .map((response) => response.data)
       .map((data) => TrelloCard(data, [CardFields.all]));
 

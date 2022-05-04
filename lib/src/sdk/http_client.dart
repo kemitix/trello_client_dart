@@ -150,6 +150,7 @@ class DioHttpClient extends HttpClient {
 class CurlLoggerDioInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    print('query parameters: ${options.queryParameters}');
     print(dio2curl(options));
     handler.next(options);
   }
