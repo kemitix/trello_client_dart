@@ -13,7 +13,6 @@ void main() {
   var bytes = 100;
   var url = 'my-url';
   var client = TestTrelloClient(
-      baseUrl: 'example.com',
       queryParameters: {},
       authentication:
           TrelloAuthentication.of(MemberId("_memberId"), "_key", "_token"),
