@@ -58,4 +58,36 @@ void main() {
               'Run "trello help <command>" for more information about a command.'
             ]));
   });
+  group('help output', () {
+    //given
+    var arguments = '--help'.split(' ');
+
+    var printer = FakePrinter();
+    var envArgsEnvironment = EnvArgsEnvironment(
+        platformEnvironment: validEnvironment,
+        arguments: arguments,
+        clientFactory: (_) => TestTrelloClient(responses: []).trelloClient,
+        printer: printer.printer);
+    //when
+    setUpAll(() async => await app().run(envArgsEnvironment));
+    //then
+    test(
+        'output',
+        () => expect(printer.output, [
+              'A CLI for Trello',
+              '',
+              'Usage: trello <command> [arguments]',
+              '',
+              'Global options:',
+              '-h, --help    Print this usage information.',
+              '',
+              'Available commands:',
+              '  board    Trello Boards',
+              '  card     Trello Cards',
+              '  list     Trello Lists',
+              '  member   Trello Members (users)',
+              '',
+              'Run "trello help <command>" for more information about a command.'
+            ]));
+  });
 }
