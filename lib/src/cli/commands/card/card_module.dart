@@ -9,14 +9,15 @@ import 'card_get_command.dart';
 import 'card_member_add_command.dart';
 import 'card_update_command.dart';
 
-class CardModule extends Command {
+class CardModule extends TrelloModule {
   @override
   final String name = 'card';
 
   @override
   final String description = 'Trello Cards';
 
-  CardModule(CommandEnvironment commandEnvironment) {
+  CardModule(CommandEnvironment commandEnvironment)
+      : super(commandEnvironment) {
     [
       GetCardCommand(commandEnvironment),
       ListAttachmentsCommand(commandEnvironment),

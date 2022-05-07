@@ -15,6 +15,17 @@ class CommandEnvironment {
   void Function(Object s) get printer => _printer;
 }
 
+abstract class TrelloModule extends Command {
+  final CommandEnvironment _commandEnvironment;
+
+  TrelloModule(this._commandEnvironment);
+
+  CommandEnvironment get e => _commandEnvironment;
+
+  @override
+  void printUsage() => e.printer(usage);
+}
+
 abstract class TrelloCommand extends Command {
   final String _name;
   final String _description;
@@ -39,6 +50,9 @@ abstract class TrelloCommand extends Command {
   List<String> get parameters => argResults!.rest;
 
   int _nextParameterIndex = 0;
+
+  @override
+  void printUsage() => e.printer(usage);
 
   Either<Failure, String> nextParameter(String description) =>
       parameters.length <= _nextParameterIndex
