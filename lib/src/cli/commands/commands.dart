@@ -2,14 +2,15 @@ import 'dart:async';
 
 import 'package:args/command_runner.dart';
 import 'package:tabular/tabular.dart';
-import 'package:trello_sdk/src/cli/app.dart';
 
 import '../../../trello_sdk.dart';
 
 class CommandEnvironment {
   CommandEnvironment(this._client, this._printer);
+
   final TrelloClient _client;
   final void Function(Object s) _printer;
+
   TrelloClient get client => _client;
   void Function(Object s) get printer => _printer;
 }
