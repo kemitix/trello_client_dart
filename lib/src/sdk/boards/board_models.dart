@@ -1,3 +1,5 @@
+import 'package:trello_sdk/src/sdk/members/member_models.dart';
+
 import '../client.dart';
 import '../trello_object_model.dart';
 
@@ -10,7 +12,7 @@ class TrelloBoard extends TrelloObject<BoardFields> {
   String get desc => getValue(BoardFields.desc);
   String get descData => getValue(BoardFields.descData);
   bool get closed => getValue(BoardFields.closed);
-  String get idMemberCreator => getValue(BoardFields.idMemberCreator);
+  MemberId get idMemberCreator => MemberId(getValue(BoardFields.idMemberCreator));
   String get idOrganization => getValue(BoardFields.idOrganization);
   bool get pinned => getValue(BoardFields.pinned);
   String get url => getValue(BoardFields.url);
