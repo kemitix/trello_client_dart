@@ -21,5 +21,6 @@ class GetCardCommand extends CardCommand {
           .map((card) => tabulateObject(card, fields))
           .collapse(printOutput);
 
-  TaskEither<Failure, TrelloCard> _getCard(cardId) => client.card(cardId).get();
+  TaskEither<Failure, TrelloCard> _getCard(cardId) =>
+      client.card(cardId).get(fields: fields);
 }
