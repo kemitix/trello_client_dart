@@ -8,14 +8,16 @@ void main() {
   //given
   var memberId = 'my-member-id';
   var client = TestTrelloClient(responses: [
-    createResponse(body: [{
-      'id': 'my-id',
-      'name': 'my-board-name',
-      'pinned': false,
-      'closed': true,
-      'starred': false,
-      'shortUrl': 'my-short-url',
-    },])
+    createResponse(body: [
+      {
+        'id': 'my-id',
+        'name': 'my-board-name',
+        'pinned': false,
+        'closed': true,
+        'starred': false,
+        'shortUrl': 'my-short-url',
+      },
+    ])
   ]);
   var printer = FakePrinter();
   var environment = EnvArgsEnvironment(
@@ -32,17 +34,19 @@ void main() {
   var history = client.fetchHistory;
   test('there was one request', () => expect(history.length, 1));
   test('request was GET', () => expect(history[0].head.method, 'GET'));
-  test('request path', () => expect(history[0].head.path, '/1/members/$memberId/boards'));
-  test('request query parameters',
+  test('request path',
+      () => expect(history[0].head.path, '/1/members/$memberId/boards'));
+  test(
+      'request query parameters',
       () => expect(history[0].head.queryParameters, {
-        'filter': 'all',
-        'fields': 'id,name,pinned,closed,starred,shortUrl',
-      }));
+            'filter': 'all',
+            'fields': 'id,name,pinned,closed,starred,shortUrl',
+          }));
   test(
       'output',
       () => expect(printer.output, [
-        'id    | name          | pinned | closed | starred | shortUrl    ',
-        '------|---------------|--------|--------|---------|-------------',
-        'my-id | my-board-name | false  | true   | false   | my-short-url',
-      ]));
+            'id    | name          | pinned | closed | starred | shortUrl    ',
+            '------|---------------|--------|--------|---------|-------------',
+            'my-id | my-board-name | false  | true   | false   | my-short-url',
+          ]));
 }
