@@ -78,4 +78,22 @@ void main() {
               'Run "trello help" to see global options.'
             ]));
   });
+  group('board id not given', () {
+    //given
+    var arguments = 'board list-lists'.split(' ');
+
+    var printer = FakePrinter();
+    var envArgsEnvironment = EnvArgsEnvironment(
+        platformEnvironment: validEnvironment,
+        arguments: arguments,
+        clientFactory: (_) => TestTrelloClient(responses: []).trelloClient,
+        printer: printer.printer);
+    //when
+    setUpAll(() async => await app().run(envArgsEnvironment));
+    //then
+    test(
+        'output',
+        () => expect(printer.output,
+            ['ERROR: board list-lists - Failure: Board Id not given']));
+  });
 }

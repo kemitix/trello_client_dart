@@ -13,9 +13,8 @@ abstract class Failure {
   String get message => _message;
 
   @override
-  String toString() {
-    return 'Failure: $_message - $_context';
-  }
+  String toString() =>
+      'Failure: $_message${_context.isEmpty ? '' : ' - $_context'}';
 
   Failure withContext(Map<String, String> additionalContext) {
     _context.addAll(additionalContext);
