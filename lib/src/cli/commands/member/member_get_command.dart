@@ -21,7 +21,10 @@ class GetMemberCommand extends MemberCommand {
   ];
 
   @override
-  FutureOr<void> run() async => (await client.member(memberId).get().run())
-      .map((member) => tabulateObject(member, fields))
+  FutureOr<void> run() async => (await taskEitherFlatE(memberId
+              .map((memberId) => client.member(memberId))
+              .map((memberClient) => memberClient.get(fields: fields)))
+          .map((member) => tabulateObject(member, fields))
+          .run())
       .collapse(printOutput);
 }
