@@ -4,13 +4,14 @@ import '../../../../trello_sdk.dart';
 import '../commands.dart';
 import 'board_lists_list_command.dart';
 
-class BoardModule extends Command {
+class BoardModule extends TrelloModule {
   @override
   final String name = 'board';
   @override
   final String description = 'Trello Boards';
 
-  BoardModule(CommandEnvironment commandEnvironment) {
+  BoardModule(CommandEnvironment commandEnvironment)
+      : super(commandEnvironment) {
     [ListListsCommand(commandEnvironment)].forEach(addSubcommand);
   }
 }

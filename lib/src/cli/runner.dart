@@ -24,7 +24,5 @@ class TrelloCommandRunner extends CommandRunner {
   final CommandEnvironment _commandEnvironment;
 
   @override
-  void printUsage() {
-    _commandEnvironment.printer(usage);
-  }
+  void printUsage() => _commandEnvironment.printer(usage);
 }
