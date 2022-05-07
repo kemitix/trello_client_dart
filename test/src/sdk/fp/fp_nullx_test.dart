@@ -12,8 +12,10 @@ void main() {
     test('when not null', () => expect(a_value.toOption(), some(a_value)));
   });
   group('toEither', () {
-    test('when null', () => expect(null_value.toEither(() => ('is null')), left('is null')));
-    test('when not null', () => expect(a_value.toEither(() => ('is null')), right(a_value)));
+    test('when null',
+        () => expect(null_value.toEither(() => ('is null')), left('is null')));
+    test('when not null',
+        () => expect(a_value.toEither(() => ('is null')), right(a_value)));
   });
   group('toList', () {
     test('when null', () => expect(null_value.toList(), []));
@@ -21,11 +23,15 @@ void main() {
   });
   group('toIterable', () {
     test('when null', () => expect(null_value.toIterable().isEmpty, isTrue));
-    test('when not null contains value', () => expect(a_value.toIterable().contains(a_value!), isTrue));
-    test('when not null has no other value', () => expect(a_value.toIterable().length, 1));
+    test('when not null contains value',
+        () => expect(a_value.toIterable().contains(a_value!), isTrue));
+    test('when not null has no other value',
+        () => expect(a_value.toIterable().length, 1));
   });
   group('toStream', () {
-    test('when null', () async => expect(await null_value.toStream().toList(), []));
-    test('when not null', () async => expect(await a_value.toStream().toList(), [a_value!]));
+    test('when null',
+        () async => expect(await null_value.toStream().toList(), []));
+    test('when not null',
+        () async => expect(await a_value.toStream().toList(), [a_value!]));
   });
 }

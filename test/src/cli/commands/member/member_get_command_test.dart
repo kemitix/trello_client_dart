@@ -36,39 +36,41 @@ void main() {
   var history = client.fetchHistory;
   test('there was one request', () => expect(history.length, 1));
   test('request was GET', () => expect(history[0].head.method, 'GET'));
-  test('request path', () => expect(history[0].head.path, '/1/members/$memberId'));
-  test('request query parameters',
+  test('request path',
+      () => expect(history[0].head.path, '/1/members/$memberId'));
+  test(
+      'request query parameters',
       () => expect(history[0].head.queryParameters, {
-        'boardBackgrounds': 'none',
-        'boardStars': 'false',
-        'boardsInvited': 'all',
-        'boardsInvitedFields': 'all',
-        'cars': 'none',
-        'customBoardBackground': 'none',
-        'customEmoji': 'none',
-        'customStickers': 'none',
-        'fields': 'all',
-        'organizations': 'none',
-        'organization_fields': 'all',
-        'organization_paid_account': 'false',
-        'organizationsInvited': 'none',
-        'organizationsInvited_fields': 'all',
-        'paid_account': 'false',
-        'savedSearches': 'false',
-        'tokens': 'none',
-      }));
+            'boardBackgrounds': 'none',
+            'boardStars': 'false',
+            'boardsInvited': 'all',
+            'boardsInvitedFields': 'all',
+            'cars': 'none',
+            'customBoardBackground': 'none',
+            'customEmoji': 'none',
+            'customStickers': 'none',
+            'fields': 'all',
+            'organizations': 'none',
+            'organization_fields': 'all',
+            'organization_paid_account': 'false',
+            'organizationsInvited': 'none',
+            'organizationsInvited_fields': 'all',
+            'paid_account': 'false',
+            'savedSearches': 'false',
+            'tokens': 'none',
+          }));
   test(
       'output',
       () => expect(printer.output, [
-        'id         | my-member-id  ',
-        'username   | my-username   ',
-        'email      | my-email      ',
-        'fullName   | my-full-name  ',
-        'initials   | my-initials   ',
-        'url        | my-url        ',
-        'status     | my-status     ',
-        'memberType | my-member-type',
-        'confirmed  | true          ',
-        'bio        | my-bio        ',
-      ]));
+            'id         | my-member-id  ',
+            'username   | my-username   ',
+            'email      | my-email      ',
+            'fullName   | my-full-name  ',
+            'initials   | my-initials   ',
+            'url        | my-url        ',
+            'status     | my-status     ',
+            'memberType | my-member-type',
+            'confirmed  | true          ',
+            'bio        | my-bio        ',
+          ]));
 }
