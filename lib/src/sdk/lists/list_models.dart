@@ -1,3 +1,5 @@
+import 'package:trello_sdk/src/sdk/boards/board_models.dart';
+
 import '../client.dart';
 import '../trello_object_model.dart';
 
@@ -8,7 +10,7 @@ class TrelloList extends TrelloObject<ListFields> {
   ListId get id => ListId(getValue(ListFields.id));
   String get name => getValue(ListFields.name);
   bool get closed => getValue(ListFields.closed);
-  String get idBoard => getValue(ListFields.idBoard);
+  BoardId get idBoard => BoardId(getValue(ListFields.idBoard));
   int get pos => getValue(ListFields.pos);
   bool get subscribed => getValue(ListFields.subscribed);
 }
