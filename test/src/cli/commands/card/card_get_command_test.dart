@@ -33,7 +33,7 @@ void main() {
   test('request was GET', () => expect(history[0].head.method, 'GET'));
   test('request path', () => expect(history[0].head.path, '/1/cards/$cardId'));
   test('request query parameters',
-      () => expect(history[0].head.queryParameters, {'fields': 'all'}));
+      () => expect(history[0].head.queryParameters, {'fields': 'id,name,pos,due,idMembers'}));
   test(
       'output',
       () => expect(printer.output, [
