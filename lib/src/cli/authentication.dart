@@ -21,8 +21,6 @@ Either<Errors, TrelloAuthentication> authentication(Environment e) {
 
   Either<List<ValidationError>, Environment> verified =
       validator.verify<ValidationError>(e);
-  // FIXME this appears to be a bug in the 'verify' implementation that is losing all the errors
-  // all we get is an empty list of errors.
   return verified
       .map((e) => TrelloAuthentication.of(
             MemberId(e['TRELLO_USERNAME']!),
@@ -32,14 +30,11 @@ Either<Errors, TrelloAuthentication> authentication(Environment e) {
       .leftMap((l) => l.map((ve) => ve.errorDescription).toList());
 }
 
-class EnvironmentError extends ValidationError with EquatableMixin {
+class EnvironmentError extends ValidationError {
   @override
   String get errorDescription => 'Environment not set $_key';
 
   EnvironmentError(this._key);
 
   final String _key;
-
-  @override
-  List<Object?> get props => [_key];
 }
