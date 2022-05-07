@@ -35,8 +35,6 @@ class TrelloClient {
     _card = (id) => CardClient(_httpClient, id, authentication);
   }
 
-  MemberId get memberId => _memberId;
-
   MemberClient member(MemberId id) => _member(id);
   BoardClient board(BoardId id) => _board(id);
   ListClient list(ListId id) => _list(id);

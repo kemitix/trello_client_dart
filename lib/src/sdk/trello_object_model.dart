@@ -9,13 +9,12 @@ abstract class TrelloObject<T extends Enum> {
     _all = all;
   }
 
-  Map<String, dynamic> toJson() => raw;
+  // Map<String, dynamic> toJson() => raw;
 
   Map<String, dynamic> get raw => _source;
 
-  List<T> get fields => _fields;
+  // List<T> get fields => _fields;
 
-  //@protected
   V getValue<V>(T field) {
     String fieldName = field.name;
     if (_all || _fields.contains(field)) {

@@ -10,8 +10,6 @@ abstract class Failure {
   late final String _message;
   late Map<String, String> _context;
 
-  String get message => _message;
-
   @override
   String toString() =>
       'Failure: $_message${_context.isEmpty ? '' : ' - $_context'}';
