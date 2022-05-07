@@ -25,10 +25,6 @@ abstract class MemberCommand extends TrelloCommand {
       String name, String description, CommandEnvironment commandEnvironment)
       : super(name, description, commandEnvironment);
 
-  MemberId get memberId {
-    if (parameters.isEmpty) {
-      usageException('Member Id was not given');
-    }
-    return MemberId(parameters.first);
-  }
+  Either<Failure, MemberId> get memberId =>
+    nextParameter('Member Id').map((id) => MemberId(id));
 }
