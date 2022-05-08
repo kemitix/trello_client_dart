@@ -35,25 +35,19 @@ void main() {
     test('there were two requests', () => expect(history.length, 2));
 
     test('first request was GET', () => expect(history[0].head.method, 'GET'));
-    test('first request path', () =>
-        expect(history[0].head.path, '/1/cards/$cardId'));
+    test('first request path',
+        () => expect(history[0].head.path, '/1/cards/$cardId'));
     test('first request query parameters',
-            () => expect(history[0].head.queryParameters, {'fields': 'idMembers'}));
+        () => expect(history[0].head.queryParameters, {'fields': 'idMembers'}));
 
-    test('second request was POST', () =>
-        expect(history[1].head.method, 'POST'));
-    test('second request path', () =>
-        expect(history[1].head.path, '/1/cards/$cardId/idMembers'));
+    test('second request was POST',
+        () => expect(history[1].head.method, 'POST'));
+    test('second request path',
+        () => expect(history[1].head.path, '/1/cards/$cardId/idMembers'));
     test('second request query parameters',
-            () => expect(history[1].head.queryParameters, {
-              'value': memberId
-            }));
+        () => expect(history[1].head.queryParameters, {'value': memberId}));
 
-    test(
-        'output',
-            () => expect(printer.output, [
-              'Added member'
-            ]));
+    test('output', () => expect(printer.output, ['Added member']));
   });
   group('do not add existing member to card', () {
     //given
@@ -84,13 +78,14 @@ void main() {
     test('there was one request', () => expect(history.length, 1));
 
     test('request was GET', () => expect(history[0].head.method, 'GET'));
-    test('request path', () => expect(history[0].head.path, '/1/cards/$cardId'));
+    test(
+        'request path', () => expect(history[0].head.path, '/1/cards/$cardId'));
     test('request query parameters',
-            () => expect(history[0].head.queryParameters, {'fields': 'idMembers'}));
+        () => expect(history[0].head.queryParameters, {'fields': 'idMembers'}));
 
     test(
         'output',
-            () => expect(printer.output, [
+        () => expect(printer.output, [
               'ERROR: card add-member - Failure: Can\'t Add a Member to a Card as it is already applied'
             ]));
   });

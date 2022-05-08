@@ -8,7 +8,8 @@ void main() {
   //given
   var memberId = 'my-member-id';
   var client = TestTrelloClient(responses: [
-    createResponse(body: [ // get boards
+    createResponse(body: [
+      // get boards
       {
         'id': 'my-id',
         'name': 'my-board-name',
@@ -39,9 +40,9 @@ void main() {
   test(
       'request query parameters',
       () => expect(history[0].head.queryParameters, {
-        'filter': 'all',
-        'fields': 'id,name,pinned,closed,starred,shortUrl'
-      }));
+            'filter': 'all',
+            'fields': 'id,name,pinned,closed,starred,shortUrl'
+          }));
   test(
       'output',
       () => expect(printer.output, [

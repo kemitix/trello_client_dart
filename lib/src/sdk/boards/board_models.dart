@@ -12,7 +12,8 @@ class TrelloBoard extends TrelloObject<BoardFields> {
   String get desc => getValue(BoardFields.desc);
   String get descData => getValue(BoardFields.descData);
   bool get closed => getValue(BoardFields.closed);
-  MemberId get idMemberCreator => MemberId(getValue(BoardFields.idMemberCreator));
+  MemberId get idMemberCreator =>
+      MemberId(getValue(BoardFields.idMemberCreator));
   String get idOrganization => getValue(BoardFields.idOrganization);
   bool get pinned => getValue(BoardFields.pinned);
   String get url => getValue(BoardFields.url);
@@ -48,4 +49,3 @@ enum BoardFields {
   memberships,
   enterpriseOwned
 }
-

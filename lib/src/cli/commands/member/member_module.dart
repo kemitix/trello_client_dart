@@ -26,5 +26,5 @@ abstract class MemberCommand extends TrelloCommand {
       : super(name, description, commandEnvironment);
 
   Either<Failure, MemberId> get memberId =>
-    nextParameter('Member Id').map((id) => MemberId(id));
+      nextParameter('Member Id').map((id) => MemberId(id));
 }
