@@ -70,14 +70,21 @@ class DioHttpClient extends HttpClient {
     String path, {
     Map<String, String>? queryParameters,
     Map<String, String>? headers,
-  }) => attemptTask(() => _dio.get<T>(path,
-        queryParameters: queryParameters,
-        options: Options(
-          headers: headers,
-        ))).bimap(
-      (l) => HttpClientFailure(message: 'GET $path - ${l.message}'),
-      (r) => DioHttpResponse(r),
-    );
+  }) =>
+      attemptTask(() => _dio.get<T>(path,
+          queryParameters: queryParameters,
+          options: Options(
+            headers: headers,
+          ))).bimap(
+        (l) {
+          if (l.runtimeType == DioError &&
+              (l as DioError).response!.statusCode == 404) {
+            return ResourceNotFoundFailure(resource: path);
+          }
+          return HttpClientFailure(message: 'GET $path - $l');
+        },
+        (r) => DioHttpResponse(r),
+      );
 
   @override
   TaskEither<Failure, HttpResponse<T>> put<T>(

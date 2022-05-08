@@ -80,7 +80,7 @@ void main() {
       //given
       var boardId = 'my-board-id';
       var client = TestTrelloClient(responses: [
-        createResponse(statusCode: 403, body: {}),
+        createResponse(statusCode: 404, body: {}),
       ]);
       var boardClient = client.trelloClient.board(BoardId(boardId));
       late Either<Failure, List<TrelloList>> response;
@@ -109,9 +109,9 @@ void main() {
             () async => response.fold(
                   (l) => expect(
                       l.toString(),
-                      HttpClientFailure(
-                              message:
-                                  'GET /1/boards/my-board-id/lists - Http status error [403] - {boardId: my-board-id}')
+                      ResourceNotFoundFailure(
+                              resource:
+                                  '/1/boards/my-board-id/lists - {boardId: my-board-id}')
                           .toString()),
                   (r) => fail('should have failed'),
                 ));
