@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:test/test.dart';
 import 'package:trello_sdk/src/sdk/boards/board_client.dart';
 import 'package:trello_sdk/src/sdk/boards/board_models.dart';
@@ -33,15 +34,100 @@ void main() {
       setUpAll(() async => firstList = await getFirstList(boardClient));
 
       //then
-      test('board id', () async => verify<TrelloList>(firstList, (r) => expect(r.id, ListId('my-list-id'))));
-      test('board name', () async => verify<TrelloList>(firstList, (r) => expect(r.name, 'my-list-name')));
-      test('board closed', () async => verify<TrelloList>(firstList, (r) => expect(r.closed, true)));
-      test('board idBoard', () async => verify<TrelloList>(firstList, (r) => expect(r.idBoard, BoardId(boardId))));
-      test('board pos', () async => verify<TrelloList>(firstList, (r) => expect(r.pos, 2000)));
-      test('board subscribed', () async => verify<TrelloList>(firstList, (r) => expect(r.subscribed, true)));
+      group('request', () {
+        late RequestOptions request;
+        setUpAll(() => request = client.fetchHistory[0].head);
+        test('there was one request', () => client.fetchHistory.length == 1);
+        test('method', () => request.method == 'GET');
+        test('path', () => request.path == '/1/foo');
+        test(
+            'query parameters',
+            () =>
+                request.queryParameters ==
+                {
+                  'foo',
+                  'bar',
+                });
+      });
+      group('response', () {
+        test(
+            'board id',
+            () async => verify<TrelloList>(
+                firstList, (r) => expect(r.id, ListId('my-list-id'))));
+        test(
+            'board name',
+            () async => verify<TrelloList>(
+                firstList, (r) => expect(r.name, 'my-list-name')));
+        test(
+            'board closed',
+            () async =>
+                verify<TrelloList>(firstList, (r) => expect(r.closed, true)));
+        test(
+            'board idBoard',
+            () async => verify<TrelloList>(
+                firstList, (r) => expect(r.idBoard, BoardId(boardId))));
+        test(
+            'board pos',
+            () async =>
+                verify<TrelloList>(firstList, (r) => expect(r.pos, 2000)));
+        test(
+            'board subscribed',
+            () async => verify<TrelloList>(
+                firstList, (r) => expect(r.subscribed, true)));
+      });
+    });
+    group('failure', () {
+      //given
+      var boardId = 'my-board-id';
+      var client = TestTrelloClient(responses: [
+        createResponse(statusCode: 403, body: {}),
+      ]);
+      var boardClient = client.trelloClient.board(BoardId(boardId));
+      late Either<Failure, List<TrelloList>> response;
+
+      //when
+      setUpAll(() async {
+        try {
+          response = await boardClient.getLists().run();
+        } catch (err) {
+          print('error: $err');
+          response =
+              left(HttpClientFailure(message: err.runtimeType.toString()));
+        }
+      });
+
+      //then
+      group('request', () {
+        late RequestOptions request;
+        setUpAll(() => request = client.fetchHistory[0].head);
+        test('there was one request', () => client.fetchHistory.length == 1);
+        test('method', () => request.method == 'GET');
+        test('path', () => request.path == '/1/foo');
+        test(
+            'query parameters',
+            () =>
+                request.queryParameters ==
+                {
+                  'foo': 'bar',
+                });
+      });
+      group('response', () {
+        test(
+            'status code',
+            () async => response.fold(
+                  (l) => expect(
+                      l.toString(),
+                      HttpClientFailure(
+                              message:
+                                  'GET /1/boards/my-board-id/lists - Http status error [403] - {boardId: my-board-id}')
+                          .toString()),
+                  (r) => fail('should have failed'),
+                ));
+      });
     });
   });
 }
 
-Future<Either<Failure, TrelloList>> getFirstList(BoardClient boardClient) async =>
-     boardClient.getLists().map((list) => list[0]).run();
+Future<Either<Failure, TrelloList>> getFirstList(
+        BoardClient boardClient) async =>
+    boardClient.getLists().map((list) => list[0]).run();
