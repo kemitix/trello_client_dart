@@ -41,13 +41,6 @@ class UsageFailure extends Failure {
   }) : super(message: usage, context: context);
 }
 
-class NotImplementedFailure extends Failure {
-  NotImplementedFailure({
-    required String function,
-    Map<String, String>? context,
-  }) : super(message: 'Function not implemented: $function', context: context);
-}
-
 class AlreadyAppliedFailure extends Failure {
   AlreadyAppliedFailure({
     required String action,
