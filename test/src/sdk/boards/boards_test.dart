@@ -76,7 +76,7 @@ void main() {
                 firstList, (r) => expect(r.subscribed, true)));
       });
     });
-    group('failure', () {
+    group('http client failure', () {
       //given
       var boardId = 'my-board-id';
       var client = TestTrelloClient(responses: [
@@ -86,15 +86,7 @@ void main() {
       late Either<Failure, List<TrelloList>> response;
 
       //when
-      setUpAll(() async {
-        try {
-          response = await boardClient.getLists().run();
-        } catch (err) {
-          print('error: $err');
-          response =
-              left(HttpClientFailure(message: err.runtimeType.toString()));
-        }
-      });
+      setUpAll(() async => response = await boardClient.getLists().run());
 
       //then
       group('request', () {
