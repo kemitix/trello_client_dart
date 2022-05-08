@@ -70,8 +70,7 @@ class DioHttpClient extends HttpClient {
     String path, {
     Map<String, String>? queryParameters,
     Map<String, String>? headers,
-  }) {
-    return attemptTask(() => _dio.get<T>(path,
+  }) => attemptTask(() => _dio.get<T>(path,
         queryParameters: queryParameters,
         options: Options(
           headers: headers,
@@ -79,7 +78,6 @@ class DioHttpClient extends HttpClient {
       (l) => HttpClientFailure(message: 'GET $path - ${l.message}'),
       (r) => DioHttpResponse(r),
     );
-  }
 
   @override
   TaskEither<Failure, HttpResponse<T>> put<T>(
