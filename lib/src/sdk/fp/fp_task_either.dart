@@ -86,7 +86,7 @@ class TaskEither<L, R> {
       map(mapRight).mapLeft(mapLeft);
 }
 
-TaskEither<dynamic, V> attemptTask<V>(Future<V> Function() action) {
+TaskEither<Object, V> attemptTask<V>(Future<V> Function() action) {
   return TaskEither.flatten(TaskEither.fromTask(
       Task(() => action()).attempt().map((e) => TaskEither.fromEither(e))));
 }
