@@ -120,6 +120,7 @@ class DioHttpClient extends HttpClient {
     Map<String, String>? headers,
     void Function(int, int)? onReceiveProgress,
   }) =>
+      //TODO use _dio.downloadUri() - remove _dioDownload entirely
       TaskEither.fromTask(Task(() => _dioDownloader.get(
             path, onReceiveProgress: onReceiveProgress,
             queryParameters: queryParameters,
