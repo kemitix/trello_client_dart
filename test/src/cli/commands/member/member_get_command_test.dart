@@ -49,7 +49,8 @@ void main() {
             'customBoardBackground': 'none',
             'customEmoji': 'none',
             'customStickers': 'none',
-            'fields': 'id,username,email,fullName,initials,url,status,memberType,confirmed,bio',
+            'fields':
+                'id,username,email,fullName,initials,url,status,memberType,confirmed,bio',
             'organizations': 'none',
             'organization_fields': 'all',
             'organization_paid_account': 'false',
