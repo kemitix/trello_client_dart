@@ -16,7 +16,7 @@ class BoardClient {
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-boards/#api-boards-id-lists-get
   TaskEither<Failure, List<TrelloList>> getLists({
     CardFilter cards = CardFilter.all,
-    List<CardFields> card_fields = const [CardFields.all],
+    List<CardFields> cardFields = const [CardFields.all],
     ListFilter filter = ListFilter.all,
     List<ListFields> fields = const [ListFields.all],
   }) =>
@@ -25,7 +25,7 @@ class BoardClient {
             '/1/boards/${_id}/lists',
             queryParameters: {
               'cards': cards.name,
-              'card_fields': asCsv(card_fields),
+              'card_fields': asCsv(cardFields),
               'filter': filter.name,
               'fields': asCsv(fields),
             },
