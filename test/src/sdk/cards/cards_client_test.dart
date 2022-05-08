@@ -27,26 +27,31 @@ void main() {
       late final Either<Failure, TrelloCard> response;
 
       //when
-      setUpAll(() async =>
-          response = await client.trelloClient.card(CardId(cardId)).get().run());
+      setUpAll(() async => response =
+          await client.trelloClient.card(CardId(cardId)).get().run());
 
       //then
       group('request', () {
         var request;
-        test('there was one request', () => expect(client.fetchHistory.length, 1));
+        test('there was one request',
+            () => expect(client.fetchHistory.length, 1));
         setUpAll(() {
           request = client.fetchHistory.head!.head;
         });
         test('got first request', () => expect(request, isNotNull));
         test('method', () => expect(request.method, 'GET'));
         test('path', () => expect(request.path, '/1/cards/my-card-id'));
-        test('query parameters', () => expect(request.queryParameters, {
-          'fields': 'all',
-        }));
+        test(
+            'query parameters',
+            () => expect(request.queryParameters, {
+                  'fields': 'all',
+                }));
       });
       group('response', () {
-        test('card id',
-            () => verify<TrelloCard>(response, (card) => expect(card.id, CardId(cardId))));
+        test(
+            'card id',
+            () => verify<TrelloCard>(
+                response, (card) => expect(card.id, CardId(cardId))));
         test(
             'card name',
             () => verify<TrelloCard>(
@@ -61,35 +66,36 @@ void main() {
       late final Either<Failure, TrelloCard> response;
 
       //when
-      setUpAll(() async =>
-      response = await client.trelloClient.card(CardId(cardId)).get().run());
+      setUpAll(() async => response =
+          await client.trelloClient.card(CardId(cardId)).get().run());
 
       //then
       group('request', () {
         var request;
-        test('there was one request', () => expect(client.fetchHistory.length, 1));
+        test('there was one request',
+            () => expect(client.fetchHistory.length, 1));
         setUpAll(() {
           request = client.fetchHistory.head!.head;
         });
         test('got first request', () => expect(request, isNotNull));
         test('method', () => expect(request.method, 'GET'));
         test('path', () => expect(request.path, '/1/cards/my-card-id'));
-        test('query parameters', () => expect(request.queryParameters, {
-          'fields': 'all',
-        }));
+        test(
+            'query parameters',
+            () => expect(request.queryParameters, {
+                  'fields': 'all',
+                }));
       });
       group('response', () {
         test(
             'status code',
-                () async => response.fold(
+            () async => response.fold(
                   (l) => expect(
-                  l.toString(),
-                  HttpClientFailure(
-                      message:
-                      'GET /1/cards/my-card-id - Http status error [404]')
-                      .toString()),
+                      l.toString(),
+                      ResourceNotFoundFailure(resource: '/1/cards/my-card-id')
+                          .toString()),
                   (r) => fail('should have failed'),
-            ));
+                ));
       });
     });
   });
