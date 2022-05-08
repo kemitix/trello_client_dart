@@ -78,6 +78,7 @@ class DioHttpClient extends HttpClient {
           ))).bimap(
         (l) {
           if (l.runtimeType == DioError &&
+              (l as DioError).response != null &&
               (l as DioError).response!.statusCode == 404) {
             return ResourceNotFoundFailure(resource: path);
           }
