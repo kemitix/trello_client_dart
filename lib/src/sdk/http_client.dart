@@ -79,7 +79,7 @@ class DioHttpClient extends HttpClient {
         (l) {
           if (l.runtimeType == DioError &&
               (l as DioError).response != null &&
-              (l as DioError).response!.statusCode == 404) {
+              l.response!.statusCode == 404) {
             return ResourceNotFoundFailure(resource: path);
           }
           return HttpClientFailure(message: 'GET $path - $l');
@@ -94,13 +94,20 @@ class DioHttpClient extends HttpClient {
     Map<String, String>? queryParameters,
     Map<String, String>? headers,
   }) =>
-      TaskEither.fromTask(Task(() => _dio.put<T>(path,
+      attemptTask(() => _dio.put<T>(path,
           data: data,
           queryParameters: queryParameters,
           options: Options(
             headers: headers,
-          )))).bimap(
-        (l) => HttpClientFailure(message: 'PUT $path - ${l.message}'),
+          ))).bimap(
+        (l) {
+          if (l.runtimeType == DioError &&
+              (l as DioError).response != null &&
+              l.response!.statusCode == 404) {
+            return ResourceNotFoundFailure(resource: path);
+          }
+          return HttpClientFailure(message: 'PUT $path - $l');
+        },
         (r) => DioHttpResponse(r),
       );
 
