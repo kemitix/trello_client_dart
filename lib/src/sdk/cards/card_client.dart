@@ -31,10 +31,6 @@ class CardClient {
         },
       )
       .map((response) => response.data)
-      .filterOrElse(
-        (data) => data != null,
-        (data) => ResourceNotFoundFailure(resource: 'Card ID: $_cardId'),
-      )
       .map((data) => TrelloCard(data, fields ?? [CardFields.all]));
 
   /// Get Attachments on a Card
