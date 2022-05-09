@@ -27,7 +27,7 @@ void main() {
   });
   //put
   group('card put', () {
-    var body = {'name':'my-new-card-name','desc':'my-new-card-desc'};
+    var body = {'name': 'my-new-card-name', 'desc': 'my-new-card-desc'};
     apiTest<TrelloCard>(
         apiCall: (client) =>
             client.trelloClient.card(CardId('my-card-id')).put(body),
