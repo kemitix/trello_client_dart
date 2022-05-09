@@ -28,6 +28,7 @@ void main() {
             'subscribed': true,
           }
         ]),
+        expectedHeaders: {},
         responseValues: [
           testValue('id', (r) => r[0].id, ListId('my-list-id')),
           testValue('name', (r) => r[0].name, 'my-list-name'),

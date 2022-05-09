@@ -36,6 +36,7 @@ void apiTest<T>({
   required ResponseBody existingResourceResponse,
   required List<TestResponseValue<T>> responseValues,
   required Map<String, String> additionalContext,
+  required Map<String, String> expectedHeaders,
 }) {
   group('exists', () {
     //given
@@ -63,6 +64,7 @@ void apiTest<T>({
       test('path', () => expect(request.path, expectedPath));
       test('query parameters',
           () => expect(request.queryParameters, expectedQueryParameters));
+      test('headers', () => expect(request.headers, expectedHeaders));
     });
     group('response', () {
       responseValues.forEach((element) => test('property ${element.name}', () {
