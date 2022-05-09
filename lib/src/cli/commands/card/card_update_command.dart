@@ -1,7 +1,5 @@
 import 'dart:async';
 
-import 'package:dartx/dartx.dart';
-
 import '../../../../trello_sdk.dart';
 import '../../cli.dart';
 
@@ -54,15 +52,7 @@ class UpdateCardCommand extends CardCommand {
 
   TaskEither<Failure, TrelloCard> _putCardTE(
           CardClient cardClient, Map<String, String> updates) =>
-      cardClient.put(_formatUpdates(updates));
-
-  String _formatUpdates(Map<String, String> updates) {
-    //TODO translate updates into string
-    return updates.entries
-        .map((e) => '${e.key.urlEncode}=${e.value.urlEncode}')
-        .join('&');
-    //return 'name=2022-05-04T20%3A49%3A18%2B01%3A01';
-  }
+      cardClient.put(updates);
 
   CardClient _cardClient(CardId cardId) => client.card(cardId);
 
