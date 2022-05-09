@@ -27,7 +27,7 @@ void main() {
   });
   //put
   group('card put', () {
-    var body = 'name=my-new-card-name&desc=my-new-card-desc';
+    var body = {'name':'my-new-card-name','desc':'my-new-card-desc'};
     apiTest<TrelloCard>(
         apiCall: (client) =>
             client.trelloClient.card(CardId('my-card-id')).put(body),
@@ -35,7 +35,7 @@ void main() {
         expectedPath: '/1/cards/my-card-id',
         expectedHeaders: {
           Headers.contentTypeHeader: Headers.formUrlEncodedContentType,
-          Headers.contentLengthHeader: body.length.toString(),
+          Headers.contentLengthHeader: '43',
         },
         expectedQueryParameters: {},
         existingResourceResponse: createResponse(body: {
