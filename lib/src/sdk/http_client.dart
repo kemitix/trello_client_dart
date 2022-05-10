@@ -118,11 +118,18 @@ class DioHttpClient extends HttpClient {
     Map<String, String>? queryParameters,
     Map<String, String>? headers,
   }) =>
-      TaskEither.fromTask(Task(() => _dio.post<T>(path,
+      attemptTask(() => _dio.post<T>(path,
           data: data,
           queryParameters: queryParameters,
-          options: Options(headers: headers)))).bimap(
-        (l) => HttpClientFailure(message: 'POST $path - ${l.message}'),
+          options: Options(headers: headers))).bimap(
+        (l) {
+          if (l.runtimeType == DioError &&
+              (l as DioError).response != null &&
+              l.response!.statusCode == 404) {
+            return ResourceNotFoundFailure(resource: path);
+          }
+          return HttpClientFailure(message: 'POST $path');
+        },
         (r) => DioHttpResponse(r),
       );
 
