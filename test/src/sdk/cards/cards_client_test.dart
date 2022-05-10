@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:test/test.dart';
 import 'package:trello_sdk/src/sdk/cards/cards.dart';
+import 'package:trello_sdk/src/sdk/members/members.dart';
 
 import '../../cli/cli_commons.dart';
 import '../sdk_commons.dart';
@@ -166,6 +167,20 @@ void main() {
         additionalContext: {});
   });
   //addMember
+  group('card addMember', () {
+    apiTest(
+      apiCall: (client) => client.trelloClient
+          .card(CardId('my-card-id'))
+          .addMember(MemberId('my-member-id')),
+      expectedMethod: 'POST',
+      expectedPath: '/1/cards/my-card-id/idMembers',
+      expectedHeaders: {Headers.contentTypeHeader: Headers.jsonContentType},
+      expectedQueryParameters: {'value': 'my-member-id'},
+      existingResourceResponse: createResponse(body: {}),
+      responseValues: [],
+      additionalContext: {},
+    );
+  });
   //attachments
   //attachment
 }

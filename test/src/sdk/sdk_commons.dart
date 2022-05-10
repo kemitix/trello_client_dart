@@ -34,11 +34,11 @@ void apiTest<T>({
   required TaskEither<Failure, T> Function(TestTrelloClient) apiCall,
   required String expectedMethod,
   required String expectedPath,
+  required Map<String, String> expectedHeaders,
   required Map<String, String> expectedQueryParameters,
   required ResponseBody existingResourceResponse,
   required List<TestResponseValue<T>> responseValues,
   required Map<String, String> additionalContext,
-  required Map<String, String> expectedHeaders,
 }) {
   group('exists', () {
     //given
