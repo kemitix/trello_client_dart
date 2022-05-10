@@ -20,7 +20,9 @@ class TestResponseValue<T> {
   final dynamic _expectedValue;
 
   String get name => _name;
+
   dynamic Function(T) get get => _extract;
+
   dynamic get expected => _expectedValue;
 }
 
@@ -103,6 +105,42 @@ void apiTest<T>({
                 (l) => expect(
                     l.toString(),
                     ResourceNotFoundFailure(resource: expectedPath)
+                        .withContext(additionalContext)
+                        .toString()),
+                (r) => fail('should have failed'),
+              ));
+    });
+  });
+  group('unknown error', () {
+    //given
+    var missingResponse = createResponse(statusCode: 500, body: {});
+    var client = TestTrelloClient(responses: [missingResponse]);
+    late final Either<Failure, T> response;
+
+    //when
+    setUpAll(() async => response = await apiCall(client).run());
+
+    //then
+    group('request', () {
+      var request;
+      test(
+          'there was one request', () => expect(client.fetchHistory.length, 1));
+      setUp(() {
+        request = client.fetchHistory.head!.head;
+      });
+      test('got first request', () => expect(request, isNotNull));
+      test('method', () => expect(request.method, expectedMethod));
+      test('path', () => expect(request.path, expectedPath));
+      test('query parameters',
+          () => expect(request.queryParameters, expectedQueryParameters));
+    });
+    group('response', () {
+      test(
+          'status code',
+          () async => response.fold(
+                (l) => expect(
+                    l.toString(),
+                    HttpClientFailure(message: '$expectedMethod $expectedPath')
                         .withContext(additionalContext)
                         .toString()),
                 (r) => fail('should have failed'),

@@ -82,7 +82,7 @@ class DioHttpClient extends HttpClient {
               l.response!.statusCode == 404) {
             return ResourceNotFoundFailure(resource: path);
           }
-          return HttpClientFailure(message: 'GET $path - $l');
+          return HttpClientFailure(message: 'GET $path');
         },
         (r) => DioHttpResponse(r),
       );
@@ -106,7 +106,7 @@ class DioHttpClient extends HttpClient {
               l.response!.statusCode == 404) {
             return ResourceNotFoundFailure(resource: path);
           }
-          return HttpClientFailure(message: 'PUT $path - $l');
+          return HttpClientFailure(message: 'PUT $path');
         },
         (r) => DioHttpResponse(r),
       );
@@ -198,6 +198,7 @@ class CurlLoggerDioInterceptor extends Interceptor {
 
 class DioHttpResponse<T> extends HttpResponse<T> {
   final Response<T> _response;
+
   DioHttpResponse(this._response);
 
   @override
