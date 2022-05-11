@@ -7,5 +7,4 @@ export 'fp/fp.dart';
 export 'lists/lists.dart';
 export 'members/members.dart';
 export 'misc.dart';
-export 'trello_client.dart';
 export 'trello_object_model.dart';
