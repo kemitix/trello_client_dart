@@ -228,4 +228,45 @@ void main() {
             additionalContext: {},
           ));
   //attachment
+  group(
+      'attachment',
+      () => apiTest<TrelloAttachment>(
+            apiCall: (client) => client.trelloClient
+                .card(CardId('my-card-id'))
+                .attachment(AttachmentId('my-attachment-id'))
+                .get(),
+            expectedMethod: 'GET',
+            expectedPath: '/1/cards/my-card-id/attachments/my-attachment-id',
+            expectedHeaders: {},
+            expectedQueryParameters: {},
+            existingResourceResponse: createResponse(
+              body: {
+                'id': 'my-id',
+                'bytes': 'my-bytes',
+                'date': DateTime(2022, 04, 03).toString(),
+                'edgeColor': 'my-edge-color',
+                'idMember': 'my-member-id',
+                'isUpload': true,
+                'mimeType': 'my-mime-type',
+                'name': 'my-name',
+                'previews': ['my-preview-1', 'my-preview-2'],
+                'url': 'my-url',
+                'pos': 123.456,
+              },
+            ),
+            responseValues: [
+              testValue('id', (r) => r.id, 'my-id'),
+              testValue('bytes', (r) => r.bytes, 'my-bytes'),
+              testValue('date', (r) => r.date, DateTime(2022, 04, 03)),
+              testValue('edgeColor', (r) => r.edgeColor, 'my-edge-color'),
+              testValue('idMember', (r) => r.idMember, 'my-member-id'),
+              testValue('isUpload', (r) => r.isUpload, isTrue),
+              testValue('mimeType', (r) => r.mimeType, 'my-mime-type'),
+              testValue('previews', (r) => r.previews,
+                  ['my-preview-1', 'my-preview-2']),
+              testValue('url', (r) => r.url, 'my-url'),
+              testValue('pos', (r) => r.pos, 123.456),
+            ],
+            additionalContext: {},
+          ));
 }
