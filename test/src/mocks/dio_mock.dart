@@ -1,8 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
-import 'package:trello_sdk/src/sdk/client.dart';
-import 'package:trello_sdk/src/sdk/fp/fp.dart';
 import 'package:trello_sdk/src/sdk/http_client.dart';
 import 'package:trello_sdk/src/sdk/sdk.dart';
 
@@ -62,18 +60,24 @@ class TestTrelloClient {
         authentication ??
             TrelloAuthentication.of(MemberId("_memberId"), "_key", "_token"));
   }
+
   late final TrelloClient _client;
   late final DioAdapterMock _dioAdapterMock;
   late final FakeFileWriter _fileWriter;
+
   TrelloClient get trelloClient => _client;
+
   List<Tuple3<RequestOptions, Stream<Uint8List>?, Future<dynamic>?>>
       get fetchHistory => _dioAdapterMock.fetchHistory;
+
   List<Tuple2<FileName, dynamic>> get filesWritten => _fileWriter.filesWritten;
 }
 
 class FakeFileWriter {
   List<Tuple2<FileName, dynamic>> filesWritten = [];
+
   Future<void> Function(FileName, dynamic) _fileWriter() =>
       (fn, d) async => filesWritten.add(Tuple2(fn, d));
+
   Future<void> Function(FileName, dynamic) get fileWriter => _fileWriter();
 }

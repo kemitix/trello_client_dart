@@ -18,12 +18,10 @@ class TaskEither<L, R> {
 
   /// Apply the function contained inside `a` to change the value on the [Right] from
   /// type `R` to a value of type `C`.
-  @override
   TaskEither<L, C> ap<C>(covariant TaskEither<L, C Function(R r)> a) =>
       a.flatMap((f) => flatMap((v) => pure(f(v))));
 
   /// Returns a [TaskEither] that returns a `Right(a)`.
-  @override
   TaskEither<L, C> pure<C>(C a) => TaskEither(() async => Right(a));
 
   /// Used to chain multiple functions that return a [TaskEither].
@@ -31,7 +29,6 @@ class TaskEither<L, R> {
   /// You can extract the value of every [Right] in the chain without
   /// handling all possible missing cases.
   /// If running any of the tasks in the chain returns [Left], the result is [Left].
-  @override
   TaskEither<L, C> flatMap<C>(covariant TaskEither<L, C> Function(R r) f) =>
       TaskEither(() => run().then(
             (either) async => either.fold(
@@ -42,7 +39,6 @@ class TaskEither<L, R> {
 
   /// If running this [TaskEither] returns [Right], then change its value from type `R` to
   /// type `C` using function `f`.
-  @override
   TaskEither<L, C> map<C>(C Function(R r) f) => ap(pure(f));
 
   /// Flat a [TaskEither] contained inside another [TaskEither] to be a single [TaskEither].

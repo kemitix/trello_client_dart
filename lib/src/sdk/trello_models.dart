@@ -1,6 +1,6 @@
 /// 'default' is a reserved word, so is here in uppercase
 /// use the names in lowercase to get correct form
-enum BoardBackgrounds { all, custom, DEFAULT, none, premium }
+enum BoardBackgrounds { all, custom, defaulT, none, premium }
 
 enum BoardsInvited {
   all,

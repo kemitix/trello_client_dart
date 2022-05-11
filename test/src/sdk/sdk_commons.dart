@@ -39,13 +39,13 @@ class ExpectedRequest<T> {
   Map<String, String> additionalContext;
 
   ExpectedRequest({
-    required String this.expectedMethod,
-    required String this.expectedPath,
-    required Map<String, String> this.expectedHeaders,
-    required Map<String, String> this.expectedQueryParameters,
-    required ResponseBody this.existingResourceResponse,
-    required List<TestResponseValue<T>> this.responseValues,
-    required Map<String, String> this.additionalContext,
+    required this.expectedMethod,
+    required this.expectedPath,
+    required this.expectedHeaders,
+    required this.expectedQueryParameters,
+    required this.existingResourceResponse,
+    required this.responseValues,
+    required this.additionalContext,
   });
 }
 
@@ -71,7 +71,7 @@ void apiTest<T>({
       count++;
       group('request $count', () {
         var myCount = count;
-        var request;
+        late RequestOptions request;
         setUpAll(() {
           if (client.fetchHistory.length >= myCount) {
             request = client.fetchHistory[myCount - 1].head;
@@ -115,7 +115,7 @@ void apiTest<T>({
         count++;
         group('request $count', () {
           var myCount = count;
-          var request;
+          late RequestOptions request;
           setUp(() {
             if (client.fetchHistory.length >= count) {
               request = client.fetchHistory[myCount - 1].head;
@@ -163,7 +163,7 @@ void apiTest<T>({
         count++;
         group('request $count', () {
           var myCount = count;
-          var request;
+          late RequestOptions request;
           setUp(() {
             if (client.fetchHistory.length >= count) {
               request = client.fetchHistory[myCount - 1].head;

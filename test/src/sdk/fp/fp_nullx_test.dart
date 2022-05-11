@@ -1,37 +1,35 @@
-import 'package:test/test.dart';
-
 import 'package:dartz/dartz.dart';
-
+import 'package:test/test.dart';
 import 'package:trello_sdk/src/sdk/fp/fp_nullx.dart';
 
 void main() {
-  final String? null_value = null;
-  final String? a_value = "Hello, World!";
+  final String? nullValue = null;
+  final String? aValue = "Hello, World!";
   group('toOption', () {
-    test('when null', () => expect(null_value.toOption(), none()));
-    test('when not null', () => expect(a_value.toOption(), some(a_value)));
+    test('when null', () => expect(nullValue.toOption(), none()));
+    test('when not null', () => expect(aValue.toOption(), some(aValue)));
   });
   group('toEither', () {
     test('when null',
-        () => expect(null_value.toEither(() => ('is null')), left('is null')));
+        () => expect(nullValue.toEither(() => ('is null')), left('is null')));
     test('when not null',
-        () => expect(a_value.toEither(() => ('is null')), right(a_value)));
+        () => expect(aValue.toEither(() => ('is null')), right(aValue)));
   });
   group('toList', () {
-    test('when null', () => expect(null_value.toList(), []));
-    test('when not null', () => expect(a_value.toList(), [a_value!]));
+    test('when null', () => expect(nullValue.toList(), []));
+    test('when not null', () => expect(aValue.toList(), [aValue!]));
   });
   group('toIterable', () {
-    test('when null', () => expect(null_value.toIterable().isEmpty, isTrue));
+    test('when null', () => expect(nullValue.toIterable().isEmpty, isTrue));
     test('when not null contains value',
-        () => expect(a_value.toIterable().contains(a_value!), isTrue));
+        () => expect(aValue.toIterable().contains(aValue!), isTrue));
     test('when not null has no other value',
-        () => expect(a_value.toIterable().length, 1));
+        () => expect(aValue.toIterable().length, 1));
   });
   group('toStream', () {
     test('when null',
-        () async => expect(await null_value.toStream().toList(), []));
+        () async => expect(await nullValue.toStream().toList(), []));
     test('when not null',
-        () async => expect(await a_value.toStream().toList(), [a_value!]));
+        () async => expect(await aValue.toStream().toList(), [aValue!]));
   });
 }

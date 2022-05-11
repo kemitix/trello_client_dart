@@ -5,12 +5,15 @@ import 'http_client.dart';
 
 class TrelloAuthentication extends Equatable {
   final String _key;
+
   String get key => _key;
 
   final String _token;
+
   String get token => _token;
 
   final MemberId _memberId;
+
   MemberId get memberId => _memberId;
 
   TrelloAuthentication.of(this._memberId, this._key, this._token);
@@ -20,7 +23,6 @@ class TrelloAuthentication extends Equatable {
 }
 
 class TrelloClient {
-  late final MemberId _memberId;
   late final HttpClient _httpClient;
   late final Function1<MemberId, MemberClient> _member;
   late final Function1<BoardId, BoardClient> _board;
@@ -28,7 +30,6 @@ class TrelloClient {
   late final Function1<CardId, CardClient> _card;
 
   TrelloClient(this._httpClient, TrelloAuthentication authentication) {
-    _memberId = authentication.memberId;
     _member = (id) => MemberClient(_httpClient, id);
     _board = (id) => BoardClient(_httpClient, id);
     _list = (id) => ListClient(_httpClient, id);
@@ -36,8 +37,11 @@ class TrelloClient {
   }
 
   MemberClient member(MemberId id) => _member(id);
+
   BoardClient board(BoardId id) => _board(id);
+
   ListClient list(ListId id) => _list(id);
+
   CardClient card(CardId id) => _card(id);
 
   void close() {
@@ -47,6 +51,7 @@ class TrelloClient {
 
 abstract class StringValue extends Equatable {
   final String value;
+
   StringValue(this.value);
 
   @override
