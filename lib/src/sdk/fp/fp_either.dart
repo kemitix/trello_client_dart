@@ -1,8 +1,8 @@
 import 'fp.dart';
 
-// lift
-Function1<Either<L, A>, Either<L, B>> lift1either<L, A, B>(B Function(A a) f) =>
-    (Either<L, A> fa) => map1either(fa, f);
+// // lift
+// Function1<Either<L, A>, Either<L, B>> lift1either<L, A, B>(B Function(A a) f) =>
+//     (Either<L, A> fa) => map1either(fa, f);
 
 Function2<Either<L, A>, Either<L, B>, Either<L, C>> lift2either<L, A, B, C>(
         C Function(A a, B b) f) =>
@@ -13,10 +13,10 @@ Function3<Either<L, A>, Either<L, B>, Either<L, C>, Either<L, D>>
         (Either<L, A> fa, Either<L, B> fb, Either<L, C> fc) =>
             map3either(fa, fb, fc, f);
 
-// map
-Either<L, B> map1either<L, A, A2 extends A, B>(
-        Either<L, A2> fa, B Function(A a) fun) =>
-    fa.fold(left, (a) => right(fun(a)));
+// // map
+// Either<L, B> map1either<L, A, A2 extends A, B>(
+//         Either<L, A2> fa, B Function(A a) fun) =>
+//     fa.fold(left, (a) => right(fun(a)));
 
 Either<L, C> map2either<L, A, A2 extends A, B, B2 extends B, C>(
         Either<L, A2> fa, Either<L, B2> fb, C Function(A a, B b) fun) =>
