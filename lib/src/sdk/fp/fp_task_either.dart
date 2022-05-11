@@ -3,17 +3,18 @@ import '../fp/fp.dart';
 class TaskEither<L, R> {
   /// Build a [TaskEither] from a function returning a `Future<Either<L, R>>`.
   const TaskEither(this._run);
+
   final Future<Either<L, R>> Function() _run;
 
   /// Run the task and return a `Future<Either<L, R>>`.
   Future<Either<L, R>> run() => _run();
 
-  /// Pattern matching to convert a [TaskEither] to a [Task].
-  ///
-  /// Execute `onLeft` when running this [TaskEither] returns a [Left].
-  /// Otherwise execute `onRight`.
-  Task<A> match<A>(A Function(L l) onLeft, A Function(R r) onRight) =>
-      Task(() async => (await run()).fold(onLeft, onRight));
+  // /// Pattern matching to convert a [TaskEither] to a [Task].
+  // ///
+  // /// Execute `onLeft` when running this [TaskEither] returns a [Left].
+  // /// Otherwise execute `onRight`.
+  // Task<A> match<A>(A Function(L l) onLeft, A Function(R r) onRight) =>
+  //     Task(() async => (await run()).fold(onLeft, onRight));
 
   /// Apply the function contained inside `a` to change the value on the [Right] from
   /// type `R` to a value of type `C`.
