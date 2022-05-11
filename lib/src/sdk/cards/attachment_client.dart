@@ -4,6 +4,7 @@ import '../http_client.dart';
 class AttachmentClient {
   AttachmentClient(
       this._client, this._cardId, this._attachmentId, this._authentication);
+
   final HttpClient _client;
   final CardId _cardId;
   final AttachmentId _attachmentId;
@@ -29,7 +30,7 @@ class AttachmentClient {
   /// GET (url from 'Get an Attachment on a Card')
   ///
   /// Download an attachment and save it to disk.
-  TaskEither<Failure, void> download(FileName fileName) =>
+  TaskEither<Failure, TrelloAttachment> download(FileName fileName) =>
       get(fields: [AttachmentFields.url, AttachmentFields.bytes]).flatMap(
         (attachment) => _client.download(
           attachment.url,
@@ -39,6 +40,6 @@ class AttachmentClient {
                 'OAuth oauth_consumer_key="${_authentication.key}", '
                     'oauth_token="${_authentication.token}"',
           },
-        ),
+        ).map((_) => attachment),
       );
 }
