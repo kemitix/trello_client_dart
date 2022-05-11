@@ -2,7 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:test/test.dart';
 import 'package:trello_sdk/src/sdk/errors.dart';
-import 'package:trello_sdk/src/sdk/extensions/list_extensions.dart';
 import 'package:trello_sdk/src/sdk/fp/fp_task_either.dart';
 
 import '../cli/cli_commons.dart';
@@ -30,121 +29,171 @@ TestResponseValue<T> testValue<T>(
         String name, dynamic Function(T) get, dynamic expected) =>
     TestResponseValue(name, get, expected);
 
+class ExpectedRequest<T> {
+  String expectedMethod;
+  String expectedPath;
+  Map<String, String> expectedHeaders;
+  Map<String, String> expectedQueryParameters;
+  ResponseBody existingResourceResponse;
+  List<TestResponseValue<T>> responseValues;
+  Map<String, String> additionalContext;
+
+  ExpectedRequest({
+    required String this.expectedMethod,
+    required String this.expectedPath,
+    required Map<String, String> this.expectedHeaders,
+    required Map<String, String> this.expectedQueryParameters,
+    required ResponseBody this.existingResourceResponse,
+    required List<TestResponseValue<T>> this.responseValues,
+    required Map<String, String> this.additionalContext,
+  });
+}
+
 void apiTest<T>({
   required TaskEither<Failure, T> Function(TestTrelloClient) apiCall,
-  required String expectedMethod,
-  required String expectedPath,
-  required Map<String, String> expectedHeaders,
-  required Map<String, String> expectedQueryParameters,
-  required ResponseBody existingResourceResponse,
-  required List<TestResponseValue<T>> responseValues,
-  required Map<String, String> additionalContext,
+  required List<ExpectedRequest<T>> expectedRequests,
+  bool testNotFound = true,
+  bool testUnknownError = true,
 }) {
   group('exists', () {
     //given
-    var client = TestTrelloClient(responses: [existingResourceResponse]);
+    var client = TestTrelloClient(
+        responses:
+            expectedRequests.map((e) => e.existingResourceResponse).toList());
     late final Either<Failure, T> response;
 
     //when
     setUpAll(() async => response = await apiCall(client).run());
 
     //then
-    group('request', () {
-      var request;
-      setUpAll(() {
-        if (client.fetchHistory.isNotEmpty) {
-          var firstFetch = client.fetchHistory.head;
-          if (firstFetch != null) {
-            request = firstFetch.head;
+    var count = 0;
+    expectedRequests.forEach((expectedRequest) {
+      count++;
+      group('request $count', () {
+        var myCount = count;
+        var request;
+        setUpAll(() {
+          if (client.fetchHistory.length >= myCount) {
+            request = client.fetchHistory[myCount - 1].head;
           }
-        }
+        });
+        test('got request $count', () => expect(request, isNotNull));
+        test('method',
+            () => expect(request.method, expectedRequest.expectedMethod));
+        test('path', () => expect(request.path, expectedRequest.expectedPath));
+        test(
+            'query parameters',
+            () => expect(request.queryParameters,
+                expectedRequest.expectedQueryParameters));
+        test('headers',
+            () => expect(request.headers, expectedRequest.expectedHeaders));
       });
-      test(
-          'there was one request', () => expect(client.fetchHistory.length, 1));
-      test('got first request', () => expect(request, isNotNull));
-      test('method', () => expect(request.method, expectedMethod));
-      test('path', () => expect(request.path, expectedPath));
-      test('query parameters',
-          () => expect(request.queryParameters, expectedQueryParameters));
-      test('headers', () => expect(request.headers, expectedHeaders));
-    });
-    group('response', () {
-      responseValues.forEach((element) => test('property ${element.name}', () {
-            verify<T>(response,
-                (resource) => expect(element.get(resource), element.expected));
-          }));
+      group('response $count', () {
+        expectedRequest.responseValues
+            .forEach((element) => test('property ${element.name}', () {
+                  verify<T>(
+                      response,
+                      (resource) =>
+                          expect(element.get(resource), element.expected));
+                }));
+      });
     });
   });
-  group('not found', () {
-    //given
-    var missingResponse = createResponse(statusCode: 404, body: {});
-    var client = TestTrelloClient(responses: [missingResponse]);
-    late final Either<Failure, T> response;
+  if (testNotFound) {
+    group('not found', () {
+      //given
+      var missingResponse = createResponse(statusCode: 404, body: {});
+      var client = TestTrelloClient(responses: [missingResponse]);
+      late final Either<Failure, T> response;
 
-    //when
-    setUpAll(() async => response = await apiCall(client).run());
+      //when
+      setUpAll(() async => response = await apiCall(client).run());
 
-    //then
-    group('request', () {
-      var request;
-      test(
-          'there was one request', () => expect(client.fetchHistory.length, 1));
-      setUp(() {
-        request = client.fetchHistory.head!.head;
+      //then
+      var count = 0;
+      expectedRequests.forEach((expectedRequest) {
+        count++;
+        group('request $count', () {
+          var myCount = count;
+          var request;
+          setUp(() {
+            if (client.fetchHistory.length >= count) {
+              request = client.fetchHistory[myCount - 1].head;
+            }
+          });
+          test('got request $count', () => expect(request, isNotNull));
+          test('method',
+              () => expect(request.method, expectedRequest.expectedMethod));
+          test(
+              'path', () => expect(request.path, expectedRequest.expectedPath));
+          test(
+              'query parameters',
+              () => expect(request.queryParameters,
+                  expectedRequest.expectedQueryParameters));
+        });
+        group('response $count', () {
+          test(
+              'status code',
+              () async => response.fold(
+                    (l) => expect(
+                        l.toString(),
+                        ResourceNotFoundFailure(
+                                resource: expectedRequest.expectedPath)
+                            .withContext(expectedRequest.additionalContext)
+                            .toString()),
+                    (r) => fail('should have failed'),
+                  ));
+        });
       });
-      test('got first request', () => expect(request, isNotNull));
-      test('method', () => expect(request.method, expectedMethod));
-      test('path', () => expect(request.path, expectedPath));
-      test('query parameters',
-          () => expect(request.queryParameters, expectedQueryParameters));
     });
-    group('response', () {
-      test(
-          'status code',
-          () async => response.fold(
-                (l) => expect(
-                    l.toString(),
-                    ResourceNotFoundFailure(resource: expectedPath)
-                        .withContext(additionalContext)
-                        .toString()),
-                (r) => fail('should have failed'),
-              ));
-    });
-  });
-  group('unknown error', () {
-    //given
-    var missingResponse = createResponse(statusCode: 500, body: {});
-    var client = TestTrelloClient(responses: [missingResponse]);
-    late final Either<Failure, T> response;
+  }
+  if (testUnknownError) {
+    group('unknown error', () {
+      //given
+      var missingResponse = createResponse(statusCode: 500, body: {});
+      var client = TestTrelloClient(responses: [missingResponse]);
+      late final Either<Failure, T> response;
 
-    //when
-    setUpAll(() async => response = await apiCall(client).run());
+      //when
+      setUpAll(() async => response = await apiCall(client).run());
 
-    //then
-    group('request', () {
-      var request;
-      test(
-          'there was one request', () => expect(client.fetchHistory.length, 1));
-      setUp(() {
-        request = client.fetchHistory.head!.head;
+      //then
+      var count = 0;
+      expectedRequests.forEach((expectedRequest) {
+        count++;
+        group('request $count', () {
+          var myCount = count;
+          var request;
+          setUp(() {
+            if (client.fetchHistory.length >= count) {
+              request = client.fetchHistory[myCount - 1].head;
+            }
+          });
+          test('got request $count', () => expect(request, isNotNull));
+          test('method',
+              () => expect(request.method, expectedRequest.expectedMethod));
+          test(
+              'path', () => expect(request.path, expectedRequest.expectedPath));
+          test(
+              'query parameters',
+              () => expect(request.queryParameters,
+                  expectedRequest.expectedQueryParameters));
+        });
+        group('response $count', () {
+          test(
+              'status code',
+              () async => response.fold(
+                    (l) => expect(
+                        l.toString(),
+                        HttpClientFailure(
+                                message:
+                                    '${expectedRequest.expectedMethod} ${expectedRequest.expectedPath}')
+                            .withContext(expectedRequest.additionalContext)
+                            .toString()),
+                    (r) => fail('should have failed'),
+                  ));
+        });
       });
-      test('got first request', () => expect(request, isNotNull));
-      test('method', () => expect(request.method, expectedMethod));
-      test('path', () => expect(request.path, expectedPath));
-      test('query parameters',
-          () => expect(request.queryParameters, expectedQueryParameters));
     });
-    group('response', () {
-      test(
-          'status code',
-          () async => response.fold(
-                (l) => expect(
-                    l.toString(),
-                    HttpClientFailure(message: '$expectedMethod $expectedPath')
-                        .withContext(additionalContext)
-                        .toString()),
-                (r) => fail('should have failed'),
-              ));
-    });
-  });
+  }
 }
