@@ -67,7 +67,7 @@ void apiTest<T>({
 
     //then
     var count = 0;
-    expectedRequests.forEach((expectedRequest) {
+    for (var expectedRequest in expectedRequests) {
       count++;
       group('request $count', () {
         var myCount = count;
@@ -89,15 +89,14 @@ void apiTest<T>({
             () => expect(request.headers, expectedRequest.expectedHeaders));
       });
       group('response $count', () {
-        expectedRequest.responseValues
-            .forEach((element) => test('property ${element.name}', () {
-                  verify<T>(
-                      response,
-                      (resource) =>
-                          expect(element.get(resource), element.expected));
-                }));
+        for (var element in expectedRequest.responseValues) {
+          test('property ${element.name}', () {
+            verify<T>(response,
+                (resource) => expect(element.get(resource), element.expected));
+          });
+        }
       });
-    });
+    }
   });
   if (testNotFound) {
     group('not found', () {
@@ -111,7 +110,7 @@ void apiTest<T>({
 
       //then
       var count = 0;
-      expectedRequests.forEach((expectedRequest) {
+      for (var expectedRequest in expectedRequests) {
         count++;
         group('request $count', () {
           var myCount = count;
@@ -144,7 +143,7 @@ void apiTest<T>({
                     (r) => fail('should have failed'),
                   ));
         });
-      });
+      }
     });
   }
   if (testUnknownError) {
@@ -159,7 +158,7 @@ void apiTest<T>({
 
       //then
       var count = 0;
-      expectedRequests.forEach((expectedRequest) {
+      for (var expectedRequest in expectedRequests) {
         count++;
         group('request $count', () {
           var myCount = count;
@@ -193,7 +192,7 @@ void apiTest<T>({
                     (r) => fail('should have failed'),
                   ));
         });
-      });
+      }
     });
   }
 }
