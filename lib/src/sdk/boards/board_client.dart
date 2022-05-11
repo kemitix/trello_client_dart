@@ -22,7 +22,7 @@ class BoardClient {
   }) =>
       _client
           .get<List<dynamic>>(
-            '/1/boards/${_id}/lists',
+            '/1/boards/$_id/lists',
             queryParameters: {
               'cards': cards.name,
               'card_fields': asCsv(cardFields),

@@ -32,7 +32,7 @@ class UpdateCardCommand extends CardCommand {
     argParser.addOption('location-name', help: 'For use with/by the Map View');
     argParser.addOption('coordinates',
         help: 'For use with/by the Map View. Should be latitude,longitude');
-    argParser.addOption('cover', help: '''Updates the card\'s cover:
+    argParser.addOption('cover', help: '''Updates the card's cover:
 - color       : pink, yellow, lime, blue, black, orange, red, purple, sky, green (Makes the cover a solid color)
 - brightness  : dark, light (Determines whether the text on the cover should be dark or light)
 - url         : An unsplash URL: https://images.unsplash.com (Used if making an image the cover. Only Unsplash URLs work)

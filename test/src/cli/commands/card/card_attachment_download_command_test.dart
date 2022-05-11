@@ -1,8 +1,4 @@
-import 'dart:typed_data';
-
 import 'package:test/test.dart';
-import 'package:trello_sdk/src/cli/app.dart';
-import 'package:trello_sdk/src/sdk/client.dart';
 import 'package:trello_sdk/trello_cli.dart';
 
 import '../../../mocks/dio_mock.dart';

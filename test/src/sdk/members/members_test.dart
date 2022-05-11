@@ -3,7 +3,6 @@ import 'package:dio/dio.dart';
 import 'package:test/test.dart';
 import 'package:trello_sdk/src/sdk/boards/board_models.dart';
 import 'package:trello_sdk/src/sdk/errors.dart';
-import 'package:trello_sdk/src/sdk/members/member_models.dart';
 import 'package:trello_sdk/src/sdk/members/members.dart';
 import 'package:trello_sdk/src/sdk/trello_models.dart';
 

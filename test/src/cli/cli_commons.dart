@@ -1,9 +1,6 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:trello_sdk/trello_cli.dart';
-
-import '../mocks/dio_mock.dart';
 
 var validEnvironment = <String, String>{
   'TRELLO_USERNAME': 'foo',
@@ -26,6 +23,7 @@ ResponseBody createResponse(
 
 class FakePrinter {
   final List<String> output = [];
+
   void Function(Object) get printer =>
       (Object s) => output.addAll(s.toString().split('\n'));
 }

@@ -1,7 +1,3 @@
-// authentication
-
-import 'package:equatable/equatable.dart';
-import 'package:trello_sdk/src/cli/runner.dart';
 import 'package:verify/verify.dart';
 
 import '../../trello_cli.dart';
@@ -9,9 +5,8 @@ import '../../trello_cli.dart';
 typedef Errors = List<dynamic>;
 
 Either<Errors, TrelloAuthentication> authentication(Environment e) {
-  Function1<String, Validator<Environment>> environmentIsSet = (String key) =>
-      (Environment e) =>
-          e.keys.contains(key) ? Right(e) : Left([EnvironmentError(key)]);
+  Validator<Environment> environmentIsSet(String key) => (Environment e) =>
+      e.keys.contains(key) ? Right(e) : Left([EnvironmentError(key)]);
 
   Validator<Environment> validator = Verify.all<Environment>([
     'USERNAME',

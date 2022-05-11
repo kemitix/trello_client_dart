@@ -62,7 +62,7 @@ class MemberClient {
     if (boards != null) queryParameters['boards'] = boards;
     if (notifications != null) queryParameters['notifications'] = notifications;
     return _client
-        .get<dynamic>('/1/members/${_id}', queryParameters: queryParameters)
+        .get<dynamic>('/1/members/$_id', queryParameters: queryParameters)
         .map((r) => r.data)
         .map((item) => TrelloMember(item, fields ?? [MemberFields.all]));
   }
@@ -80,7 +80,7 @@ class MemberClient {
   }) =>
       _client
           .get<List<dynamic>>(
-            '/1/members/${this._id}/boards',
+            '/1/members/$_id/boards',
             queryParameters: {
               'filter': filter.name,
               'fields': asCsv(fields ?? [BoardFields.all])

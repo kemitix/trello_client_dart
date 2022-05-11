@@ -1,9 +1,7 @@
-import 'package:args/command_runner.dart';
-
 import '../../../../trello_sdk.dart';
 import '../commands.dart';
-import 'member_get_command.dart';
 import 'member_boards_list_command.dart';
+import 'member_get_command.dart';
 
 class MemberModule extends TrelloModule {
   @override

@@ -17,7 +17,7 @@ class ListClient {
   TaskEither<Failure, List<TrelloCard>> getCards({List<CardFields>? fields}) =>
       _client
           .get<List<dynamic>>(
-            '/1/lists/${_id}/cards',
+            '/1/lists/$_id/cards',
             queryParameters: {},
           )
           .map((response) => response.data ?? [])
