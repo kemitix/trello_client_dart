@@ -1,9 +1,9 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:dio/dio.dart';
 
 import '../../trello_sdk.dart';
+import 'external/files.dart';
 
 abstract class HttpResponse<T> {
   T? get data;
@@ -164,12 +164,6 @@ class DioHttpClient extends HttpClient {
         },
         (r) => _fileWriter(fileName, r.data),
       );
-
-  Future<void> defaultFileWriter(FileName fileName, dynamic data) {
-    var f = File(fileName.value).openSync(mode: FileMode.write);
-    f.writeFromSync(data);
-    return f.close();
-  }
 }
 
 // class CurlLoggerDioInterceptor extends Interceptor {
