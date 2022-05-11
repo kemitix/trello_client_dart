@@ -316,12 +316,14 @@ void main() {
                   existingResourceResponse: createResponse(
                     body: {
                       'id': 'my-id',
+                      'name': 'my-name',
                       'bytes': 'my-bytes',
                       'url': 'my-url',
                     },
                   ),
                   responseValues: [
                     testValue('id', (r) => r.id, 'my-id'),
+                    testValue('name', (r) => r.name, 'my-name'),
                     testValue('bytes', (r) => r.bytes, 'my-bytes'),
                     testValue('url', (r) => r.url, 'my-url'),
                   ],
