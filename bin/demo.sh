@@ -49,3 +49,5 @@ trello card update $MUTABLE_CARD --name "$(date --iso-8601=seconds)" --member-id
 trello card get $MUTABLE_CARD
 trello card add-member $MUTABLE_CARD $MEMBER_ID
 trello card get $MUTABLE_CARD
+trello card remove-member $MUTABLE_CARD $MEMBER_ID
+trello card get $MUTABLE_CARD

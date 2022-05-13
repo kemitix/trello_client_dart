@@ -9,6 +9,7 @@ class CardClient {
     _attachment =
         (id) => AttachmentClient(_client, _cardId, id, _authentication);
   }
+
   final HttpClient _client;
   final CardId _cardId;
   final TrelloAuthentication _authentication;
@@ -91,4 +92,14 @@ class CardClient {
       _client.post('/1/cards/$_cardId/idMembers', queryParameters: {
         'value': memberId.value,
       });
+
+  /// Remove a Member from a Card
+  ///
+  /// DELETE /1/cards/{id}/idMembers/{idMember}
+  ///
+  /// Remove a member from a card
+  ///
+  /// https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-id-idmembers-idmember-delete
+  TaskEither<Failure, void> removeMember(MemberId memberId) =>
+      _client.delete('/1/cards/$_cardId/idMembers/${memberId.value}');
 }

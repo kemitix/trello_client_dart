@@ -202,6 +202,25 @@ void main() {
                     responseValues: [],
                     additionalContext: {})
               ]));
+  //removeMember
+  group(
+      'card removeMember',
+      () => apiTest(
+              apiCall: (client) => client.trelloClient
+                  .card(CardId('my-card-id'))
+                  .removeMember(MemberId('my-member-id')),
+              expectedRequests: [
+                ExpectedRequest(
+                    expectedMethod: 'DELETE',
+                    expectedPath: '/1/cards/my-card-id/idMembers/my-member-id',
+                    expectedHeaders: {
+                      Headers.contentTypeHeader: Headers.jsonContentType
+                    },
+                    expectedQueryParameters: {},
+                    existingResourceResponse: createResponse(body: {}),
+                    responseValues: [],
+                    additionalContext: {})
+              ]));
   //attachments
   group(
       'attachments',

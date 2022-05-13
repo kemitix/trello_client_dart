@@ -79,7 +79,7 @@ trello card update $CARD_ID --name "New Card Title" --dueComplete
 trello card add-member $CARD_ID $MEMBER_ID
 ```
 
-- [ ] Remove a Member from a Card
+- [x] Remove a Member from a Card
 
 ```bash
 trello card remove-member $CARD_ID $MEMBER_ID
@@ -210,7 +210,7 @@ This list of API actions was retrieved from the [Trello Reference REST API](http
 |        | Create a new Label on a Card          | .createLabel(...)                            |                                               |                                              |
 |        | Mark a Card's Notifications as read   | .readNotifications()                         |                                               |                                              |
 |        | Remove a Label from a Card            | .removeLabel(idLabel)                        |                                               |                                              |
-|        | Remove a Member from a Card           | .removeMember(idMember)                      |                                               |                                              |
+|   ✔    | Remove a Member from a Card           | .removeMember(idMember)                      |                                               |                                              |
 |        | Remove a Member's Vote on a Card      | .removeMemberVote(idMember)                  |                                               |                                              |
 |        | Update Checkitem on Checklist on Card | .checkList(idCheckList).updateCheckItem(...) |                                               |                                              |
 |        | Delete a Checklist on a Card          | .checkList(idCheckList).delete()             |                                               |                                              |

@@ -66,6 +66,8 @@ void apiTest<T>({
     setUpAll(() async => response = await apiCall(client).run());
 
     //then
+    test('expected ${expectedRequests.length} requests',
+        () => expect(client.fetchHistory.length, expectedRequests.length));
     var count = 0;
     for (var expectedRequest in expectedRequests) {
       count++;
