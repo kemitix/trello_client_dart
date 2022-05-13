@@ -39,6 +39,13 @@ abstract class HttpClient {
     Map<String, String>? queryParameters,
     Map<String, String>? headers,
   });
+
+  TaskEither<Failure, HttpResponse<T>> delete<T>(
+    String path, {
+    data,
+    Map<String, String>? queryParameters,
+    Map<String, String>? headers,
+  });
 }
 
 class DioHttpClient extends HttpClient {
@@ -132,6 +139,25 @@ class DioHttpClient extends HttpClient {
         },
         (r) => DioHttpResponse(r),
       );
+
+  @override
+  TaskEither<Failure, HttpResponse<T>> delete<T>(
+    String path, {
+    data,
+    Map<String, String>? queryParameters,
+    Map<String, String>? headers,
+  }) =>
+      attemptTask(() => _dio.delete<T>(path,
+          data: data,
+          queryParameters: queryParameters,
+          options: Options(headers: headers))).bimap((l) {
+        if (l.runtimeType == DioError &&
+            (l as DioError).response != null &&
+            l.response!.statusCode == 404) {
+          return ResourceNotFoundFailure(resource: path);
+        }
+        return HttpClientFailure(message: 'DELETE $path');
+      }, (r) => DioHttpResponse(r));
 
   @override
   TaskEither<Failure, FutureOr<void>> download(

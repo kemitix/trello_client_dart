@@ -5,6 +5,7 @@ import 'card_attachment_get_command.dart';
 import 'card_attachments_list_command.dart';
 import 'card_get_command.dart';
 import 'card_member_add_command.dart';
+import 'card_member_remove_command.dart';
 import 'card_update_command.dart';
 
 class CardModule extends TrelloModule {
@@ -23,6 +24,7 @@ class CardModule extends TrelloModule {
       DownloadAttachmentCommand(commandEnvironment),
       UpdateCardCommand(commandEnvironment),
       AddMemberToCardCommand(commandEnvironment),
+      RemoveMemberToCardCommand(commandEnvironment),
     ].forEach(addSubcommand);
   }
 }
