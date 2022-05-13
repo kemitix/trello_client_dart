@@ -3,8 +3,8 @@ import 'dart:async';
 import '../../../../trello_sdk.dart';
 import '../../cli.dart';
 
-class RemoveMemberToCardCommand extends CardCommand {
-  RemoveMemberToCardCommand(CommandEnvironment commandEnvironment)
+class RemoveMemberFromCardCommand extends CardCommand {
+  RemoveMemberFromCardCommand(CommandEnvironment commandEnvironment)
       : super(
             'remove-member', 'Remove a Member from a Card', commandEnvironment);
 
