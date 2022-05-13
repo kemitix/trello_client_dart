@@ -24,7 +24,7 @@ class CardModule extends TrelloModule {
       DownloadAttachmentCommand(commandEnvironment),
       UpdateCardCommand(commandEnvironment),
       AddMemberToCardCommand(commandEnvironment),
-      RemoveMemberToCardCommand(commandEnvironment),
+      RemoveMemberFromCardCommand(commandEnvironment),
     ].forEach(addSubcommand);
   }
 }
