@@ -16,12 +16,11 @@ class ListListsCommand extends BoardCommand {
   ];
 
   @override
-  FutureOr<void> run() async =>
-      (await TaskEither.fromEither(boardId.map(boardClient))
-              .flatMap(getLists)
-              .map((lists) => tabulateObjects(lists, fields))
-              .run())
-          .collapse(printOutput);
+  FutureOr<void> run() => TaskEither.fromEither(boardId.map(boardClient))
+      .flatMap(getLists)
+      .map((lists) => tabulateObjects(lists, fields))
+      .run()
+      .then((value) => value.collapse(printOutput));
 
   TaskEither<Failure, List<TrelloList>> getLists(BoardClient boardClient) =>
       boardClient.getLists(fields: fields);

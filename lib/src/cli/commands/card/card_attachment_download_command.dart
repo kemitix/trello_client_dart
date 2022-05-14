@@ -10,11 +10,11 @@ class DownloadAttachmentCommand extends CardCommand {
             commandEnvironment);
 
   @override
-  FutureOr<void> run() async =>
-      (await TaskEither.map3Either(cardId, attachmentId, fileName, _doDownload)
-              .run())
-          .map((_) => "Download complete")
-          .collapse(printOutput);
+  FutureOr<void> run() =>
+      TaskEither.map3Either(cardId, attachmentId, fileName, _doDownload)
+          .run()
+          .then((value) =>
+              value.replace("Download complete").collapse(printOutput));
 
   TaskEither<Failure, void> _doDownload(
           CardId cardId, AttachmentId attachmentId, FileName fileName) =>

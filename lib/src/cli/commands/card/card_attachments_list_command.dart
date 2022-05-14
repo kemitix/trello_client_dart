@@ -16,10 +16,12 @@ class ListAttachmentsCommand extends CardCommand {
   ];
 
   @override
-  FutureOr<void> run() async =>
-      (await TaskEither.fromEither(cardId).flatMap(_getAttachments).run())
+  FutureOr<void> run() => TaskEither.fromEither(cardId)
+      .flatMap(_getAttachments)
+      .run()
+      .then((value) => value
           .map((attachments) => tabulateObjects(attachments, fields))
-          .collapse(printOutput);
+          .collapse(printOutput));
 
   TaskEither<Failure, List<TrelloAttachment>> _getAttachments(cardId) =>
       client.card(cardId).attachments(fields: fields);
