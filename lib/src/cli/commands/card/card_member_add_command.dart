@@ -17,13 +17,17 @@ class AddMemberToCardCommand extends CardCommand {
       .then((result) => result.collapse(printOutput));
 
   TaskEither<Failure, void> _addMember(CardId cardId, MemberId memberId) =>
-      TaskEither.flatten(client
+      TaskEither.flatten(_verifyIsNotAMember(cardId, memberId)
+          .map((_) => client.card(cardId).addMember(memberId)));
+
+  TaskEither<Failure, List<String>> _verifyIsNotAMember(
+          CardId cardId, MemberId memberId) =>
+      client
           .card(cardId)
           .get(fields: [CardFields.idMembers])
           .map((card) => card.idMembers)
           .filterOrElse(
             (idMembers) => !idMembers.contains(memberId.value),
             (idMembers) => AlreadyAppliedFailure(action: description),
-          )
-          .map((_) => client.card(cardId).addMember(memberId)));
+          );
 }
