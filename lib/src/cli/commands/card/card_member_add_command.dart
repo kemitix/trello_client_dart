@@ -14,7 +14,7 @@ class AddMemberToCardCommand extends CardCommand {
   FutureOr<void> run() => TaskEither.map2Either(cardId, memberId, _addMember)
       .map((_) => "Added member")
       .run()
-      .then((value) => value.collapse(printOutput));
+      .then((result) => result.collapse(printOutput));
 
   TaskEither<Failure, void> _addMember(CardId cardId, MemberId memberId) =>
       TaskEither.flatten(client

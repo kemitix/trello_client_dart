@@ -15,7 +15,7 @@ class RemoveMemberFromCardCommand extends CardCommand {
   FutureOr<void> run() => TaskEither.map2Either(cardId, memberId, _removeMember)
       .map((_) => "Removed member")
       .run()
-      .then((value) => value.collapse(printOutput));
+      .then((result) => result.collapse(printOutput));
 
   TaskEither<Failure, void> _removeMember(CardId cardId, MemberId memberId) =>
       TaskEither.flatten(client

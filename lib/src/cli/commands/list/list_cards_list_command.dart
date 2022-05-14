@@ -15,11 +15,9 @@ class ListCardsCommand extends ListCommand {
   ];
 
   @override
-  FutureOr<void> run() => TaskEither.map1Either(listId, _getCards)
+  FutureOr<void> run() => TaskEither.map1Either(listId,
+          (ListId listId) => client.list(listId).getCards(fields: fields))
       .map((cards) => tabulateObjects(cards, fields))
       .run()
-      .then((value) => value.collapse(printOutput));
-
-  TaskEither<Failure, List<TrelloCard>> _getCards(ListId listId) =>
-      client.list(listId).getCards(fields: fields);
+      .then((result) => result.collapse(printOutput));
 }

@@ -24,5 +24,5 @@ class ListMemberBoardsCommand extends MemberCommand {
               client.member(memberId).getBoards(fields: fields))
       .map((board) => tabulateObjects(board, fields))
       .run()
-      .then((value) => value.collapse(printOutput));
+      .then((result) => result.collapse(printOutput));
 }

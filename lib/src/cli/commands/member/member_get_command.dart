@@ -24,7 +24,7 @@ class GetMemberCommand extends MemberCommand {
   FutureOr<void> run() => TaskEither.map1Either(memberId,
           (MemberId memberId) => client.member(memberId).get(fields: fields))
       .run()
-      .then((value) => value
+      .then((result) => result
           .map((member) => tabulateObject(member, fields))
           .collapse(printOutput));
 }
