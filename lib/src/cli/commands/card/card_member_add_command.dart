@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import '../../../../trello_sdk.dart';
+import '../../../sdk/cards/card.dart';
 import '../../cli.dart';
 
 class AddMemberToCardCommand extends CardCommand {
@@ -20,14 +21,10 @@ class AddMemberToCardCommand extends CardCommand {
       TaskEither.flatten(_verifyIsNotAMember(cardId, memberId)
           .map((_) => client.card(cardId).addMember(memberId)));
 
-  TaskEither<Failure, List<String>> _verifyIsNotAMember(
+  TaskEither<Failure, List<MemberId>> _verifyIsNotAMember(
           CardId cardId, MemberId memberId) =>
-      client
-          .card(cardId)
-          .get(fields: [CardFields.idMembers])
-          .map((card) => card.idMembers)
-          .filterOrElse(
-            (idMembers) => !idMembers.contains(memberId.value),
-            (idMembers) => AlreadyAppliedFailure(action: description),
-          );
+      Card.getMemberIds(cardId, client).filterOrElse(
+        (idMembers) => !idMembers.contains(memberId),
+        (idMembers) => AlreadyAppliedFailure(action: description),
+      );
 }

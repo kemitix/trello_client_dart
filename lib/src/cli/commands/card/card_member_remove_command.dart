@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import '../../../../trello_sdk.dart';
+import '../../../sdk/cards/card.dart';
 import '../../cli.dart';
 
 class RemoveMemberFromCardCommand extends CardCommand {
@@ -21,14 +22,10 @@ class RemoveMemberFromCardCommand extends CardCommand {
       TaskEither.flatten(_verifyIsAMember(cardId, memberId)
           .map((_) => client.card(cardId).removeMember(memberId)));
 
-  TaskEither<Failure, List<String>> _verifyIsAMember(
+  TaskEither<Failure, List<MemberId>> _verifyIsAMember(
           CardId cardId, MemberId memberId) =>
-      client
-          .card(cardId)
-          .get(fields: [CardFields.idMembers])
-          .map((card) => card.idMembers)
-          .filterOrElse(
-            (idMembers) => idMembers.contains(memberId.value),
-            (idMembers) => AlreadyAppliedFailure(action: description),
-          );
+      Card.getMemberIds(cardId, client).filterOrElse(
+        (idMembers) => idMembers.contains(memberId),
+        (idMembers) => AlreadyAppliedFailure(action: description),
+      );
 }
