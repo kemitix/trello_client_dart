@@ -94,15 +94,15 @@ class TrelloCard extends TrelloObject<CardFields> {
 }
 
 class CardId extends StringValue {
-  CardId(String id) : super(id);
+  CardId(super.id);
 }
 
 class AttachmentId extends StringValue {
-  AttachmentId(String id) : super(id);
+  AttachmentId(super.id);
 }
 
 class FileName extends StringValue {
-  FileName(String fileName) : super(fileName);
+  FileName(super.fileName);
 }
 
 // Field vale may come from Trello as 'latitude,longitude'

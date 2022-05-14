@@ -30,9 +30,7 @@ class CardModule extends TrelloModule {
 }
 
 abstract class CardCommand extends TrelloCommand {
-  CardCommand(
-      String name, String description, CommandEnvironment commandEnvironment)
-      : super(name, description, commandEnvironment);
+  CardCommand(super.name, super.description, super.commandEnvironment);
 
   Either<Failure, CardId> get cardId =>
       nextParameter('Card Id').map((id) => CardId(id));

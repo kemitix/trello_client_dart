@@ -15,9 +15,7 @@ class ListModule extends TrelloModule {
 }
 
 abstract class ListCommand extends TrelloCommand {
-  ListCommand(
-      String name, String description, CommandEnvironment commandEnvironment)
-      : super(name, description, commandEnvironment);
+  ListCommand(super.name, super.description, super.commandEnvironment);
 
   Either<Failure, ListId> get listId =>
       nextParameter('List Id').map((id) => ListId(id));

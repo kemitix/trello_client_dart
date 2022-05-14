@@ -19,9 +19,7 @@ class MemberModule extends TrelloModule {
 }
 
 abstract class MemberCommand extends TrelloCommand {
-  MemberCommand(
-      String name, String description, CommandEnvironment commandEnvironment)
-      : super(name, description, commandEnvironment);
+  MemberCommand(super.name, super.description, super.commandEnvironment);
 
   Either<Failure, MemberId> get memberId =>
       nextParameter('Member Id').map((id) => MemberId(id));
