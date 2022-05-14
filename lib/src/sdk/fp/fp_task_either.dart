@@ -81,9 +81,24 @@ class TaskEither<L, R> {
   TaskEither<C, D> bimap<C, D>(
           C Function(L l) mapLeft, D Function(R r) mapRight) =>
       map(mapRight).mapLeft(mapLeft);
-}
 
-TaskEither<Object, V> attemptTask<V>(Future<V> Function() action) {
-  return TaskEither.flatten(TaskEither.fromTask(
-      Task(() => action()).attempt().map((e) => TaskEither.fromEither(e))));
+  static TaskEither<L, R> map1Either<L, R, E1R>(
+          Either<L, E1R> e1, TaskEither<L, R> Function(E1R s1) f2e) =>
+      TaskEither.flatten(TaskEither.fromEither(e1.map((e1r) => f2e(e1r))));
+
+  static TaskEither<L, R> map2Either<L, R, E1R, E2R>(Either<L, E1R> e1,
+          Either<L, E2R> e2, TaskEither<L, R> Function(E1R s1, E2R s2) f2e) =>
+      TaskEither.flatten(TaskEither.fromEither(map2either(e1, e2, f2e)));
+
+  static TaskEither<L, R> map3Either<L, E1R, E2R, E3R, R>(
+          Either<L, E1R> e1,
+          Either<L, E2R> e2,
+          Either<L, E3R> e3,
+          TaskEither<L, R> Function(E1R r1, E2R r2, E3R e3) fn) =>
+      TaskEither.flatten(TaskEither.fromEither(map3either(e1, e2, e3, fn)));
+
+  static TaskEither<Object, V> attempt<V>(Future<V> Function() action) {
+    return TaskEither.flatten(TaskEither.fromTask(
+        Task(() => action()).attempt().map((e) => TaskEither.fromEither(e))));
+  }
 }

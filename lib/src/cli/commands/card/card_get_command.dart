@@ -16,11 +16,10 @@ class GetCardCommand extends CardCommand {
   ];
 
   @override
-  FutureOr<void> run() async =>
-      (await TaskEither.fromEither(cardId).flatMap(_getCard).run())
+  FutureOr<void> run() => TaskEither.map1Either(
+          cardId, (CardId cardId) => client.card(cardId).get(fields: fields))
+      .run()
+      .then((result) => result
           .map((card) => tabulateObject(card, fields))
-          .collapse(printOutput);
-
-  TaskEither<Failure, TrelloCard> _getCard(cardId) =>
-      client.card(cardId).get(fields: fields);
+          .collapse(printOutput));
 }

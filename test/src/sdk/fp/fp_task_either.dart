@@ -4,7 +4,7 @@ import 'package:test/test.dart';
 import 'package:trello_sdk/src/sdk/fp/fp.dart';
 
 void main() {
-  test('attemptTask catches thrown exception', () async {
+  test('TaskEither.attempt catches thrown exception', () async {
     //given
     Future<int> action() async {
       throw SocketException('bar');
@@ -13,7 +13,7 @@ void main() {
     late final TaskEither<String, int> result;
     //when
 
-    result = attemptTask(action).mapLeft((l) => "Foo: $l");
+    result = TaskEither.attempt(action).mapLeft((l) => "Foo: $l");
 
     //then
     try {
