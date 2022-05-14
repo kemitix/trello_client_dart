@@ -15,3 +15,4 @@ build/
 # Mac
 .DS_Store
 /trello
+/trello.exe
