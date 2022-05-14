@@ -42,13 +42,13 @@ class CardClient {
   ///
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-id-attachments-get
   TaskEither<Failure, List<TrelloAttachment>> attachments({
-    AttachmentFilter filter = AttachmentFilter.falsE,
+    AttachmentFilter filter = AttachmentFilter.FALSE,
     List<AttachmentFields>? fields,
   }) =>
       _client
           .get<List<dynamic>>('/1/cards/$_cardId/attachments',
               queryParameters: {
-                'filter': filter.name.toLowerCase(),
+                'filter': filter.toString(),
                 'fields': asCsv(fields ?? [AttachmentFields.all]),
               },
               headers: {

@@ -252,6 +252,9 @@ enum AttachmentFields {
 }
 
 enum AttachmentFilter {
-  falsE, // Uppercase E to avoid clashing with language keyword - use toLowerCase when passing to API
-  cover,
+  FALSE,
+  COVER;
+
+  @override
+  String toString() => name.toLowerCase();
 }
