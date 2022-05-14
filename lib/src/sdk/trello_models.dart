@@ -1,6 +1,15 @@
 /// 'default' is a reserved word, so is here in uppercase
 /// use the names in lowercase to get correct form
-enum BoardBackgrounds { all, custom, defaulT, none, premium }
+enum BoardBackgrounds {
+  all,
+  CUSTOM,
+  DEFAULT,
+  none,
+  PREMIUM;
+
+  @override
+  String toString() => name.toLowerCase();
+}
 
 enum BoardsInvited {
   all,
