@@ -78,7 +78,7 @@ class DioHttpClient extends HttpClient {
     Map<String, String>? queryParameters,
     Map<String, String>? headers,
   }) =>
-      attemptTask(() => _dio.get<T>(path,
+      TaskEither.attempt(() => _dio.get<T>(path,
           queryParameters: queryParameters,
           options: Options(
             headers: headers,
@@ -101,7 +101,7 @@ class DioHttpClient extends HttpClient {
     Map<String, String>? queryParameters,
     Map<String, String>? headers,
   }) =>
-      attemptTask(() => _dio.put<T>(path,
+      TaskEither.attempt(() => _dio.put<T>(path,
           data: data,
           queryParameters: queryParameters,
           options: Options(
@@ -125,7 +125,7 @@ class DioHttpClient extends HttpClient {
     Map<String, String>? queryParameters,
     Map<String, String>? headers,
   }) =>
-      attemptTask(() => _dio.post<T>(path,
+      TaskEither.attempt(() => _dio.post<T>(path,
           data: data,
           queryParameters: queryParameters,
           options: Options(headers: headers))).bimap(
@@ -147,7 +147,7 @@ class DioHttpClient extends HttpClient {
     Map<String, String>? queryParameters,
     Map<String, String>? headers,
   }) =>
-      attemptTask(() => _dio.delete<T>(path,
+      TaskEither.attempt(() => _dio.delete<T>(path,
           data: data,
           queryParameters: queryParameters,
           options: Options(headers: headers))).bimap((l) {
@@ -167,7 +167,7 @@ class DioHttpClient extends HttpClient {
     Map<String, String>? headers,
     void Function(int, int)? onReceiveProgress,
   }) =>
-      attemptTask(() => _dioDownloader.get(
+      TaskEither.attempt(() => _dioDownloader.get(
             path, onReceiveProgress: onReceiveProgress,
             queryParameters: queryParameters,
             //Received data with List<int>

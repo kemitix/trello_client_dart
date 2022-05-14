@@ -11,11 +11,10 @@ class AddMemberToCardCommand extends CardCommand {
       nextParameter('Member Id').map((id) => MemberId(id));
 
   @override
-  FutureOr<void> run() =>
-      taskEitherFlatE(map2either(cardId, memberId, _addMember))
-          .map((_) => "Added member")
-          .run()
-          .then((value) => value.collapse(printOutput));
+  FutureOr<void> run() => TaskEither.map2Either(cardId, memberId, _addMember)
+      .map((_) => "Added member")
+      .run()
+      .then((value) => value.collapse(printOutput));
 
   TaskEither<Failure, void> _addMember(CardId cardId, MemberId memberId) =>
       TaskEither.flatten(client

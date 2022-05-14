@@ -18,13 +18,9 @@ class GetAttachmentCommand extends CardCommand {
 
   @override
   FutureOr<void> run() async =>
-      (await taskEitherFlatE(_getAttachment(cardId, attachmentId)).run())
+      (await TaskEither.map2Either(cardId, attachmentId, doGetAttachment).run())
           .map((attachment) => tabulateObject(attachment, fields))
           .collapse(printOutput);
-
-  Function2<Either<Failure, CardId>, Either<Failure, AttachmentId>,
-          Either<Failure, TaskEither<Failure, TrelloAttachment>>>
-      get _getAttachment => lift2either(doGetAttachment);
 
   TaskEither<Failure, TrelloAttachment> doGetAttachment(
           CardId cardId, AttachmentId attachmentId) =>
