@@ -91,6 +91,11 @@ class TrelloCard extends TrelloObject<CardFields> {
     return CardCoordinates(
         latitude: value['latitude'], longitude: value['longitude']);
   }
+
+  @override
+  String toString() {
+    return 'TrelloCard{$raw';
+  }
 }
 
 class CardId extends StringValue {
