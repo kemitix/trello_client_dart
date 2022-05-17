@@ -16,9 +16,10 @@ class ListListsCommand extends BoardCommand {
   ];
 
   @override
-  FutureOr<void> run() => TaskEither.map1Either(boardId,
-          (BoardId boardId) => client.board(boardId).getLists(fields: fields))
+  FutureOr<void> run() async => (await Either.sequenceFuture(boardId
+          .map((boardId) => client.board(boardId))
+          .map((client) => client.getLists(fields: fields))))
+      .flatMap(id)
       .map((lists) => tabulateObjects(lists, fields))
-      .run()
-      .then((result) => result.collapse(printOutput));
+      .collapse(printOutput);
 }

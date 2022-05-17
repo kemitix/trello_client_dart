@@ -14,7 +14,8 @@ class ListClient {
   /// List the cards in a list
   ///
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-lists/#api-lists-id-cards-get
-  TaskEither<Failure, List<TrelloCard>> getCards({List<CardFields>? fields}) =>
+  Future<Either<Failure, List<TrelloCard>>> getCards(
+          {List<CardFields>? fields}) =>
       _client
           .get<List<dynamic>>(
             '/1/lists/$_id/cards',
@@ -23,5 +24,6 @@ class ListClient {
           .map((response) => response.data ?? [])
           .map((items) => items
               .map((item) => TrelloCard(item, fields ?? [CardFields.all]))
-              .toList(growable: false));
+              .toList(growable: false))
+          .run();
 }

@@ -14,7 +14,7 @@ class BoardClient {
   /// Get the Lists on a Board
   ///
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-boards/#api-boards-id-lists-get
-  TaskEither<Failure, List<TrelloList>> getLists({
+  Future<Either<Failure, List<TrelloList>>> getLists({
     CardFilter cards = CardFilter.all,
     List<CardFields> cardFields = const [CardFields.all],
     ListFilter filter = ListFilter.all,
@@ -34,5 +34,6 @@ class BoardClient {
           .map((response) => response.data ?? [])
           .map((items) => items
               .map((item) => TrelloList(item, fields))
-              .toList(growable: false));
+              .toList(growable: false))
+          .run();
 }

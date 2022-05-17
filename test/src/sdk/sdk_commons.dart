@@ -2,7 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:test/test.dart';
 import 'package:trello_sdk/src/sdk/errors.dart';
-import 'package:trello_sdk/src/sdk/fp/fp_task_either.dart';
 
 import '../cli/cli_commons.dart';
 import '../mocks/dio_mock.dart';
@@ -50,7 +49,7 @@ class ExpectedRequest<T> {
 }
 
 void apiTest<T>({
-  required TaskEither<Failure, T> Function(TestTrelloClient) apiCall,
+  required Future<Either<Failure, T>> Function(TestTrelloClient) apiCall,
   required List<ExpectedRequest<T>> expectedRequests,
   bool testNotFound = true,
   bool testUnknownError = true,
@@ -63,7 +62,7 @@ void apiTest<T>({
     late final Either<Failure, T> response;
 
     //when
-    setUpAll(() async => response = await apiCall(client).run());
+    setUpAll(() async => response = await apiCall(client));
 
     //then
     test('expected ${expectedRequests.length} requests',
@@ -108,7 +107,7 @@ void apiTest<T>({
       late final Either<Failure, T> response;
 
       //when
-      setUpAll(() async => response = await apiCall(client).run());
+      setUpAll(() async => response = await apiCall(client));
 
       //then
       var count = 0;
@@ -156,7 +155,7 @@ void apiTest<T>({
       late final Either<Failure, T> response;
 
       //when
-      setUpAll(() async => response = await apiCall(client).run());
+      setUpAll(() async => response = await apiCall(client));
 
       //then
       var count = 0;

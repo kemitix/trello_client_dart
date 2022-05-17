@@ -17,13 +17,13 @@ class GetAttachmentCommand extends CardCommand {
   ];
 
   @override
-  FutureOr<void> run() => TaskEither.map2Either(
-          cardId,
-          attachmentId,
-          (CardId cardId, AttachmentId attachmentId) =>
-              client.card(cardId).attachment(attachmentId).get(fields: fields))
-      .run()
-      .then((result) => result
-          .map((attachment) => tabulateObject(attachment, fields))
-          .collapse(printOutput));
+  FutureOr<void> run() async => (await Either.sequenceFuture(map2either(
+              cardId,
+              attachmentId,
+              (CardId cardId, AttachmentId attachmentId) =>
+                  client.card(cardId).attachment(attachmentId))
+          .map((client) => client.get(fields: fields))))
+      .flatMap(id)
+      .map((TrelloAttachment attachment) => tabulateObject(attachment, fields))
+      .collapse(printOutput);
 }
