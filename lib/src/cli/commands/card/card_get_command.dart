@@ -16,10 +16,10 @@ class GetCardCommand extends CardCommand {
   ];
 
   @override
-  FutureOr<void> run() => TaskEither.map1Either(
-          cardId, (CardId cardId) => client.card(cardId).get(fields: fields))
-      .run()
-      .then((result) => result
-          .map((card) => tabulateObject(card, fields))
-          .collapse(printOutput));
+  FutureOr<void> run() async => (await Either.sequenceFuture(cardId
+          .map((cardId) => client.card(cardId))
+          .map((client) => client.get(fields: fields))))
+      .flatMap(id)
+      .map((card) => tabulateObject(card, fields))
+      .collapse(printOutput);
 }

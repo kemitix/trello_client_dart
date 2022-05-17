@@ -24,7 +24,7 @@ class CardClient {
   /// Get a card by its ID
   ///
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-id-get
-  TaskEither<Failure, TrelloCard> get({List<CardFields>? fields}) => _client
+  Future<Either<Failure, TrelloCard>> get({List<CardFields>? fields}) => _client
       .get<dynamic>(
         '/1/cards/$_cardId',
         queryParameters: {
@@ -32,7 +32,8 @@ class CardClient {
         },
       )
       .map((response) => response.data)
-      .map((data) => TrelloCard(data, fields ?? [CardFields.all]));
+      .map((data) => TrelloCard(data, fields ?? [CardFields.all]))
+      .run();
 
   /// Get Attachments on a Card
   ///
@@ -41,7 +42,7 @@ class CardClient {
   /// List the attachments on a card
   ///
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-id-attachments-get
-  TaskEither<Failure, List<TrelloAttachment>> attachments({
+  Future<Either<Failure, List<TrelloAttachment>>> attachments({
     AttachmentFilter filter = AttachmentFilter.FALSE,
     List<AttachmentFields>? fields,
   }) =>
@@ -60,7 +61,8 @@ class CardClient {
           .map((items) => items
               .map((item) =>
                   TrelloAttachment(item, fields ?? [AttachmentFields.all]))
-              .toList());
+              .toList())
+          .run();
 
   /// Update a Card
   ///
@@ -69,12 +71,14 @@ class CardClient {
   /// Update a card
   ///
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-id-put
-  TaskEither<Failure, TrelloCard> put(Map<String, String> updates) => _client
-      .put('/1/cards/$_cardId', data: _formatUpdates(updates), headers: {
-        Headers.contentTypeHeader: Headers.formUrlEncodedContentType,
-      })
-      .map((response) => response.data)
-      .map((data) => TrelloCard(data, [CardFields.all]));
+  Future<Either<Failure, TrelloCard>> put(Map<String, String> updates) =>
+      _client
+          .put('/1/cards/$_cardId', data: _formatUpdates(updates), headers: {
+            Headers.contentTypeHeader: Headers.formUrlEncodedContentType,
+          })
+          .map((response) => response.data)
+          .map((data) => TrelloCard(data, [CardFields.all]))
+          .run();
 
   //returns 'name=2022-05-04T20%3A49%3A18%2B01%3A01';
   String _formatUpdates(Map<String, String> updates) => updates.entries
@@ -88,10 +92,10 @@ class CardClient {
   /// Add a member to a card
   ///
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-id-idmembers-post
-  TaskEither<Failure, void> addMember(MemberId memberId) =>
+  Future<Either<Failure, HttpResponse<void>>> addMember(MemberId memberId) =>
       _client.post('/1/cards/$_cardId/idMembers', queryParameters: {
         'value': memberId.value,
-      });
+      }).run();
 
   /// Remove a Member from a Card
   ///
@@ -100,6 +104,6 @@ class CardClient {
   /// Remove a member from a card
   ///
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-id-idmembers-idmember-delete
-  TaskEither<Failure, void> removeMember(MemberId memberId) =>
-      _client.delete('/1/cards/$_cardId/idMembers/${memberId.value}');
+  Future<Either<Failure, HttpResponse<void>>> removeMember(MemberId memberId) =>
+      _client.delete('/1/cards/$_cardId/idMembers/${memberId.value}').run();
 }

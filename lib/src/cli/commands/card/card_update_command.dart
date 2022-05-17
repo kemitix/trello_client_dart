@@ -41,11 +41,12 @@ class UpdateCardCommand extends CardCommand {
   }
 
   @override
-  FutureOr<void> run() => TaskEither.map1Either(
-          cardId, (CardId cardId) => client.card(cardId).put(_updates()))
+  FutureOr<void> run() async => (await Either.sequenceFuture(cardId
+          .map((cardId) => client.card(cardId))
+          .map((client) => client.put(_updates()))))
+      .flatMap(id)
       .map((r) => "Updated")
-      .run()
-      .then((result) => result.collapse(printOutput));
+      .collapse(printOutput);
 
   Map<String, String> _updates() {
     var updates = <String, String>{};
