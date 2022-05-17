@@ -2,6 +2,7 @@ import 'dart:async';
 
 import '../../../../trello_sdk.dart';
 import '../../../sdk/cards/card.dart';
+import '../../../sdk/http_client.dart';
 import '../../cli.dart';
 
 class RemoveMemberFromCardCommand extends CardCommand {
@@ -13,19 +14,22 @@ class RemoveMemberFromCardCommand extends CardCommand {
       nextParameter('Member Id').map((id) => MemberId(id));
 
   @override
-  FutureOr<void> run() => TaskEither.map2Either(cardId, memberId, _removeMember)
-      .map((_) => "Removed member")
-      .run()
-      .then((result) => result.collapse(printOutput));
+  FutureOr<void> run() async =>
+      (await Either.sequenceFuture(map2either(cardId, memberId, _removeMember)
+              .map((a) async => (await a).map((_) => "Removed member"))))
+          .flatMap(id)
+          .collapse(printOutput);
 
-  TaskEither<Failure, void> _removeMember(CardId cardId, MemberId memberId) =>
-      TaskEither.flatten(_verifyIsAMember(cardId, memberId)
-          .map((_) => client.card(cardId).removeMember(memberId)));
+  Future<Either<Failure, HttpResponse<void>>> _removeMember(
+          CardId cardId, MemberId memberId) async =>
+      (await Either.sequenceFuture((await _verifyIsAMember(cardId, memberId))
+              .map((isValid) => client.card(cardId).removeMember(memberId))))
+          .flatMap(id);
 
-  TaskEither<Failure, List<MemberId>> _verifyIsAMember(
-          CardId cardId, MemberId memberId) =>
-      Card.getMemberIds(cardId, client).filterOrElse(
+  Future<Either<Failure, List<MemberId>>> _verifyIsAMember(
+          CardId cardId, MemberId memberId) async =>
+      (await Card.getMemberIds(cardId, client)).filter(
         (idMembers) => idMembers.contains(memberId),
-        (idMembers) => AlreadyAppliedFailure(action: description),
+        () => AlreadyAppliedFailure(action: description),
       );
 }

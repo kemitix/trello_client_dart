@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:trello_sdk/src/sdk/http_client.dart';
+
 import '../../../../trello_sdk.dart';
 import '../../../sdk/cards/card.dart';
 import '../../cli.dart';
@@ -12,19 +14,22 @@ class AddMemberToCardCommand extends CardCommand {
       nextParameter('Member Id').map((id) => MemberId(id));
 
   @override
-  FutureOr<void> run() => TaskEither.map2Either(cardId, memberId, _addMember)
-      .map((_) => "Added member")
-      .run()
-      .then((result) => result.collapse(printOutput));
+  FutureOr<void> run() async =>
+      (await Either.sequenceFuture(map2either(cardId, memberId, _addMember)
+              .map((a) async => (await a).map((_) => "Added member"))))
+          .flatMap(id)
+          .collapse(printOutput);
 
-  TaskEither<Failure, void> _addMember(CardId cardId, MemberId memberId) =>
-      TaskEither.flatten(_verifyIsNotAMember(cardId, memberId)
-          .map((_) => client.card(cardId).addMember(memberId)));
+  Future<Either<Failure, HttpResponse<void>>> _addMember(
+          CardId cardId, MemberId memberId) async =>
+      (await Either.sequenceFuture((await _verifyIsNotAMember(cardId, memberId))
+              .map((isValid) => client.card(cardId).addMember(memberId))))
+          .flatMap(id);
 
-  TaskEither<Failure, List<MemberId>> _verifyIsNotAMember(
-          CardId cardId, MemberId memberId) =>
-      Card.getMemberIds(cardId, client).filterOrElse(
+  Future<Either<Failure, List<MemberId>>> _verifyIsNotAMember(
+          CardId cardId, MemberId memberId) async =>
+      (await Card.getMemberIds(cardId, client)).filter(
         (idMembers) => !idMembers.contains(memberId),
-        (idMembers) => AlreadyAppliedFailure(action: description),
+        () => AlreadyAppliedFailure(action: description),
       );
 }

@@ -15,9 +15,10 @@ class ListCardsCommand extends ListCommand {
   ];
 
   @override
-  FutureOr<void> run() => TaskEither.map1Either(listId,
-          (ListId listId) => client.list(listId).getCards(fields: fields))
+  FutureOr<void> run() async => (await Either.sequenceFuture(listId
+          .map((ListId listId) => client.list(listId))
+          .map((client) => client.getCards(fields: fields))))
+      .flatMap(id)
       .map((cards) => tabulateObjects(cards, fields))
-      .run()
-      .then((result) => result.collapse(printOutput));
+      .collapse(printOutput);
 }

@@ -33,8 +33,7 @@ void main() {
     late Either<Failure, TrelloMember> member;
 
     //when
-    setUpAll(() async => member = await memberClient
-        .get(
+    setUpAll(() async => member = await memberClient.get(
           boardBackgrounds: MemberBoardBackgrounds.all,
           boardStars: false,
           boardsInvited: [BoardsInvited.pinned],
@@ -58,8 +57,7 @@ void main() {
           actions: 'my-actions',
           boards: 'my-boards',
           notifications: 'my-notifications',
-        )
-        .run());
+        ));
 
     //then
     group('request', () {
@@ -166,7 +164,7 @@ void main() {
 
     //when
     setUpAll(() async => boards = await memberClient.getBoards(
-        filter: MemberBoardFilter.closed, fields: [BoardFields.all]).run());
+        filter: MemberBoardFilter.closed, fields: [BoardFields.all]));
 
     //then
     group('request', () {
