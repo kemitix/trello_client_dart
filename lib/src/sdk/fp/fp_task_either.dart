@@ -49,8 +49,14 @@ class TaskEither<L, R> {
   factory TaskEither.fromEither(Either<L, R> either) =>
       TaskEither(() async => either);
 
+  factory TaskEither.sequence(Either<L, TaskEither<L, R>> nestedTaskEither) =>
+      TaskEither.flatten(TaskEither.fromEither(nestedTaskEither));
+
   /// Build a [TaskEither] that returns a `Left(left)`.
   factory TaskEither.left(L left) => TaskEither(() async => Left(left));
+
+  /// Build a [TaskEither] that returns a `Right(right)`.
+  factory TaskEither.right(R right) => TaskEither(() async => Right(right));
 
   /// If `f` applied on this [TaskEither] as [Right] returns `true`, then return this [TaskEither].
   /// If it returns `false`, return the result of `onFalse` in a [Left].

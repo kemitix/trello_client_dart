@@ -1,4 +1,5 @@
-import 'package:dartx/dartx.dart';
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 
 import '../../../trello_sdk.dart';
@@ -71,19 +72,16 @@ class CardClient {
   /// Update a card
   ///
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-id-put
-  Future<Either<Failure, TrelloCard>> put(Map<String, String> updates) =>
+  Future<Either<Failure, TrelloCard>> put(Map<String, dynamic> updates) =>
       _client
           .put('/1/cards/$_cardId', data: _formatUpdates(updates), headers: {
-            Headers.contentTypeHeader: Headers.formUrlEncodedContentType,
+            Headers.contentTypeHeader: Headers.jsonContentType,
           })
           .map((response) => response.data)
           .map((data) => TrelloCard(data, [CardFields.all]))
           .run();
 
-  //returns 'name=2022-05-04T20%3A49%3A18%2B01%3A01';
-  String _formatUpdates(Map<String, String> updates) => updates.entries
-      .map((e) => '${e.key.urlEncode}=${e.value.urlEncode}')
-      .join('&');
+  String _formatUpdates(Map<String, dynamic> updates) => json.encode(updates);
 
   /// Add a Member to a Card
   ///
