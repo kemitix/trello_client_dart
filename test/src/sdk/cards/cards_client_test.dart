@@ -165,9 +165,8 @@ void main() {
                   expectedMethod: 'PUT',
                   expectedPath: '/1/cards/my-card-id',
                   expectedHeaders: {
-                    Headers.contentTypeHeader:
-                        Headers.formUrlEncodedContentType,
-                    Headers.contentLengthHeader: '43',
+                    Headers.contentTypeHeader: Headers.jsonContentType,
+                    Headers.contentLengthHeader: '53',
                   },
                   expectedQueryParameters: {},
                   existingResourceResponse: createResponse(body: {

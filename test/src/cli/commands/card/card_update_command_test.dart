@@ -43,7 +43,7 @@ void main() {
   test(
       'request content type',
       () => expect(history[0].head.headers[Headers.contentTypeHeader],
-          Headers.formUrlEncodedContentType));
+          Headers.jsonContentType));
   test('request has no query parameters',
       () => expect(history[0].head.queryParameters, {}));
   test('output', () => expect(printer.output, ['Updated']));
