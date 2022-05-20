@@ -1,7 +1,7 @@
 import 'fp.dart';
 
-/// map1eitherFM - map 1 `Either` onto a plain function that returns an `Either`
-Either<L, R> map1eitherFM<L, A, A2 extends A, R>(
+/// map 1 `Either` onto a plain function that returns an `Either`
+Either<L, R> mapEitherFlat<L, A, A2 extends A, R>(
   Either<L, A2> fa,
   Either<L, R> Function(A a) fn,
 ) =>
@@ -63,8 +63,8 @@ Either<L, R>
             (a) =>
                 fb.fold(left, (b) => fc.fold(left, (c) => right(fn(a, b, c)))));
 
-/// defer1either1
-Future<Either<L, R>> defer1either1<A, B, L, R>(
+/// def1either1 - map 1 `Either` and 1 plain onto an async function
+Future<Either<L, R>> def1either1<A, B, L, R>(
   Either<L, A> a,
   B b,
   Future<Either<L, R>> Function(A, B) fn,
@@ -72,8 +72,8 @@ Future<Either<L, R>> defer1either1<A, B, L, R>(
     (await map1either1(a, b, (A a, B b) => fn(a, b)).traverseFuture(id))
         .flatMap(id);
 
-/// defer1either2
-Future<Either<L, R>> defer1either2<A, B, C, L, R>(
+/// defer1either2 - map 1 `Either` and 2 plain onto an async function
+Future<Either<L, R>> def1either2<A, B, C, L, R>(
   Either<L, A> a,
   B b,
   C c,
@@ -83,7 +83,7 @@ Future<Either<L, R>> defer1either2<A, B, C, L, R>(
             .traverseFuture(id))
         .flatMap(id);
 
-/// defer2either
+/// defer2either - map 2 `Either` onto an async function
 Future<Either<L, R>> defer2either<A, B, C, L, R>(
   Either<L, A> a,
   Either<L, B> b,
