@@ -6,21 +6,23 @@ import 'package:dcli/dcli.dart';
 import 'package:trello_sdk/src/sdk/external/dio_client_factory.dart';
 import 'package:trello_sdk/trello_cli.dart';
 
-void main() async {
-  createClient(authentication(Platform.environment)).map((client) async {
-    await getMembersBoards(member(), client)
-        .then((boards) => map1either(boards, selectBoard).flatMap(id))
-        .then((board) => defer1either1(board, client, getLists))
-        .then((lists) => defer1either1(lists, client, getCardsOnLists))
-        .then((cards) =>
-            defer1either2(cards, selectStyle(), client, updateAllCards))
-        .then((cards) => cards.fold(
-              (l) => print('Error: $l'),
-              (r) => print('Updated ${r.length} cards'),
-            ));
-    client.close();
-  });
-}
+const m1efm = map1eitherFM;
+const d1e1 = defer1either1;
+const d1e2 = defer1either2;
+
+void main() => createClient(authentication(Platform.environment)).map(
+    (client) => getMembersBoards(member(), client)
+        .then((boards) => m1efm(boards, selectBoard))
+        .then((board) => d1e1(board, client, getLists))
+        .then((lists) => d1e1(lists, client, getCardsOnLists))
+        .then((cards) => d1e2(cards, selectStyle(), client, updateAllCards))
+        .then((cards) => printSummary(cards))
+        .whenComplete(() => client.close()));
+
+void printSummary(Either<Failure, List<TrelloCard>> cards) => cards.fold(
+      (l) => print('Error: $l'),
+      (r) => print('Updated ${r.length} cards'),
+    );
 
 String selectStyle() =>
     menu(prompt: 'Cover Style to apply?', options: ['normal', 'full']);
