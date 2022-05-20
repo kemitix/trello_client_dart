@@ -1,5 +1,12 @@
 import 'fp.dart';
 
+/// map1eitherFM - map 1 `Either` onto a plain function that returns an `Either`
+Either<L, R> map1eitherFM<L, A, A2 extends A, R>(
+  Either<L, A2> fa,
+  Either<L, R> Function(A a) fn,
+) =>
+    fa.fold(left, (a) => fn(a));
+
 /// map1either - map 1 `Either` onto a plain function
 Either<L, R> map1either<L, A, A2 extends A, R>(
   Either<L, A2> fa,
