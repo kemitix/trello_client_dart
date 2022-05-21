@@ -34,4 +34,7 @@ class AddMemberToCardCommand extends CardCommand {
           }
         },
       );
+
+  @override
+  List<UpdateProperty> get updateProperties => [];
 }

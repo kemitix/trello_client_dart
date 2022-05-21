@@ -19,4 +19,7 @@ class DownloadAttachmentCommand extends CardCommand {
       .then((e) => e.replace("Download complete"))
       .onError((Failure error, stackTrace) => left(error))
       .then((result) => result.collapse(printOutput));
+
+  @override
+  List<UpdateProperty> get updateProperties => [];
 }
