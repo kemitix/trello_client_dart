@@ -18,6 +18,7 @@ class GetCardCommand extends CardCommand {
   @override
   FutureOr<void> run() => Either.sequenceFuture(
           cardId.map((cardId) => client.card(cardId).get(fields: fields)))
+      .onError((Failure error, stackTrace) => left(error))
       .then((result) => result
           .map((card) => tabulateObject(card, fields))
           .collapse(printOutput));

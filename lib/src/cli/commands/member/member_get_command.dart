@@ -23,6 +23,7 @@ class GetMemberCommand extends MemberCommand {
   @override
   FutureOr<void> run() => Either.sequenceFuture(memberId
           .map((memberId) => client.member(memberId).get(fields: fields)))
+      .onError((Failure error, stackTrace) => left(error))
       .then((result) => result
           .map((member) => tabulateObject(member, fields))
           .collapse(printOutput));

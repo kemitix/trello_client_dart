@@ -1,8 +1,6 @@
-import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:test/test.dart';
 import 'package:trello_sdk/src/sdk/boards/board_models.dart';
-import 'package:trello_sdk/src/sdk/errors.dart';
 import 'package:trello_sdk/src/sdk/members/members.dart';
 import 'package:trello_sdk/src/sdk/trello_models.dart';
 
@@ -30,10 +28,10 @@ void main() {
       })
     ]);
     var memberClient = client.trelloClient.member(MemberId(memberId));
-    late Either<Failure, TrelloMember> member;
+    late Future<TrelloMember> member;
 
     //when
-    setUpAll(() async => member = await memberClient.get(
+    setUpAll(() => member = memberClient.get(
           boardBackgrounds: MemberBoardBackgrounds.all,
           boardStars: false,
           boardsInvited: [BoardsInvited.pinned],
@@ -93,47 +91,43 @@ void main() {
     group('response', () {
       test(
           'member id',
-          () async => verify<TrelloMember>(
+          () => verify<TrelloMember>(
               member, (r) => expect(r.id, MemberId(memberId))));
       test(
           'member full name',
-          () async => verify<TrelloMember>(
+          () => verify<TrelloMember>(
               member, (r) => expect(r.fullName, 'my-full-name')));
-      test(
-          'member url',
-          () async =>
-              verify<TrelloMember>(member, (r) => expect(r.url, 'my-url')));
+      test('member url',
+          () => verify<TrelloMember>(member, (r) => expect(r.url, 'my-url')));
       test(
           'member username',
-          () async => verify<TrelloMember>(
+          () => verify<TrelloMember>(
               member, (r) => expect(r.username, 'my-username')));
       test(
           'member email',
-          () async =>
+          () =>
               verify<TrelloMember>(member, (r) => expect(r.email, 'my-email')));
       test(
           'member initials',
-          () async => verify<TrelloMember>(
+          () => verify<TrelloMember>(
               member, (r) => expect(r.initials, 'my-initials')));
       test(
           'member confirmed',
-          () async =>
+          () =>
               verify<TrelloMember>(member, (r) => expect(r.confirmed, isTrue)));
       test(
           'member member type',
-          () async => verify<TrelloMember>(
+          () => verify<TrelloMember>(
               member, (r) => expect(r.memberType, 'my-member-type')));
       test(
           'member status',
-          () async => verify<TrelloMember>(
+          () => verify<TrelloMember>(
               member, (r) => expect(r.status, 'my-status')));
-      test(
-          'member bio',
-          () async =>
-              verify<TrelloMember>(member, (r) => expect(r.bio, 'my-bio')));
+      test('member bio',
+          () => verify<TrelloMember>(member, (r) => expect(r.bio, 'my-bio')));
       test(
           'member activity blocked',
-          () async => verify<TrelloMember>(
+          () => verify<TrelloMember>(
               member, (r) => expect(r.raw['activityBlocked'], isTrue)));
     });
   });
@@ -160,10 +154,10 @@ void main() {
       ])
     ]);
     var memberClient = client.trelloClient.member(MemberId(memberId));
-    late Either<Failure, List<TrelloBoard>> boards;
+    late Future<List<TrelloBoard>> boards;
 
     //when
-    setUpAll(() async => boards = await memberClient.getBoards(
+    setUpAll(() => boards = memberClient.getBoards(
         filter: MemberBoardFilter.closed, fields: [BoardFields.all]));
 
     //then
@@ -181,10 +175,10 @@ void main() {
               }));
     });
     group('response', () {
-      late Either<Failure, TrelloBoard> board;
-      setUpAll(() => board = boards.map((list) => list[0]));
+      late Future<TrelloBoard> board;
+      setUpAll(() => board = boards.then((list) => list[0]));
       test('one item in list',
-          () => boards.map((list) => expect(list.length, 1)));
+          () => boards.then((list) => expect(list.length, 1)));
       test(
           'board id',
           () async => verify<TrelloBoard>(

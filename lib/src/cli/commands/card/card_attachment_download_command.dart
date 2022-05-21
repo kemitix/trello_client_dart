@@ -17,5 +17,6 @@ class DownloadAttachmentCommand extends CardCommand {
           (CardId cardId, AttachmentId attachmentId, FileName fileName) =>
               client.card(cardId).attachment(attachmentId).download(fileName)))
       .then((e) => e.replace("Download complete"))
+      .onError((Failure error, stackTrace) => left(error))
       .then((result) => result.collapse(printOutput));
 }

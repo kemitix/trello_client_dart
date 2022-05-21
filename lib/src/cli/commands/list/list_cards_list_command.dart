@@ -17,6 +17,7 @@ class ListCardsCommand extends ListCommand {
   @override
   FutureOr<void> run() => Either.sequenceFuture(
           listId.map((listId) => client.list(listId).getCards(fields: fields)))
+      .onError((Failure error, stackTrace) => left(error))
       .then((result) => result
           .map((cards) => tabulateObjects(cards, fields))
           .collapse(printOutput));
