@@ -21,4 +21,8 @@ class ListCardsCommand extends ListCommand {
       .then((result) => result
           .map((cards) => tabulateObjects(cards, fields))
           .collapse(printOutput));
+
+  @override
+  //TODO add fields override
+  List<UpdateProperty> get updateProperties => [];
 }

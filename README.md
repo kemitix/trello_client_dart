@@ -1,9 +1,9 @@
 CLI and SDK for accessing the Trello API
 
-- 'package:trello/trello_sdk' - Access the Trello API
-- bin/trello - CLI to access Trello
+- `package:trello_sdk/trello_sdk.dart` - Access the Trello API
+- `bin/trello.dart` - CLI to access Trello
 
-Status: experimental/alpha/development
+Status: **experimental/alpha/development**
 
 Developing a client library for interacting with Trello API.
 Includes a CLI to exercise and test `trello_sdk`.

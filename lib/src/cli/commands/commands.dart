@@ -12,6 +12,7 @@ class CommandEnvironment {
   final void Function(Object s) _printer;
 
   TrelloClient get client => _client;
+
   void Function(Object s) get printer => _printer;
 }
 
@@ -26,6 +27,47 @@ abstract class TrelloModule extends Command {
   void printUsage() => e.printer(usage);
 }
 
+abstract class UpdateProperty {
+  final String property;
+  final String help;
+  late final UpdateType type;
+  late final String query;
+
+  UpdateProperty(
+    this.property, {
+    required this.help,
+    required this.type,
+    String? query,
+  }) {
+    this.query = query ?? property;
+  }
+}
+
+class UpdateOption extends UpdateProperty {
+  UpdateOption(
+    super.property, {
+    required super.help,
+    String? query,
+  }) : super(
+          type: UpdateType.option,
+        );
+}
+
+class UpdateFlag extends UpdateProperty {
+  UpdateFlag(
+    super.property, {
+    required super.help,
+    String? query,
+  }) : super(
+          type: UpdateType.flag,
+        );
+}
+
+enum UpdateType {
+  option,
+  flag;
+}
+
 abstract class TrelloCommand extends Command {
   final String _name;
   final String _description;
@@ -33,11 +75,24 @@ abstract class TrelloCommand extends Command {
 
   CommandEnvironment get e => _commandEnvironment;
 
+  List<UpdateProperty> get updateProperties;
+
   TrelloCommand(
     this._name,
     this._description,
     this._commandEnvironment,
-  );
+  ) {
+    updateProperties.forEach((update) {
+      switch (update.type) {
+        case UpdateType.option:
+          argParser.addOption(update.property, help: update.help);
+          break;
+        case UpdateType.flag:
+          argParser.addFlag(update.property, help: update.help);
+          break;
+      }
+    });
+  }
 
   @override
   String get name => _name;
@@ -50,6 +105,16 @@ abstract class TrelloCommand extends Command {
   List<String> get parameters => argResults!.rest;
 
   int _nextParameterIndex = 0;
+
+  Map<String, String> updates() {
+    var updates = <String, String>{};
+    updateProperties
+        .where((element) => argResults!.wasParsed(element.property))
+        .forEach((element) {
+      updates[element.query] = argResults![element.property];
+    });
+    return updates;
+  }
 
   @override
   void printUsage() => e.printer(usage);

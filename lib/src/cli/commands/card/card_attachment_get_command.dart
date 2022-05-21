@@ -27,4 +27,8 @@ class GetAttachmentCommand extends CardCommand {
       .then((result) => result
           .map((attachment) => tabulateObject(attachment, fields))
           .collapse(printOutput));
+
+  @override
+  //TODO add fields override
+  List<UpdateProperty> get updateProperties => [];
 }

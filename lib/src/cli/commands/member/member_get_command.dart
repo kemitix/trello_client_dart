@@ -27,4 +27,8 @@ class GetMemberCommand extends MemberCommand {
       .then((result) => result
           .map((member) => tabulateObject(member, fields))
           .collapse(printOutput));
+
+  @override
+  //TODO add fields override
+  List<UpdateProperty> get updateProperties => [];
 }

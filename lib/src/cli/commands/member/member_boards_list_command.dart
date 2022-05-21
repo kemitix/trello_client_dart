@@ -24,4 +24,8 @@ class ListMemberBoardsCommand extends MemberCommand {
       .then((result) => result
           .map((boards) => tabulateObjects(boards, fields))
           .collapse(printOutput));
+
+  @override
+  //TODO add fields override
+  List<UpdateProperty> get updateProperties => [];
 }

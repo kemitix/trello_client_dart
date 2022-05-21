@@ -33,4 +33,7 @@ class RemoveMemberFromCardCommand extends CardCommand {
         }
         return Future.value(memberId);
       });
+
+  @override
+  List<UpdateProperty> get updateProperties => [];
 }

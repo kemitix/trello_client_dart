@@ -22,4 +22,8 @@ class ListListsCommand extends BoardCommand {
           .then((lists) => tabulateObjects(lists, fields))))
       .onError((Failure error, stackTrace) => left(error))
       .then((result) => result.collapse(printOutput));
+
+  @override
+  //TODO add fields override
+  List<UpdateProperty> get updateProperties => [];
 }
