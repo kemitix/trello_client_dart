@@ -5,7 +5,11 @@ import '../../cli.dart';
 
 class GetMemberCommand extends MemberCommand {
   GetMemberCommand(CommandEnvironment commandEnvironment)
-      : super('get', 'Get a Member', commandEnvironment);
+      : super('get', 'Get a Member', commandEnvironment) {
+    argParser.addOption('fields',
+        help: 'all or a comma-separated list of fields',
+        defaultsTo: fields.map((f) => f.name).join(','));
+  }
 
   final List<MemberFields> fields = [
     MemberFields.id,
@@ -22,13 +26,15 @@ class GetMemberCommand extends MemberCommand {
 
   @override
   FutureOr<void> run() => Either.sequenceFuture(memberId
-          .map((memberId) => client.member(memberId).get(fields: fields)))
+          .map((memberId) => client.member(memberId).get(fields: getFields())))
       .onError((Failure error, stackTrace) => left(error))
       .then((result) => result
-          .map((member) => tabulateObject(member, fields))
+          .map((member) => tabulateObject(member, getFields()))
           .collapse(printOutput));
 
+  List<MemberFields> getFields() =>
+      getEnumFields(enumValues: MemberFields.values, defaults: fields);
+
   @override
-  //TODO add fields override
   List<UpdateProperty> get updateProperties => [];
 }
