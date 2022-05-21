@@ -31,14 +31,18 @@ Set the `MEMBER` value first then iteratively run the demo to identify the ID of
 
 ## API Coverage
 
-This list of API actions was retrieved from the [Trello Reference REST API](https://developer.atlassian.com/cloud/trello/rest/api-group-actions/#api-actions-idaction-reactionssummary-get) on 11th April 2022.
+This list of API actions was retrieved from the
+[Trello Reference REST API](https://developer.atlassian.com/cloud/trello/rest/api-group-actions/#api-actions-idaction-reactionssummary-get)
+on 11th April 2022.
+
+Key:
 
 - ✔ Done
 
 ### Actions
 
-| Status  | Label                               |
-|:-------:|:------------------------------------|
+| Status | Label                               |
+|:------:|:------------------------------------|
 |        | Get an Action                       |
 |        | Update an Action                    |
 |        | Delete an Action                    |
@@ -60,13 +64,13 @@ This list of API actions was retrieved from the [Trello Reference REST API](http
 
 | Status | Label                             |
 |:------:|:----------------------------------|
-|       | Get Application's compliance data |
+|        | Get Application's compliance data |
 
 ### Batch
 
 | Status | Label          |
 |:------:|:---------------|
-|       | Batch Requests |
+|        | Batch Requests |
 
 ### Boards
 
@@ -163,68 +167,68 @@ This list of API actions was retrieved from the [Trello Reference REST API](http
 
 | Status | Label                             |
 |:------:|:----------------------------------|
-|       | Create a Checklist                |
-|       | Get a Checklist                   |
-|       | Update a Checklist                |
-|       | Delete a Checklist                |
-|       | Get field on a Checklist          |
-|       | Update field on a Checklist       |
-|       | Get the Board the Checklist is on |
-|       | Get the Card a Checklist is on    |
-|       | Get Checkitems on a Checklist     |
-|       | Create Checkitem on Checklist     |
-|       | Get a Checkitem on a Checklist    |
-|       | Delete Checkitem from Checklist   |
+|        | Create a Checklist                |
+|        | Get a Checklist                   |
+|        | Update a Checklist                |
+|        | Delete a Checklist                |
+|        | Get field on a Checklist          |
+|        | Update field on a Checklist       |
+|        | Get the Board the Checklist is on |
+|        | Get the Card a Checklist is on    |
+|        | Get Checkitems on a Checklist     |
+|        | Create Checkitem on Checklist     |
+|        | Get a Checkitem on a Checklist    |
+|        | Delete Checkitem from Checklist   |
 
 ### CustomFields
 
 | Status | Label                                  |
 |:------:|:---------------------------------------|
-|       | Create a new Custom Field on a Board   |
-|       | Get a Custom Field                     |
-|       | Update a Custom Field definition       |
-|       | Delete a Custom Field definition       |
-|       | Get Options of Custom Field drop down  |
-|       | Add Option to Custom Field dropdown    |
-|       | Get Option of Custom Field dropdown    |
-|       | Delete Option of Custom Field dropdown |
+|        | Create a new Custom Field on a Board   |
+|        | Get a Custom Field                     |
+|        | Update a Custom Field definition       |
+|        | Delete a Custom Field definition       |
+|        | Get Options of Custom Field drop down  |
+|        | Add Option to Custom Field dropdown    |
+|        | Get Option of Custom Field dropdown    |
+|        | Delete Option of Custom Field dropdown |
 
 ### Emoji
 
 | Status | Label                |
 |:------:|:---------------------|
-|       | List available Emoji |
+|        | List available Emoji |
 
 ### Enterprises
 
 | Status | Label                                                            |
 |:------:|:-----------------------------------------------------------------|
-|       | Get an Enterprise                                                |
-|       | Get auditlog data for an Enterprise                              |
-|       | Get Enterprise admin Members                                     |
-|       | Get signupUrl for Enterprise                                     |
-|       | Get Members of Enterprise                                        |
-|       | Get a Member of Enterprise                                       |
-|       | Get whether an organization can be transferred to an enterprise. |
-|       | Get ClaimableOrganizations of an Enterprise                      |
-|       | Get PendingOrganizations of an Enterprise                        |
-|       | Create an auth Token for an Enterprise.                          |
-|       | Transfer an Organization to an Enterprise.                       |
-|       | Update a Member's licensed status                                |
-|       | Deactivate a Member of an Enterprise.                            |
-|       | Update Member to be admin of Enterprise                          |
-|       | Remove a Member as admin from Enterprise.                        |
-|       | Delete an Organization from an Enterprise.                       |
+|        | Get an Enterprise                                                |
+|        | Get auditlog data for an Enterprise                              |
+|        | Get Enterprise admin Members                                     |
+|        | Get signupUrl for Enterprise                                     |
+|        | Get Members of Enterprise                                        |
+|        | Get a Member of Enterprise                                       |
+|        | Get whether an organization can be transferred to an enterprise. |
+|        | Get ClaimableOrganizations of an Enterprise                      |
+|        | Get PendingOrganizations of an Enterprise                        |
+|        | Create an auth Token for an Enterprise.                          |
+|        | Transfer an Organization to an Enterprise.                       |
+|        | Update a Member's licensed status                                |
+|        | Deactivate a Member of an Enterprise.                            |
+|        | Update Member to be admin of Enterprise                          |
+|        | Remove a Member as admin from Enterprise.                        |
+|        | Delete an Organization from an Enterprise.                       |
 
 ### Labels
 
 | Status | Label                     |
 |:------:|:--------------------------|
-|       | Get a Label               |
-|       | Update a Label            |
-|       | Delete a Label            |
-|       | Update a field on a label |
-|       | Create a Label            |
+|        | Get a Label               |
+|        | Update a Label            |
+|        | Delete a Label            |
+|        | Update a field on a label |
+|        | Create a Label            |
 
 ### Lists
 
@@ -246,7 +250,7 @@ This list of API actions was retrieved from the [Trello Reference REST API](http
 
 | Status | Label                                          | SDK: .member(id)                            | CLI: member    | Query Path                                                   |
 |:------:|:-----------------------------------------------|---------------------------------------------|----------------|--------------------------------------------------------------|
-|    ✔   | Get a Member                                   | .get()                                      | get ID         | GET /1/members/{id}                                          |
+|   ✔    | Get a Member                                   | .get()                                      | get ID         | GET /1/members/{id}                                          |
 |        | Update a Member                                | .put(...)                                   |                | PUT /1/members/{id}                                          |
 |        | Get a field on a Member                        | .get(field)                                 |                | GET /1/members/{id}/{field}                                  |
 |        | Get a Member's Actions                         | .getActions()                               |                | GET /1/members/{id}/actions                                  |
@@ -260,116 +264,116 @@ This list of API actions was retrieved from the [Trello Reference REST API](http
 |        | Get custom Board Background of Member          | .customBackground(idBackground).get()       |                | GET /1/members/{id}/customBoardBackgrounds/{idBackground}    |
 |        | Update custom Board Background of Member       | .customBackground(idBackground).update(...) |                | PUT /1/members/{id}/customBoardBackgrounds/{idBackground}    |
 |        | Delete custom Board Background of Member       | .customBackground(idBackground).delete()    |                | DELETE /1/members/{id}/customBoardBackgrounds/{idBackground} |
-|        | Get a Member's boardStars                      | .getStars()                                 |                | GET /1/members/{id}/boardStars                    |
-|        | Create Star for Board                          | .createStar(...)                            |                | POST /1/members/{id}/boardStars                   |
-|        | Get a boardStar of Member                      | .star(idStart).get()                        |                | GET /1/members/{id}/boardStars/{idStar}           |
-|        | Update the position of a boardStar of Member   | .star(idStar).put()                         |                | PUT /1/members/{id}/boardStars/{idStar}           |
-|        | Delete Star for Board                          | .star(idStar).delete()                      |                | DELETE /1/members/{id}/boardStars/{idStar}        |
-|   ✔    | Get Boards that Member belongs to              | .getBoards()                                | list-boards ID | GET /1/members/{id}/boards                        |
-|        | Get Boards the Member has been invited to      | .getBoardsInvited()                         |                | GET /1/members/{id}/boardsInvited                 |
-|        | Get Cards the Member is on                     | .getCards()                                 |                | GET /1/members/{id}/cards                         |
-|        | Get a Member's customEmojis                    | .getEmoji()                                 |                | GET /1/members/{id}/customEmoji                   |
-|        | Create custom Emoji for Member                 | .createEmoji(...)                           |                | POST /1/members/{id}/customEmoji                  |
-|        | Get a Member's custom Emoji                    | .emoji(idEmoji).get()                       |                | GET /1/members/{id}/customEmoji/{idEmoji}         |
-|        | Get Member's custom Stickers                   | .getStickers()                              |                | GET /1/members/{id}/customStickers                |
-|        | Create custom Sticker for Member               | .createSticker(...)                         |                | POST /1/members/{id}/customStickers               |
-|        | Get a Member's custom Sticker                  | .sticker(idSticker).get()                   |                | GET /1/members/{id}/customStickers/{idSticker}    |
-|        | Delete a Member's custom Sticker               | .sticker(idSticker).delete()                |                | DELETE /1/members/{id}/customStickers/{idSticker} |
-|        | Get Member's Notifications                     | .getNotifications()                         |                | GET /1/members/{id}/notifications               |
-|        | Get Member's Organizations                     | .getOrganizations()                         |                | GET /1/members/{id}/organizations               |
-|        | Get Organizations a Member has been invited to | .getOrganizationsInvited()                  |                | GET /1/members/{id}/organizationsInvited        |
-|        | Get Member's saved searched                    | .getSavedSearches()                         |                | GET /1/members/{id}/savedSearches               |
-|        | Create saved Search for Memer                  | .createSavedSearch(...)                     |                | POST /1/members/{id}/savedSearches              |
-|        | Get a saved search                             | .savedSearch(idSearch).get()                |                | GET /1/members/{id}/savedSearches/{idSearch}    |
-|        | Update a saved search                          | .savedSearch(idSearch).put(...)             |                | PUT /1/members/{id}/savedSearches/{idSearch}    |
-|        | Delete a saved search                          | .savedSearch(idSearch).delete()             |                | DELETE /1/members/{id}/savedSearches/{idSearch} |
-|        | Get Member's Tokens                            | .getTokens()                                |                | GET /1/members/{id}/tokens                    |
-|        | Create Avatar for Member                       | .createAvatar(...)                          |                | POST /1/members/{id}/avatar                   |
-|        | Dismiss a message for Member                   | .dismissMessage(...)                        |                | POST /1/members/{id}/oneTimeMessagesDismissed |
+|        | Get a Member's boardStars                      | .getStars()                                 |                | GET /1/members/{id}/boardStars                               |
+|        | Create Star for Board                          | .createStar(...)                            |                | POST /1/members/{id}/boardStars                              |
+|        | Get a boardStar of Member                      | .star(idStart).get()                        |                | GET /1/members/{id}/boardStars/{idStar}                      |
+|        | Update the position of a boardStar of Member   | .star(idStar).put()                         |                | PUT /1/members/{id}/boardStars/{idStar}                      |
+|        | Delete Star for Board                          | .star(idStar).delete()                      |                | DELETE /1/members/{id}/boardStars/{idStar}                   |
+|   ✔    | Get Boards that Member belongs to              | .getBoards()                                | list-boards ID | GET /1/members/{id}/boards                                   |
+|        | Get Boards the Member has been invited to      | .getBoardsInvited()                         |                | GET /1/members/{id}/boardsInvited                            |
+|        | Get Cards the Member is on                     | .getCards()                                 |                | GET /1/members/{id}/cards                                    |
+|        | Get a Member's customEmojis                    | .getEmoji()                                 |                | GET /1/members/{id}/customEmoji                              |
+|        | Create custom Emoji for Member                 | .createEmoji(...)                           |                | POST /1/members/{id}/customEmoji                             |
+|        | Get a Member's custom Emoji                    | .emoji(idEmoji).get()                       |                | GET /1/members/{id}/customEmoji/{idEmoji}                    |
+|        | Get Member's custom Stickers                   | .getStickers()                              |                | GET /1/members/{id}/customStickers                           |
+|        | Create custom Sticker for Member               | .createSticker(...)                         |                | POST /1/members/{id}/customStickers                          |
+|        | Get a Member's custom Sticker                  | .sticker(idSticker).get()                   |                | GET /1/members/{id}/customStickers/{idSticker}               |
+|        | Delete a Member's custom Sticker               | .sticker(idSticker).delete()                |                | DELETE /1/members/{id}/customStickers/{idSticker}            |
+|        | Get Member's Notifications                     | .getNotifications()                         |                | GET /1/members/{id}/notifications                            |
+|        | Get Member's Organizations                     | .getOrganizations()                         |                | GET /1/members/{id}/organizations                            |
+|        | Get Organizations a Member has been invited to | .getOrganizationsInvited()                  |                | GET /1/members/{id}/organizationsInvited                     |
+|        | Get Member's saved searched                    | .getSavedSearches()                         |                | GET /1/members/{id}/savedSearches                            |
+|        | Create saved Search for Memer                  | .createSavedSearch(...)                     |                | POST /1/members/{id}/savedSearches                           |
+|        | Get a saved search                             | .savedSearch(idSearch).get()                |                | GET /1/members/{id}/savedSearches/{idSearch}                 |
+|        | Update a saved search                          | .savedSearch(idSearch).put(...)             |                | PUT /1/members/{id}/savedSearches/{idSearch}                 |
+|        | Delete a saved search                          | .savedSearch(idSearch).delete()             |                | DELETE /1/members/{id}/savedSearches/{idSearch}              |
+|        | Get Member's Tokens                            | .getTokens()                                |                | GET /1/members/{id}/tokens                                   |
+|        | Create Avatar for Member                       | .createAvatar(...)                          |                | POST /1/members/{id}/avatar                                  |
+|        | Dismiss a message for Member                   | .dismissMessage(...)                        |                | POST /1/members/{id}/oneTimeMessagesDismissed                |
 
 ### Notifications
 
 | Status | Label                                                    |
 |:------:|:---------------------------------------------------------|
-|       | Get a Notification                                       |
-|       | Update a Notification's read status                      |
-|       | Get a field of a Notification                            |
-|       | Mark all Notifications as read                           |
-|       | Update Notification's read status                        |
-|       | Get the Board a Notification is on                       |
-|       | Get the Card a Notification is on                        |
-|       | Get the List a Notification is on                        |
-|       | Get the Member a Notification is about (not the creator) |
-|       | Get the Member who created the Notification              |
-|       | Get a Notification's associated Organization             |
+|        | Get a Notification                                       |
+|        | Update a Notification's read status                      |
+|        | Get a field of a Notification                            |
+|        | Mark all Notifications as read                           |
+|        | Update Notification's read status                        |
+|        | Get the Board a Notification is on                       |
+|        | Get the Card a Notification is on                        |
+|        | Get the List a Notification is on                        |
+|        | Get the Member a Notification is about (not the creator) |
+|        | Get the Member who created the Notification              |
+|        | Get a Notification's associated Organization             |
 
 ### Organizations
 
 | Status | Label                                                                      |
 |:------:|:---------------------------------------------------------------------------|
-|       | Create a new Organization                                                  |
-|       | Get an Organization                                                        |
-|       | Update an Organization                                                     |
-|       | Delete an Organization                                                     |
-|       | Get field on Organization                                                  |
-|       | Get Actions for Organization                                               |
-|       | Get Boards in an Organization                                              |
-|       | Retrieve Organization's Exports                                            |
-|       | Create Export for Organizations                                            |
-|       | Get the Members of an Organization                                         |
-|       | Update an Organization's Members                                           |
-|       | Get Memberships of an Organization                                         |
-|       | Get a Membership of an Organization                                        |
-|       | Get the pluginData Scoped to Organization                                  |
-|       | Get Tags of an Organization                                                |
-|       | Create a Tag in Organization                                               |
-|       | Update a Member of an Organization                                         |
-|       | Remove a Member from an Organization                                       |
-|       | Deactivate or reactivate a member of an Organization                       |
-|       | Update logo for an Organization                                            |
-|       | Delete Logo for Organization                                               |
-|       | Remove a Member from an Organization and all Organization Boards           |
-|       | Remove the associated Google Apps domain from a Workspace                  |
-|       | Delete the email domain restriction on who can be invited to the Workspace |
-|       | Delete an Organization's Tag                                               |
-|       | Get Organizations new billable guests                                      |
+|        | Create a new Organization                                                  |
+|        | Get an Organization                                                        |
+|        | Update an Organization                                                     |
+|        | Delete an Organization                                                     |
+|        | Get field on Organization                                                  |
+|        | Get Actions for Organization                                               |
+|        | Get Boards in an Organization                                              |
+|        | Retrieve Organization's Exports                                            |
+|        | Create Export for Organizations                                            |
+|        | Get the Members of an Organization                                         |
+|        | Update an Organization's Members                                           |
+|        | Get Memberships of an Organization                                         |
+|        | Get a Membership of an Organization                                        |
+|        | Get the pluginData Scoped to Organization                                  |
+|        | Get Tags of an Organization                                                |
+|        | Create a Tag in Organization                                               |
+|        | Update a Member of an Organization                                         |
+|        | Remove a Member from an Organization                                       |
+|        | Deactivate or reactivate a member of an Organization                       |
+|        | Update logo for an Organization                                            |
+|        | Delete Logo for Organization                                               |
+|        | Remove a Member from an Organization and all Organization Boards           |
+|        | Remove the associated Google Apps domain from a Workspace                  |
+|        | Delete the email domain restriction on who can be invited to the Workspace |
+|        | Delete an Organization's Tag                                               |
+|        | Get Organizations new billable guests                                      |
 
 ### Plugins
 
 | Status | Label                                  |
 |:------:|:---------------------------------------|
-|       | Get a Plugin                           |
-|       | Update a Plugin                        |                        
-|       | Create a Listing for Plugin            |
-|       | Get Plugin's Member privacy compliance |
-|       | Updating Plugin's Listing              |
+|        | Get a Plugin                           |
+|        | Update a Plugin                        |
+|        | Create a Listing for Plugin            |
+|        | Get Plugin's Member privacy compliance |
+|        | Updating Plugin's Listing              |
 
 ### Search
 
 | Status | Label              |
 |:------:|:-------------------|
-|       | Search Trello      |
-|       | Search for Members |
+|        | Search Trello      |
+|        | Search for Members |
 
 ### Tokens
 
 | Status | Label                              |
 |:------:|:-----------------------------------|
-|       | Get a Token                        |
-|       | Get Token's Member                 |
-|       | Get Webhooks for Token             |
-|       | Create Webhooks for Token          |
-|       | Get a Webhook belonging to a Token |
-|       | Update a Webhook created by Token  |
-|       | Delete a Webhook created by Token  |
-|       | Delete a Token                     |
+|        | Get a Token                        |
+|        | Get Token's Member                 |
+|        | Get Webhooks for Token             |
+|        | Create Webhooks for Token          |
+|        | Get a Webhook belonging to a Token |
+|        | Update a Webhook created by Token  |
+|        | Delete a Webhook created by Token  |
+|        | Delete a Token                     |
 
 ### Webhooks
 
 | Status | Label                    |
 |:------:|:-------------------------|
-|       | Create a Webhook         |
-|       | Get a Webhook            |
-|       | Update a Webhook         |
-|       | Delete a Webhook         |
-|       | Get a field on a Webhook |
+|        | Create a Webhook         |
+|        | Get a Webhook            |
+|        | Update a Webhook         |
+|        | Delete a Webhook         |
+|        | Get a field on a Webhook |
