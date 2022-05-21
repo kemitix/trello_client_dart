@@ -21,69 +21,13 @@ Or, once installed and `trello` is on `PATH`:
 trello --help
 ```
 
-## Roadmap
+## Example - Demo
 
-These are the initial APIs and CLI commands that will be implemented.
+The demo uses the CLI interface to obtain member info, boards, lists, cards and attachments from Trello.
+It also downloads an attachment and updates a card.
 
-- [x] Get a Member
-
-```bash
-trello member get $MEMBER_ID
-```
-
-- [x] Get Boards that Member belongs to
-
-```bash
-trello member list-boards $MEMBER_ID 
-```
-
-- [x] Get Lists on a Board
-
-```bash
-trello board list-lists $BOARD_ID
-```
-
-- [x] Get Cards in a List
-
-```bash
-trello list list-cards $LIST_ID
-```
-
-- [x] Get a Card
-
-```bash
-trello card get $CARD_ID
-```
-
-- [x] Get Attachments on a Card
-
-```bash
-trello card list-attachments $CARD_ID
-```
-
-- [x] Download attachment from a Card
-
-```bash
-trello card download-attachment $CARD_ID $ATTACHMENT_ID $OUTPUT_FILE_NAME
-```
-
-- [x] Update a Card
-
-```bash
-trello card update $CARD_ID --name "New Card Title" --dueComplete
-```
-
-- [x] Add a Member to a Card
-
-```bash
-trello card add-member $CARD_ID $MEMBER_ID
-```
-
-- [x] Remove a Member from a Card
-
-```bash
-trello card remove-member $CARD_ID $MEMBER_ID
-```
+Update the constants at the top of the file to match your own account and permissions.
+Set the `MEMBER` value first then iteratively run the demo to identify the ID of the next value to set.
 
 ## API Coverage
 
