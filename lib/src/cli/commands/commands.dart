@@ -106,6 +106,19 @@ abstract class TrelloCommand extends Command {
 
   int _nextParameterIndex = 0;
 
+  List<T> getEnumFields<T extends Enum>({
+    required List<T> enumValues,
+    required List<T> defaults,
+  }) {
+    if (argResults!.wasParsed('fields')) {
+      var split = argResults!['fields'].split(',');
+      return enumValues
+          .where((element) => split.contains(element.name))
+          .toList();
+    }
+    return defaults;
+  }
+
   Map<String, String> updates() {
     var updates = <String, String>{};
     updateProperties
