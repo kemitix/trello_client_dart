@@ -8,12 +8,12 @@ import 'package:trello_sdk/trello_cli.dart';
 
 void main() => createClient(authentication(Platform.environment)).map(
     (client) => getMembersBoards(member(), client)
-        .then((boards) => mapEitherFlat(boards, selectBoard))
-        .then((board) => def1either1(board, client, getLists))
-        .then((lists) => def1either1(lists, client, getCardsOnLists))
-        .then((cards) =>
-            def1either2(cards, selectStyle(), client, updateAllCards))
-        .then((cards) => printSummary(cards))
+        .then((boards) => Either.sequenceFuture(selectBoard(boards).map(
+            (board) => getLists(board, client)
+                .then((lists) => getCardsOnLists(lists, client))
+                .then(
+                    (cards) => updateAllCards(cards, selectStyle(), client)))))
+        .then((result) => printSummary(result))
         .whenComplete(() => client.close()));
 
 void printSummary(Either<Failure, List<TrelloCard>> cards) => cards.fold(
@@ -33,7 +33,7 @@ Either<Failure, TrelloClient> createClient(
         .map((auth) => dioClientFactory(auth))
         .leftMap((errors) => AuthenticationFailure(errors));
 
-Future<Either<Failure, List<TrelloBoard>>> getMembersBoards(
+Future<List<TrelloBoard>> getMembersBoards(
   MemberId memberId,
   TrelloClient client,
 ) async =>
@@ -56,47 +56,44 @@ Either<Failure, TrelloBoard> selectBoard(List<TrelloBoard> boardList) =>
 List<String> boardNames(List<TrelloBoard> list) =>
     list.map((board) => board.name).toList();
 
-Future<Either<Failure, List<TrelloList>>> getLists(
+Future<List<TrelloList>> getLists(
   TrelloBoard board,
   TrelloClient client,
 ) async =>
     client.board(board.id).getLists(
         filter: ListFilter.all, fields: [ListFields.id, ListFields.name]);
 
-Future<Either<Failure, List<TrelloCard>>> getCardsOnLists(
+Future<List<TrelloCard>> getCardsOnLists(
   List<TrelloList> lists,
   TrelloClient client,
-) async {
+) {
   var result = <TrelloCard>[];
-  for (var list in lists) {
-    var cards = await getCards(list, client);
-    if (cards.isLeft()) return cards;
-    cards.map((cards) => result.addAll(cards));
-  }
-  return right(result);
+  return Future.forEach(
+          lists,
+          (TrelloList list) =>
+              getCards(list, client).then((cards) => result.addAll(cards)))
+      .then((_) => result);
 }
 
-Future<Either<Failure, List<TrelloCard>>> getCards(
+Future<List<TrelloCard>> getCards(
   TrelloList list,
   TrelloClient client,
 ) =>
     client.list(list.id).getCards(fields: [CardFields.id]);
 
-Future<Either<Failure, List<TrelloCard>>> updateAllCards(
+Future<List<TrelloCard>> updateAllCards(
   List<TrelloCard> cards,
   String style,
   TrelloClient client,
 ) async {
   var result = <TrelloCard>[];
-  for (var card in cards) {
-    var updatedCard = await updateCard(client, card, style);
-    if (updatedCard.isLeft()) return updatedCard.map((_) => []);
-    updatedCard.map((card) => result.add(card));
-  }
-  return right(result);
+  return Future.forEach(
+      cards,
+      (TrelloCard card) => updateCard(client, card, style)
+          .then((updatedCard) => result.add(updatedCard))).then((_) => result);
 }
 
-Future<Either<Failure, TrelloCard>> updateCard(
+Future<TrelloCard> updateCard(
   TrelloClient client,
   TrelloCard card,
   String style,

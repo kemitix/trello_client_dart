@@ -25,16 +25,15 @@ class CardClient {
   /// Get a card by its ID
   ///
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-id-get
-  Future<Either<Failure, TrelloCard>> get({List<CardFields>? fields}) => _client
+  Future<TrelloCard> get({List<CardFields>? fields}) => _client
       .get<dynamic>(
         '/1/cards/$_cardId',
         queryParameters: {
           'fields': asCsv(fields ?? [CardFields.all]),
         },
       )
-      .map((response) => response.data)
-      .map((data) => TrelloCard(data, fields ?? [CardFields.all]))
-      .run();
+      .then((response) => response.data)
+      .then((data) => TrelloCard(data, fields ?? [CardFields.all]));
 
   /// Get Attachments on a Card
   ///
@@ -43,7 +42,7 @@ class CardClient {
   /// List the attachments on a card
   ///
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-id-attachments-get
-  Future<Either<Failure, List<TrelloAttachment>>> attachments({
+  Future<List<TrelloAttachment>> attachments({
     AttachmentFilter filter = AttachmentFilter.FALSE,
     List<AttachmentFields>? fields,
   }) =>
@@ -58,12 +57,11 @@ class CardClient {
                     'OAuth oauth_consumer_key="${_authentication.key}", '
                         'oauth_token="${_authentication.token}"',
               })
-          .map((response) => response.data ?? [])
-          .map((items) => items
+          .then((response) => response.data ?? [])
+          .then((items) => items
               .map((item) =>
                   TrelloAttachment(item, fields ?? [AttachmentFields.all]))
-              .toList())
-          .run();
+              .toList());
 
   /// Update a Card
   ///
@@ -72,14 +70,12 @@ class CardClient {
   /// Update a card
   ///
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-id-put
-  Future<Either<Failure, TrelloCard>> put(Map<String, dynamic> updates) =>
-      _client
-          .put('/1/cards/$_cardId', data: _formatUpdates(updates), headers: {
-            Headers.contentTypeHeader: Headers.jsonContentType,
-          })
-          .map((response) => response.data)
-          .map((data) => TrelloCard(data, [CardFields.all]))
-          .run();
+  Future<TrelloCard> put(Map<String, dynamic> updates) => _client
+      .put('/1/cards/$_cardId', data: _formatUpdates(updates), headers: {
+        Headers.contentTypeHeader: Headers.jsonContentType,
+      })
+      .then((response) => response.data)
+      .then((data) => TrelloCard(data, [CardFields.all]));
 
   String _formatUpdates(Map<String, dynamic> updates) => json.encode(updates);
 
@@ -90,10 +86,10 @@ class CardClient {
   /// Add a member to a card
   ///
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-id-idmembers-post
-  Future<Either<Failure, HttpResponse<void>>> addMember(MemberId memberId) =>
+  Future<HttpResponse<void>> addMember(MemberId memberId) =>
       _client.post('/1/cards/$_cardId/idMembers', queryParameters: {
         'value': memberId.value,
-      }).run();
+      });
 
   /// Remove a Member from a Card
   ///
@@ -102,6 +98,6 @@ class CardClient {
   /// Remove a member from a card
   ///
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-id-idmembers-idmember-delete
-  Future<Either<Failure, HttpResponse<void>>> removeMember(MemberId memberId) =>
-      _client.delete('/1/cards/$_cardId/idMembers/${memberId.value}').run();
+  Future<HttpResponse<void>> removeMember(MemberId memberId) =>
+      _client.delete('/1/cards/$_cardId/idMembers/${memberId.value}');
 }

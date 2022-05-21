@@ -41,12 +41,9 @@ class UpdateCardCommand extends CardCommand {
   }
 
   @override
-  FutureOr<void> run() async => (await Either.sequenceFuture(cardId
-          .map((cardId) => client.card(cardId))
-          .map((client) => client.put(_updates()))))
-      .flatMap(id)
-      .map((r) => "Updated")
-      .collapse(printOutput);
+  FutureOr<void> run() => Either.sequenceFuture(
+          cardId.map((cardId) => client.card(cardId).put(_updates())))
+      .then((result) => result.map((_) => "Updated").collapse(printOutput));
 
   Map<String, String> _updates() {
     var updates = <String, String>{};

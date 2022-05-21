@@ -16,10 +16,9 @@ class ListAttachmentsCommand extends CardCommand {
   ];
 
   @override
-  FutureOr<void> run() async => (await Either.sequenceFuture(cardId
-          .map((cardId) => client.card(cardId))
-          .map((client) => client.attachments(fields: fields))))
-      .flatMap(id)
-      .map((attachments) => tabulateObjects(attachments, fields))
-      .collapse(printOutput);
+  FutureOr<void> run() => Either.sequenceFuture(cardId
+          .map((cardId) => client.card(cardId).attachments(fields: fields)))
+      .then((result) => result
+          .map((attachments) => tabulateObjects(attachments, fields))
+          .collapse(printOutput));
 }
