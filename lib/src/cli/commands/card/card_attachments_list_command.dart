@@ -18,6 +18,7 @@ class ListAttachmentsCommand extends CardCommand {
   @override
   FutureOr<void> run() => Either.sequenceFuture(cardId
           .map((cardId) => client.card(cardId).attachments(fields: fields)))
+      .onError((Failure error, stackTrace) => left(error))
       .then((result) => result
           .map((attachments) => tabulateObjects(attachments, fields))
           .collapse(printOutput));

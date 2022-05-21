@@ -23,6 +23,7 @@ class GetAttachmentCommand extends CardCommand {
               (CardId cardId, AttachmentId attachmentId) =>
                   client.card(cardId).attachment(attachmentId))
           .map((client) => client.get(fields: fields)))
+      .onError((Failure error, stackTrace) => left(error))
       .then((result) => result
           .map((attachment) => tabulateObject(attachment, fields))
           .collapse(printOutput));

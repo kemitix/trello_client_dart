@@ -20,6 +20,7 @@ class ListMemberBoardsCommand extends MemberCommand {
   @override
   FutureOr<void> run() => Either.sequenceFuture(memberId
           .map((memberId) => client.member(memberId).getBoards(fields: fields)))
+      .onError((Failure error, stackTrace) => left(error))
       .then((result) => result
           .map((boards) => tabulateObjects(boards, fields))
           .collapse(printOutput));

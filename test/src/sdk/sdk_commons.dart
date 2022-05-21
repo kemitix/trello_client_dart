@@ -1,14 +1,13 @@
-import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:test/test.dart';
-import 'package:trello_sdk/src/sdk/errors.dart';
+import 'package:trello_sdk/trello_cli.dart';
 
 import '../cli/cli_commons.dart';
 import '../mocks/dio_mock.dart';
 
-void verify<V>(Either<Failure, V> value, void Function(V) fn) {
-  value.fold((l) => fail('should have succeeded'), (r) => fn(r));
-}
+void verify<V>(Future<V> value, void Function(V) fn) => value
+    .onError((error, stackTrace) => fail('should have succeeded'))
+    .then((r) => fn(r));
 
 class TestResponseValue<T> {
   TestResponseValue(this._name, this._extract, this._expectedValue);
@@ -49,7 +48,7 @@ class ExpectedRequest<T> {
 }
 
 void apiTest<T>({
-  required Future<Either<Failure, T>> Function(TestTrelloClient) apiCall,
+  required Future<T> Function(TestTrelloClient) apiCall,
   required List<ExpectedRequest<T>> expectedRequests,
   bool testNotFound = true,
   bool testUnknownError = true,
@@ -59,10 +58,10 @@ void apiTest<T>({
     var client = TestTrelloClient(
         responses:
             expectedRequests.map((e) => e.existingResourceResponse).toList());
-    late final Either<Failure, T> response;
+    late final Future<T> response;
 
     //when
-    setUpAll(() async => response = await apiCall(client));
+    setUpAll(() => response = apiCall(client));
 
     //then
     test('expected ${expectedRequests.length} requests',
@@ -104,10 +103,12 @@ void apiTest<T>({
       //given
       var missingResponse = createResponse(statusCode: 404, body: {});
       var client = TestTrelloClient(responses: [missingResponse]);
-      late final Either<Failure, T> response;
+      late final Either<dynamic, T> response;
 
       //when
-      setUpAll(() async => response = await apiCall(client));
+      setUpAll(() async => response = await apiCall(client)
+          .then((result) => right(result))
+          .onError((error, stackTrace) => left(error)));
 
       //then
       var count = 0;
@@ -132,6 +133,9 @@ void apiTest<T>({
                   expectedRequest.expectedQueryParameters));
         });
         group('response $count', () {
+          var expectedFailure =
+              ResourceNotFoundFailure(resource: expectedRequest.expectedPath)
+                  .withContext(expectedRequest.additionalContext);
           test(
               'status code',
               () async => response.fold(
@@ -152,10 +156,12 @@ void apiTest<T>({
       //given
       var missingResponse = createResponse(statusCode: 500, body: {});
       var client = TestTrelloClient(responses: [missingResponse]);
-      late final Either<Failure, T> response;
+      late final Either<dynamic, T> response;
 
       //when
-      setUpAll(() async => response = await apiCall(client));
+      setUpAll(() async => response = await apiCall(client)
+          .then((result) => right(result))
+          .onError((error, stackTrace) => left(error)));
 
       //then
       var count = 0;

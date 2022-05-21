@@ -43,6 +43,7 @@ class UpdateCardCommand extends CardCommand {
   @override
   FutureOr<void> run() => Either.sequenceFuture(
           cardId.map((cardId) => client.card(cardId).put(_updates())))
+      .onError((Failure error, stackTrace) => left(error))
       .then((result) => result.map((_) => "Updated").collapse(printOutput));
 
   Map<String, String> _updates() {

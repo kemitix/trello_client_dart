@@ -49,7 +49,7 @@ class TrelloClient {
   }
 }
 
-abstract class StringValue extends Equatable {
+abstract class StringValue with EquatableMixin {
   final String value;
 
   StringValue(this.value);

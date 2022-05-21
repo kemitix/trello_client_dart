@@ -15,20 +15,22 @@ class RemoveMemberFromCardCommand extends CardCommand {
 
   @override
   FutureOr<void> run() =>
-      Either.sequenceFuture(map2either(cardId, memberId, _removeMember)).then(
-          (result) =>
+      Either.sequenceFuture(map2either(cardId, memberId, _removeMember))
+          .onError((Failure error, stackTrace) => left(error))
+          .then((result) =>
               result.map((_) => "Removed member").collapse(printOutput));
 
   Future<HttpResponse<void>> _removeMember(CardId cardId, MemberId memberId) =>
       _verifyIsAMember(cardId, memberId)
-          .then((_) => client.card(cardId).removeMember(memberId));
+          .then((memberId) => client.card(cardId).removeMember(memberId));
 
-  Future<void> _verifyIsAMember(CardId cardId, MemberId memberId) =>
-      Card.getMemberIds(cardId, client)
-          .then((idMembers) => !idMembers.contains(memberId))
-          .then((isNotMember) {
-        if (isNotMember) {
+  Future<MemberId> _verifyIsAMember(CardId cardId, MemberId memberId) =>
+      Card.getMemberIds(cardId, client).then((idMembers) {
+        return idMembers.contains(memberId);
+      }).then((isMember) {
+        if (!isMember) {
           return Future.error(AlreadyAppliedFailure(action: description));
         }
+        return Future.value(memberId);
       });
 }

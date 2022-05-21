@@ -20,5 +20,6 @@ class ListListsCommand extends BoardCommand {
           .board(boardId)
           .getLists(fields: fields)
           .then((lists) => tabulateObjects(lists, fields))))
+      .onError((Failure error, stackTrace) => left(error))
       .then((result) => result.collapse(printOutput));
 }
