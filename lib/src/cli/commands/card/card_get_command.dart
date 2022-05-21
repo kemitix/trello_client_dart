@@ -16,10 +16,9 @@ class GetCardCommand extends CardCommand {
   ];
 
   @override
-  FutureOr<void> run() async => (await Either.sequenceFuture(cardId
-          .map((cardId) => client.card(cardId))
-          .map((client) => client.get(fields: fields))))
-      .flatMap(id)
-      .map((card) => tabulateObject(card, fields))
-      .collapse(printOutput);
+  FutureOr<void> run() => Either.sequenceFuture(
+          cardId.map((cardId) => client.card(cardId).get(fields: fields)))
+      .then((result) => result
+          .map((card) => tabulateObject(card, fields))
+          .collapse(printOutput));
 }

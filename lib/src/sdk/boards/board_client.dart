@@ -14,7 +14,7 @@ class BoardClient {
   /// Get the Lists on a Board
   ///
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-boards/#api-boards-id-lists-get
-  Future<Either<Failure, List<TrelloList>>> getLists({
+  Future<List<TrelloList>> getLists({
     CardFilter cards = CardFilter.all,
     List<CardFields> cardFields = const [CardFields.all],
     ListFilter filter = ListFilter.all,
@@ -30,10 +30,10 @@ class BoardClient {
               'fields': asCsv(fields),
             },
           )
-          .mapLeft((failure) => failure.withContext({'boardId': _id.value}))
-          .map((response) => response.data ?? [])
-          .map((items) => items
+          .onError((Failure error, stackTrace) =>
+              Future.error(error.withContext({'boardId': _id.value})))
+          .then((response) => response.data ?? [])
+          .then((items) => items
               .map((item) => TrelloList(item, fields))
-              .toList(growable: false))
-          .run();
+              .toList(growable: false));
 }

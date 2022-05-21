@@ -18,10 +18,9 @@ class ListMemberBoardsCommand extends MemberCommand {
   ];
 
   @override
-  FutureOr<void> run() async => (await Either.sequenceFuture(memberId
-          .map((MemberId memberId) => client.member(memberId))
-          .map((client) => client.getBoards(fields: fields))))
-      .flatMap(id)
-      .map((board) => tabulateObjects(board, fields))
-      .collapse(printOutput);
+  FutureOr<void> run() => Either.sequenceFuture(memberId
+          .map((memberId) => client.member(memberId).getBoards(fields: fields)))
+      .then((result) => result
+          .map((boards) => tabulateObjects(boards, fields))
+          .collapse(printOutput));
 }

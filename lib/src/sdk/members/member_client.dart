@@ -12,7 +12,7 @@ class MemberClient {
   /// GET /1/members/{id}
   ///
   /// Get a member
-  Future<Either<Failure, TrelloMember>> get({
+  Future<TrelloMember> get({
     MemberActions? actions,
     MemberBoards? boards,
     MemberBoardBackgrounds boardBackgrounds = MemberBoardBackgrounds.none,
@@ -63,9 +63,8 @@ class MemberClient {
     if (notifications != null) queryParameters['notifications'] = notifications;
     return _client
         .get<dynamic>('/1/members/$_id', queryParameters: queryParameters)
-        .map((r) => r.data)
-        .map((item) => TrelloMember(item, fields ?? [MemberFields.all]))
-        .run();
+        .then((r) => r.data)
+        .then((item) => TrelloMember(item, fields ?? [MemberFields.all]));
   }
 
   /// Get Boards that Member belongs to
@@ -75,7 +74,7 @@ class MemberClient {
   /// Lists the boards that the user is a member of.
   ///
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-members/#api-members-id-boards-get
-  Future<Either<Failure, List<TrelloBoard>>> getBoards({
+  Future<List<TrelloBoard>> getBoards({
     MemberBoardFilter filter = MemberBoardFilter.all,
     List<BoardFields>? fields,
   }) =>
@@ -87,11 +86,10 @@ class MemberClient {
               'fields': asCsv(fields ?? [BoardFields.all])
             },
           )
-          .map((response) => response.data ?? [])
-          .map((items) => items
+          .then((response) => response.data ?? [])
+          .then((items) => items
               .map((item) => TrelloBoard(item, fields ?? [BoardFields.all]))
-              .toList(growable: false))
-          .run();
+              .toList(growable: false));
 }
 
 enum MemberBoardFilter {

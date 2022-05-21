@@ -14,16 +14,13 @@ class ListClient {
   /// List the cards in a list
   ///
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-lists/#api-lists-id-cards-get
-  Future<Either<Failure, List<TrelloCard>>> getCards(
-          {List<CardFields>? fields}) =>
-      _client
-          .get<List<dynamic>>(
-            '/1/lists/$_id/cards',
-            queryParameters: {},
-          )
-          .map((response) => response.data ?? [])
-          .map((items) => items
-              .map((item) => TrelloCard(item, fields ?? [CardFields.all]))
-              .toList(growable: false))
-          .run();
+  Future<List<TrelloCard>> getCards({List<CardFields>? fields}) => _client
+      .get<List<dynamic>>(
+        '/1/lists/$_id/cards',
+        queryParameters: {},
+      )
+      .then((response) => response.data ?? [])
+      .then((items) => items
+          .map((item) => TrelloCard(item, fields ?? [CardFields.all]))
+          .toList(growable: false));
 }

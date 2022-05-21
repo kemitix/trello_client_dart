@@ -14,22 +14,22 @@ class AddMemberToCardCommand extends CardCommand {
       nextParameter('Member Id').map((id) => MemberId(id));
 
   @override
-  FutureOr<void> run() async =>
-      (await Either.sequenceFuture(map2either(cardId, memberId, _addMember)
-              .map((a) async => (await a).map((_) => "Added member"))))
-          .flatMap(id)
-          .collapse(printOutput);
+  FutureOr<void> run() =>
+      Either.sequenceFuture(map2either(cardId, memberId, _addMember)).then(
+          (result) => result.map((_) => "Added member").collapse(printOutput));
 
-  Future<Either<Failure, HttpResponse<void>>> _addMember(
-          CardId cardId, MemberId memberId) async =>
-      (await Either.sequenceFuture((await _verifyIsNotAMember(cardId, memberId))
-              .map((isValid) => client.card(cardId).addMember(memberId))))
-          .flatMap(id);
+  Future<HttpResponse<void>> _addMember(CardId cardId, MemberId memberId) =>
+      _verifyIsNotAMember(cardId, memberId)
+          .then((_) => client.card(cardId).addMember(memberId));
 
-  Future<Either<Failure, List<MemberId>>> _verifyIsNotAMember(
-          CardId cardId, MemberId memberId) async =>
-      (await Card.getMemberIds(cardId, client)).filter(
-        (idMembers) => !idMembers.contains(memberId),
-        () => AlreadyAppliedFailure(action: description),
+  Future<void> _verifyIsNotAMember(CardId cardId, MemberId memberId) =>
+      Card.getMemberIds(cardId, client)
+          .then((idMembers) => idMembers.contains(memberId))
+          .then(
+        (isMember) {
+          if (isMember) {
+            return Future.error(AlreadyAppliedFailure(action: description));
+          }
+        },
       );
 }

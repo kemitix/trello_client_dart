@@ -13,13 +13,13 @@ abstract class HttpResponse<T> {
 abstract class HttpClient {
   void close();
 
-  TaskEither<Failure, HttpResponse<T>> get<T>(
+  Future<HttpResponse<T>> get<T>(
     String path, {
     Map<String, String>? queryParameters,
     Map<String, String>? headers,
   });
 
-  TaskEither<Failure, void> download(
+  Future<void> download(
     String path,
     FileName fileName, {
     Map<String, String>? queryParameters,
@@ -27,21 +27,21 @@ abstract class HttpClient {
     void Function(int, int)? onReceiveProgress,
   });
 
-  TaskEither<Failure, HttpResponse<T>> put<T>(
+  Future<HttpResponse<T>> put<T>(
     String path, {
     data,
     Map<String, String>? queryParameters,
     Map<String, String>? headers,
   });
 
-  TaskEither<Failure, HttpResponse<T>> post<T>(
+  Future<HttpResponse<T>> post<T>(
     String path, {
     data,
     Map<String, String>? queryParameters,
     Map<String, String>? headers,
   });
 
-  TaskEither<Failure, HttpResponse<T>> delete<T>(
+  Future<HttpResponse<T>> delete<T>(
     String path, {
     data,
     Map<String, String>? queryParameters,
@@ -76,121 +76,125 @@ class DioHttpClient extends HttpClient {
   }
 
   @override
-  TaskEither<Failure, HttpResponse<T>> get<T>(
+  Future<HttpResponse<T>> get<T>(
     String path, {
     Map<String, String>? queryParameters,
     Map<String, String>? headers,
   }) =>
-      TaskEither.attempt(() => _dio.get<T>(path,
-          queryParameters: queryParameters,
-          options: Options(
-            headers: headers,
-          ))).bimap(
-        (l) {
-          if (l.runtimeType == DioError &&
-              (l as DioError).response != null &&
-              l.response!.statusCode == 404) {
-            return ResourceNotFoundFailure(resource: path);
-          }
-          return HttpClientFailure(message: 'GET $path');
-        },
-        (r) => DioHttpResponse(r),
-      );
-
-  @override
-  TaskEither<Failure, HttpResponse<T>> put<T>(
-    String path, {
-    data,
-    Map<String, String>? queryParameters,
-    Map<String, String>? headers,
-  }) =>
-      TaskEither.attempt(() => _dio.put<T>(path,
-          data: data,
-          queryParameters: queryParameters,
-          options: Options(
-            headers: headers,
-          ))).bimap(
-        (l) {
-          if (l.runtimeType == DioError &&
-              (l as DioError).response != null &&
-              l.response!.statusCode == 404) {
-            return ResourceNotFoundFailure(resource: path);
-          }
-          return HttpClientFailure(message: 'PUT $path');
-        },
-        (r) => DioHttpResponse(r),
-      );
-
-  @override
-  TaskEither<Failure, HttpResponse<T>> post<T>(
-    String path, {
-    data,
-    Map<String, String>? queryParameters,
-    Map<String, String>? headers,
-  }) =>
-      TaskEither.attempt(() => _dio.post<T>(path,
-          data: data,
-          queryParameters: queryParameters,
-          options: Options(headers: headers))).bimap(
-        (l) {
-          if (l.runtimeType == DioError &&
-              (l as DioError).response != null &&
-              l.response!.statusCode == 404) {
-            return ResourceNotFoundFailure(resource: path);
-          }
-          return HttpClientFailure(message: 'POST $path');
-        },
-        (r) => DioHttpResponse(r),
-      );
-
-  @override
-  TaskEither<Failure, HttpResponse<T>> delete<T>(
-    String path, {
-    data,
-    Map<String, String>? queryParameters,
-    Map<String, String>? headers,
-  }) =>
-      TaskEither.attempt(() => _dio.delete<T>(path,
-          data: data,
-          queryParameters: queryParameters,
-          options: Options(headers: headers))).bimap((l) {
-        if (l.runtimeType == DioError &&
-            (l as DioError).response != null &&
-            l.response!.statusCode == 404) {
-          return ResourceNotFoundFailure(resource: path);
+      _dio
+          .get<T>(path,
+              queryParameters: queryParameters,
+              options: Options(
+                headers: headers,
+              ))
+          .onError((error, stackTrace) {
+        if (error.runtimeType == DioError &&
+            (error as DioError).response != null &&
+            error.response!.statusCode == 404) {
+          return Future.error(ResourceNotFoundFailure(resource: path));
         }
-        return HttpClientFailure(message: 'DELETE $path');
-      }, (r) => DioHttpResponse(r));
+        return Future.error(HttpClientFailure(message: 'GET $path'));
+      }).then((r) => DioHttpResponse(r));
 
   @override
-  TaskEither<Failure, FutureOr<void>> download(
+  Future<HttpResponse<T>> put<T>(
+    String path, {
+    data,
+    Map<String, String>? queryParameters,
+    Map<String, String>? headers,
+  }) =>
+      _dio
+          .put<T>(path,
+              data: data,
+              queryParameters: queryParameters,
+              options: Options(
+                headers: headers,
+              ))
+          .onError((error, stackTrace) {
+        if (error.runtimeType == DioError &&
+            (error as DioError).response != null &&
+            error.response!.statusCode == 404) {
+          return Future.error(ResourceNotFoundFailure(resource: path));
+        }
+        return Future.error(HttpClientFailure(message: 'PUT $path'));
+      }).then(
+        (r) => DioHttpResponse(r),
+      );
+
+  @override
+  Future<HttpResponse<T>> post<T>(
+    String path, {
+    data,
+    Map<String, String>? queryParameters,
+    Map<String, String>? headers,
+  }) =>
+      _dio
+          .post<T>(path,
+              data: data,
+              queryParameters: queryParameters,
+              options: Options(headers: headers))
+          .onError((error, stackTrace) {
+        if (error.runtimeType == DioError &&
+            (error as DioError).response != null &&
+            error.response!.statusCode == 404) {
+          return Future.error(ResourceNotFoundFailure(resource: path));
+        }
+        return Future.error(HttpClientFailure(message: 'POST $path'));
+      }).then(
+        (r) => DioHttpResponse(r),
+      );
+
+  @override
+  Future<HttpResponse<T>> delete<T>(
+    String path, {
+    data,
+    Map<String, String>? queryParameters,
+    Map<String, String>? headers,
+  }) =>
+      _dio
+          .delete<T>(path,
+              data: data,
+              queryParameters: queryParameters,
+              options: Options(headers: headers))
+          .onError((error, stackTrace) {
+        if (error.runtimeType == DioError &&
+            (error as DioError).response != null &&
+            error.response!.statusCode == 404) {
+          return Future.error(ResourceNotFoundFailure(resource: path));
+        }
+        return Future.error(HttpClientFailure(message: 'DELETE $path'));
+      }).then((r) => DioHttpResponse(r));
+
+  @override
+  Future<void> download(
     String path,
     FileName fileName, {
     Map<String, String>? queryParameters,
     Map<String, String>? headers,
     void Function(int, int)? onReceiveProgress,
   }) =>
-      TaskEither.attempt(() => _dioDownloader.get(
-            path, onReceiveProgress: onReceiveProgress,
-            queryParameters: queryParameters,
-            //Received data with List<int>
-            options: Options(
-              responseType: ResponseType.bytes,
-              followRedirects: false,
-              validateStatus: (status) {
-                return status != null && status < 500;
-              },
-              headers: headers,
-            ),
-          )).bimap(
-        (l) {
-          if (l.runtimeType == DioError &&
-              (l as DioError).response != null &&
-              l.response!.statusCode == 404) {
-            return ResourceNotFoundFailure(resource: path);
-          }
-          return HttpClientFailure(message: '(download) GET $path');
-        },
+      _dioDownloader
+          .get(
+        path, onReceiveProgress: onReceiveProgress,
+        queryParameters: queryParameters,
+        //Received data with List<int>
+        options: Options(
+          responseType: ResponseType.bytes,
+          followRedirects: false,
+          validateStatus: (status) {
+            return status != null && status < 500;
+          },
+          headers: headers,
+        ),
+      )
+          .onError((error, stackTrace) {
+        if (error.runtimeType == DioError &&
+            (error as DioError).response != null &&
+            error.response!.statusCode == 404) {
+          return Future.error(ResourceNotFoundFailure(resource: path));
+        }
+        return Future.error(HttpClientFailure(message: '(download) GET $path'));
+      }).then(
         (r) => _fileWriter(fileName, r.data),
       );
 }
