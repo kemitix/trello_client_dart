@@ -6,15 +6,20 @@ import 'package:dcli/dcli.dart';
 import 'package:trello_sdk/src/sdk/external/dio_client_factory.dart';
 import 'package:trello_sdk/trello_cli.dart';
 
-void main() => createClient(authentication(Platform.environment)).map(
-    (client) => getMembersBoards(member(), client)
-        .then((boards) => Either.sequenceFuture(selectBoard(boards).map(
-            (board) => getLists(board, client)
-                .then((lists) => getCardsOnLists(lists, client))
-                .then(
-                    (cards) => updateAllCards(cards, selectStyle(), client)))))
-        .then((result) => printSummary(result))
-        .whenComplete(() => client.close()));
+Future<void> main() async {
+  var client = createClient(authentication(Platform.environment));
+  client.map((client) async {
+    var boards = await getMembersBoards(member(), client);
+    var board = selectBoard(boards);
+    await Either.sequenceFuture(board.map((board) async {
+      var lists = await getLists(board, client);
+      var cards = await getCardsOnLists(lists, client);
+      var updatedCards = await updateAllCards(cards, selectStyle(), client);
+      return updatedCards;
+    })).then(printSummary);
+    client.close();
+  });
+}
 
 void printSummary(Either<Failure, List<TrelloCard>> cards) => cards.fold(
       (l) => print('Error: $l'),
