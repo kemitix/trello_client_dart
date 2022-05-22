@@ -1,48 +1,66 @@
 import 'package:test/test.dart';
-import 'package:trello_sdk/trello_cli.dart';
 
-import '../../../mocks/dio_mock.dart';
+import '../../../sdk/sdk_commons.dart';
 import '../../cli_commons.dart';
 
 void main() {
-  //given
-  var cardId = 'my-card-id';
-  var client = TestTrelloClient(responses: [
-    createResponse(body: [
-      {
-        'id': 'my-card-id',
-        'name': 'my-card-name',
-        'mimeType': 'my-mime-type',
-        'bytes': 100,
-      }
-    ])
-  ]);
-  var printer = FakePrinter();
-  var environment = EnvArgsEnvironment(
-    platformEnvironment: validEnvironment,
-    arguments: 'card list-attachments $cardId'.split(' '),
-    clientFactory: (_) => client.trelloClient,
-    printer: printer.printer,
+  var helpOutput = [
+    'List Attachments on a Card',
+    '',
+    'Usage: trello card list-attachments [arguments]',
+    '-h, --help      Print this usage information.',
+    '    --fields    all or a comma-separated list of fields',
+    '                (defaults to "id,name,mimeType,bytes")',
+    '',
+    'Run "trello help" to see global options.'
+  ];
+  cliTest(
+    arguments: 'card list-attachments my-card-id'.split(' '),
+    responses: [
+      createResponse(body: [
+        {
+          'id': 'my-card-id',
+          'name': 'my-card-name',
+          'mimeType': 'my-mime-type',
+          'bytes': 100,
+        }
+      ])
+    ],
+    expected: CliExpectations(
+      requests: [
+        ExpectedRequest(
+          expectedMethod: 'GET',
+          expectedPath: '/1/cards/my-card-id/attachments',
+          expectedHeaders: {
+            'Authorization':
+                'OAuth oauth_consumer_key="_key", oauth_token="_token"'
+          },
+          expectedQueryParameters: {
+            'filter': 'false',
+            'fields': 'id,name,mimeType,bytes'
+          },
+        ),
+      ],
+      output: [
+        'id         | name         | mimeType     | bytes',
+        '-----------|--------------|--------------|------',
+        'my-card-id | my-card-name | my-mime-type |   100',
+      ],
+      help: helpOutput,
+      notFoundOutput: [
+        'ERROR: card list-attachments - Failure: Resource not found: /1/cards/my-card-id/attachments'
+      ],
+      serverErrorOutput: [
+        'ERROR: card list-attachments - Failure: GET /1/cards/my-card-id/attachments'
+      ],
+    ),
   );
-
-  //when
-  setUpAll(() => app().run(environment));
-
-  //then
-  var history = client.fetchHistory;
-  test('there was one request', () => expect(history.length, 1));
-  test('request was GET', () => expect(history[0].head.method, 'GET'));
-  test('request path',
-      () => expect(history[0].head.path, '/1/cards/$cardId/attachments'));
-  test(
-      'request query parameters',
-      () => expect(history[0].head.queryParameters,
-          {'filter': 'false', 'fields': 'id,name,mimeType,bytes'}));
-  test(
-      'output',
-      () => expect(printer.output, [
-            'id         | name         | mimeType     | bytes',
-            '-----------|--------------|--------------|------',
-            'my-card-id | my-card-name | my-mime-type |   100',
-          ]));
+  group(
+      'no card-id',
+      () => cliTest(
+          arguments: 'card list-attachments'.split(' '),
+          responses: [],
+          expected: CliExpectations(requests: [], output: [
+            'ERROR: card list-attachments - Failure: Card Id not given'
+          ], help: helpOutput)));
 }
