@@ -1,48 +1,60 @@
 import 'package:test/test.dart';
-import 'package:trello_sdk/trello_cli.dart';
 
-import '../../../mocks/dio_mock.dart';
+import '../../../sdk/sdk_commons.dart';
 import '../../cli_commons.dart';
 
 void main() {
-  //given
-  var cardId = 'my-card-id';
-  var client = TestTrelloClient(responses: [
-    createResponse(body: {
-      'id': 'my-card-id',
-      'pos': 'my-pos',
-      'name': 'my-card-name',
-      'due': '2022-05-05T09:45',
-      'idMembers': ['my-member-id'],
-    })
-  ]);
-  var printer = FakePrinter();
-  var environment = EnvArgsEnvironment(
-    platformEnvironment: validEnvironment,
-    arguments: 'card get $cardId'.split(' '),
-    clientFactory: (_) => client.trelloClient,
-    printer: printer.printer,
+  var helpOutput = [
+    'Get a Card',
+    '',
+    'Usage: trello card get [arguments]',
+    '-h, --help      Print this usage information.',
+    '    --fields    all or a comma-separated list of fields',
+    '                (defaults to "id,name,pos,due,idMembers")',
+    '',
+    'Run "trello help" to see global options.'
+  ];
+  cliTest(
+    arguments: 'card get my-card-id'.split(' '),
+    responses: [
+      createResponse(body: {
+        'id': 'my-card-id',
+        'pos': 'my-pos',
+        'name': 'my-card-name',
+        'due': '2022-05-05T09:45',
+        'idMembers': ['my-member-id'],
+      })
+    ],
+    expected: CliExpectations(
+      requests: [
+        ExpectedRequest(
+          expectedMethod: 'GET',
+          expectedPath: '/1/cards/my-card-id',
+          expectedHeaders: {},
+          expectedQueryParameters: {'fields': 'id,name,pos,due,idMembers'},
+        ),
+      ],
+      output: [
+        'id        | my-card-id      ',
+        'name      | my-card-name    ',
+        'pos       | my-pos          ',
+        'due       | 2022-05-05T09:45',
+        'idMembers | [my-member-id]  ',
+      ],
+      help: helpOutput,
+      notFoundOutput: [
+        'ERROR: card get - Failure: Resource not found: /1/cards/my-card-id'
+      ],
+      serverErrorOutput: ['ERROR: card get - Failure: GET /1/cards/my-card-id'],
+    ),
   );
-
-  //when
-  setUpAll(() => app().run(environment));
-
-  //then
-  var history = client.fetchHistory;
-  test('there was one request', () => expect(history.length, 1));
-  test('request was GET', () => expect(history[0].head.method, 'GET'));
-  test('request path', () => expect(history[0].head.path, '/1/cards/$cardId'));
-  test(
-      'request query parameters',
-      () => expect(history[0].head.queryParameters,
-          {'fields': 'id,name,pos,due,idMembers'}));
-  test(
-      'output',
-      () => expect(printer.output, [
-            'id        | my-card-id      ',
-            'name      | my-card-name    ',
-            'pos       | my-pos          ',
-            'due       | 2022-05-05T09:45',
-            'idMembers | [my-member-id]  '
-          ]));
+  group(
+      'no card-id',
+      () => cliTest(
+          arguments: 'card get'.split(' '),
+          responses: [],
+          expected: CliExpectations(
+              requests: [],
+              output: ['ERROR: card get - Failure: Card Id not given'],
+              help: helpOutput)));
 }
