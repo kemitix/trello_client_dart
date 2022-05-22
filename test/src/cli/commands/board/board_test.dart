@@ -5,7 +5,7 @@ void main() => cliTest(
       responses: [],
       testNotFound: false,
       testServerError: false,
-      expected: CliExpectations(
+      expectations: CliExpectations(
         requests: [],
         output: [
           'Missing subcommand for "trello board".',

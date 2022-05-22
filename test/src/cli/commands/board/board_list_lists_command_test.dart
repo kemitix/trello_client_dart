@@ -19,7 +19,7 @@ void main() {
                 }
               ])
             ],
-            expected: CliExpectations(
+            expectations: CliExpectations(
               requests: [
                 ExpectedRequest(
                   expectedMethod: 'GET',
@@ -61,7 +61,7 @@ void main() {
       () => cliTest(
             arguments: 'board list-lists'.split(' '),
             responses: [],
-            expected: CliExpectations(
+            expectations: CliExpectations(
               requests: [],
               output: ['ERROR: board list-lists - Failure: Board Id not given'],
               help: [
@@ -94,7 +94,7 @@ void main() {
             ],
             testNotFound: false,
             testServerError: false,
-            expected: CliExpectations(
+            expectations: CliExpectations(
               requests: [
                 ExpectedRequest(
                   expectedMethod: 'GET',

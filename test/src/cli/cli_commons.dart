@@ -52,13 +52,13 @@ class CliExpectations {
 void cliTest<T>({
   required List<String> arguments,
   required List<ResponseBody> responses,
-  required CliExpectations expected,
+  required CliExpectations expectations,
   bool testNotFound = true,
   bool testServerError = true,
 }) {
   group('validate test - ${arguments.join(' ')}', () {
     test('request count match response count',
-        () => expect(expected.requests.length, responses.length));
+        () => expect(expectations.requests.length, responses.length));
   });
   group('${arguments.join(' ')} --help', () {
     //given
@@ -74,7 +74,7 @@ void cliTest<T>({
     //then
     test('there were no requests',
         () => expect(client.fetchHistory.isEmpty, isTrue));
-    test('output', () => expect(printer.output, expected.help));
+    test('output', () => expect(printer.output, expectations.help));
   });
   group('${arguments.join(' ')} (200 Okay)', () {
     //given
@@ -89,10 +89,12 @@ void cliTest<T>({
     setUpAll(() async => await app().run(envArgsEnvironment));
     //then
     group('requests', () {
-      test('expected number of requests',
-          () => expect(client.fetchHistory.length, expected.requests.length));
+      test(
+          'expected number of requests',
+          () =>
+              expect(client.fetchHistory.length, expectations.requests.length));
       var count = 0;
-      for (var expectedRequest in expected.requests) {
+      for (var expectedRequest in expectations.requests) {
         count++;
         group('request $count', () {
           var myCount = count;
@@ -116,15 +118,16 @@ void cliTest<T>({
         });
       }
     });
-    test('output', () => expect(printer.output, expected.output));
+    test('output', () => expect(printer.output, expectations.output));
   });
-  if (testNotFound && expected.requests.isNotEmpty) {
+  if (testNotFound && expectations.requests.isNotEmpty) {
     test(
         'expected output for Not Found Error provided',
-        () => expect(expected.notFoundOutput, isNotNull,
+        () => expect(expectations.notFoundOutput, isNotNull,
             reason:
                 'try "testNotFound: false" or supply "expectedNotFoundOutput"'));
-    if (expected.notFoundOutput != null && expected.requests.isNotEmpty) {
+    if (expectations.notFoundOutput != null &&
+        expectations.requests.isNotEmpty) {
       group('${arguments.join(' ')} (404 Not Found)', () {
         //given
         var printer = FakePrinter();
@@ -140,17 +143,18 @@ void cliTest<T>({
         //then
         test('expected number of requests',
             () => expect(client.fetchHistory.length, 1));
-        test('output', () => expect(printer.output, expected.notFoundOutput));
+        test('output',
+            () => expect(printer.output, expectations.notFoundOutput));
       });
     }
   }
-  if (testServerError && expected.requests.isNotEmpty) {
+  if (testServerError && expectations.requests.isNotEmpty) {
     test(
         'expected output for Server Error provided',
-        () => expect(expected.serverErrorOutput, isNotNull,
+        () => expect(expectations.serverErrorOutput, isNotNull,
             reason:
                 'try "testServerError: false" or supply "expectedServerErrorOutput"'));
-    if (expected.serverErrorOutput != null) {
+    if (expectations.serverErrorOutput != null) {
       group('${arguments.join(' ')} (500 Server Error)', () {
         //given
         var printer = FakePrinter();
@@ -166,8 +170,8 @@ void cliTest<T>({
         //then
         test('expected number of requests',
             () => expect(client.fetchHistory.length, 1));
-        test(
-            'output', () => expect(printer.output, expected.serverErrorOutput));
+        test('output',
+            () => expect(printer.output, expectations.serverErrorOutput));
       });
     }
   }
