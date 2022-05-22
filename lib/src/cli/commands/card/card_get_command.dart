@@ -5,7 +5,9 @@ import '../../cli.dart';
 
 class GetCardCommand extends CardCommand {
   GetCardCommand(CommandEnvironment commandEnvironment)
-      : super('get', 'Get a Card', commandEnvironment);
+      : super('get', 'Get a Card', commandEnvironment) {
+    addFieldsOption(fields);
+  }
 
   final List<CardFields> fields = [
     CardFields.id,
@@ -17,11 +19,14 @@ class GetCardCommand extends CardCommand {
 
   @override
   FutureOr<void> run() => Either.sequenceFuture(
-          cardId.map((cardId) => client.card(cardId).get(fields: fields)))
+          cardId.map((cardId) => client.card(cardId).get(fields: getFields())))
       .onError((Failure error, stackTrace) => left(error))
       .then((result) => result
-          .map((card) => tabulateObject(card, fields))
+          .map((card) => tabulateObject(card, getFields()))
           .collapse(printOutput));
+
+  List<CardFields> getFields() =>
+      getEnumFields(enumValues: CardFields.values, defaults: fields);
 
   @override
   //TODO add fields override

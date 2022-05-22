@@ -6,9 +6,7 @@ import '../../cli.dart';
 class GetMemberCommand extends MemberCommand {
   GetMemberCommand(CommandEnvironment commandEnvironment)
       : super('get', 'Get a Member', commandEnvironment) {
-    argParser.addOption('fields',
-        help: 'all or a comma-separated list of fields',
-        defaultsTo: fields.map((f) => f.name).join(','));
+    addFieldsOption(fields);
   }
 
   final List<MemberFields> fields = [

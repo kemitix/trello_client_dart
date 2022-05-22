@@ -106,6 +106,11 @@ abstract class TrelloCommand extends Command {
 
   int _nextParameterIndex = 0;
 
+  void addFieldsOption<T extends Enum>(List<T> fields) =>
+      argParser.addOption('fields',
+          help: 'all or a comma-separated list of fields',
+          defaultsTo: fields.map((f) => f.name).join(','));
+
   List<T> getEnumFields<T extends Enum>({
     required List<T> enumValues,
     required List<T> defaults,
