@@ -1,92 +1,101 @@
 import 'package:test/test.dart';
-import 'package:trello_sdk/trello_cli.dart';
 
-import '../../../mocks/dio_mock.dart';
+import '../../../sdk/sdk_commons.dart';
 import '../../cli_commons.dart';
 
 void main() {
-  group('add new member to card', () {
-    //given
-    var cardId = 'my-card-id';
-    var memberId = 'my-member-id';
-    var client = TestTrelloClient(responses: [
-      createResponse(body: {
-        'id': 'my-card-id',
-        'pos': 'my-pos',
-        'name': 'my-card-name',
-        'due': '2022-05-05T09:45',
-        'idMembers': [],
-      }),
-      createResponse(body: {})
-    ]);
-    var printer = FakePrinter();
-    var environment = EnvArgsEnvironment(
-      platformEnvironment: validEnvironment,
-      arguments: 'card add-member $cardId $memberId'.split(' '),
-      clientFactory: (_) => client.trelloClient,
-      printer: printer.printer,
-    );
-
-    //when
-    setUpAll(() => app().run(environment));
-
-    //then
-    var history = client.fetchHistory;
-    test('there were two requests', () => expect(history.length, 2));
-
-    test('first request was GET', () => expect(history[0].head.method, 'GET'));
-    test('first request path',
-        () => expect(history[0].head.path, '/1/cards/$cardId'));
-    test('first request query parameters',
-        () => expect(history[0].head.queryParameters, {'fields': 'idMembers'}));
-
-    test('second request was POST',
-        () => expect(history[1].head.method, 'POST'));
-    test('second request path',
-        () => expect(history[1].head.path, '/1/cards/$cardId/idMembers'));
-    test('second request query parameters',
-        () => expect(history[1].head.queryParameters, {'value': memberId}));
-
-    test('output', () => expect(printer.output, ['Added member']));
+  var helpOutput = [
+    'Add a Member to a Card',
+    '',
+    'Usage: trello card add-member [arguments]',
+    '-h, --help    Print this usage information.',
+    '',
+    'Run "trello help" to see global options.'
+  ];
+  group('not already a member', () {
+    cliTest(
+        arguments: 'card add-member my-card-id my-member-id'.split(' '),
+        responses: [
+          createResponse(body: {
+            'id': 'my-card-id',
+            'pos': 'my-pos',
+            'name': 'my-card-name',
+            'due': '2022-05-05T09:45',
+            'idMembers': [],
+          }),
+          createResponse(body: {})
+        ],
+        expected: CliExpectations(
+          requests: [
+            ExpectedRequest(
+              expectedMethod: 'GET',
+              expectedPath: '/1/cards/my-card-id',
+              expectedHeaders: {},
+              expectedQueryParameters: {'fields': 'idMembers'},
+            ),
+            ExpectedRequest(
+              expectedMethod: 'POST',
+              expectedPath: '/1/cards/my-card-id/idMembers',
+              expectedHeaders: {
+                'content-type': 'application/json; charset=utf-8'
+              },
+              expectedQueryParameters: {'value': 'my-member-id'},
+            ),
+          ],
+          output: ['Added member'],
+          help: helpOutput,
+          notFoundOutput: [
+            'ERROR: card add-member - Failure: Resource not found: /1/cards/my-card-id'
+          ],
+          serverErrorOutput: [
+            'ERROR: card add-member - Failure: GET /1/cards/my-card-id'
+          ],
+        ));
   });
-  group('do not add existing member to card', () {
-    //given
-    var cardId = 'my-card-id';
-    var memberId = 'my-member-id';
-    var client = TestTrelloClient(responses: [
-      createResponse(body: {
-        'id': 'my-card-id',
-        'pos': 'my-pos',
-        'name': 'my-card-name',
-        'due': '2022-05-05T09:45',
-        'idMembers': ['my-member-id'],
-      })
-    ]);
-    var printer = FakePrinter();
-    var environment = EnvArgsEnvironment(
-      platformEnvironment: validEnvironment,
-      arguments: 'card add-member $cardId $memberId'.split(' '),
-      clientFactory: (_) => client.trelloClient,
-      printer: printer.printer,
-    );
-
-    //when
-    setUpAll(() => app().run(environment));
-
-    //then
-    var history = client.fetchHistory;
-    test('there was one request', () => expect(history.length, 1));
-
-    test('request was GET', () => expect(history[0].head.method, 'GET'));
-    test(
-        'request path', () => expect(history[0].head.path, '/1/cards/$cardId'));
-    test('request query parameters',
-        () => expect(history[0].head.queryParameters, {'fields': 'idMembers'}));
-
-    test(
-        'output',
-        () => expect(printer.output, [
-              'ERROR: card add-member - Failure: Can\'t Add a Member to a Card as it is already applied'
-            ]));
+  group('is already a member', () {
+    cliTest(
+        arguments: 'card add-member my-card-id my-member-id'.split(' '),
+        responses: [
+          createResponse(body: {
+            'id': 'my-card-id',
+            'pos': 'my-pos',
+            'name': 'my-card-name',
+            'due': '2022-05-05T09:45',
+            'idMembers': ['my-member-id'],
+          }),
+        ],
+        testNotFound: false,
+        testServerError: false,
+        expected: CliExpectations(
+          requests: [
+            ExpectedRequest(
+                expectedMethod: 'GET',
+                expectedPath: '/1/cards/my-card-id',
+                expectedHeaders: {},
+                expectedQueryParameters: {'fields': 'idMembers'})
+          ],
+          output: [
+            'ERROR: card add-member - Failure: Can\'t Add a Member to a Card as it is already applied'
+          ],
+          help: helpOutput,
+        ));
   });
+  group(
+      'no member-id',
+      () => cliTest(
+          arguments: 'card add-member my-card-id'.split(' '),
+          responses: [],
+          expected: CliExpectations(
+              requests: [],
+              output: ['ERROR: card add-member - Failure: Member Id not given'],
+              help: helpOutput)));
+  group(
+      'no card-id, member-id',
+      () => cliTest(
+          arguments: 'card add-member'.split(' '),
+          responses: [],
+          expected: CliExpectations(
+              requests: [],
+              output: ['ERROR: card add-member - Failure: Card Id not given'],
+              help: helpOutput)));
 }
