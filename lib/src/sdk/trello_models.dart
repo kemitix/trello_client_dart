@@ -2,10 +2,10 @@
 /// use the names in lowercase to get correct form
 enum BoardBackgrounds {
   all,
-  CUSTOM,
-  DEFAULT,
+  custom,
+  defaulT,
   none,
-  PREMIUM;
+  premium;
 
   @override
   String toString() => name.toLowerCase();

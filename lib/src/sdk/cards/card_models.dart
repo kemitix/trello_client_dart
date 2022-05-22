@@ -257,8 +257,8 @@ enum AttachmentFields {
 }
 
 enum AttachmentFilter {
-  FALSE,
-  COVER;
+  falsE,
+  cover;
 
   @override
   String toString() => name.toLowerCase();
