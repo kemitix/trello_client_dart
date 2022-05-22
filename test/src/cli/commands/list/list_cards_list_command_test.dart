@@ -1,46 +1,63 @@
 import 'package:test/test.dart';
-import 'package:trello_sdk/trello_cli.dart';
 
-import '../../../mocks/dio_mock.dart';
+import '../../../sdk/sdk_commons.dart';
 import '../../cli_commons.dart';
 
 void main() {
-  //given
-  var listId = 'my-list-id';
-  var client = TestTrelloClient(responses: [
-    createResponse(body: [
-      {
-        'id': 'my-id',
-        'name': 'my-card-name',
-        'pos': 1000,
-        'due': '2020-04-12',
-      },
-    ])
-  ]);
-  var printer = FakePrinter();
-  var environment = EnvArgsEnvironment(
-    platformEnvironment: validEnvironment,
-    arguments: 'list list-cards $listId'.split(' '),
-    clientFactory: (_) => client.trelloClient,
-    printer: printer.printer,
+  const helpOutput = [
+    'Get Cards in a List',
+    '',
+    'Usage: trello list list-cards [arguments]',
+    '-h, --help      Print this usage information.',
+    '    --fields    all or a comma-separated list of fields',
+    '                (defaults to "id,name,pos,due")',
+    '',
+    'Run "trello help" to see global options.'
+  ];
+  cliTest(
+    arguments: 'list list-cards my-list-id'.split(' '),
+    responses: [
+      createResponse(body: [
+        {
+          'id': 'my-id',
+          'name': 'my-card-name',
+          'pos': 1000,
+          'due': '2020-04-12',
+        }
+      ])
+    ],
+    expectations: CliExpectations(
+      requests: [
+        ExpectedRequest(
+          expectedMethod: 'GET',
+          expectedPath: '/1/lists/my-list-id/cards',
+          expectedHeaders: {},
+          expectedQueryParameters: {},
+        )
+      ],
+      output: [
+        'id    | name         |  pos | due       ',
+        '------|--------------|------|-----------',
+        'my-id | my-card-name | 1000 | 2020-04-12',
+      ],
+      help: helpOutput,
+      notFoundOutput: [
+        'ERROR: list list-cards - Failure: Resource not found: /1/lists/my-list-id/cards'
+      ],
+      serverErrorOutput: [
+        'ERROR: list list-cards - Failure: GET /1/lists/my-list-id/cards'
+      ],
+    ),
   );
-
-  //when
-  setUpAll(() => app().run(environment));
-
-  //then
-  var history = client.fetchHistory;
-  test('there was one request', () => expect(history.length, 1));
-  test('request was GET', () => expect(history[0].head.method, 'GET'));
-  test('request path',
-      () => expect(history[0].head.path, '/1/lists/$listId/cards'));
-  test('request query parameters',
-      () => expect(history[0].head.queryParameters, {}));
-  test(
-      'output',
-      () => expect(printer.output, [
-            'id    | name         |  pos | due       ',
-            '------|--------------|------|-----------',
-            'my-id | my-card-name | 1000 | 2020-04-12',
-          ]));
+  group(
+      'no list-id',
+      () => cliTest(
+          arguments: 'list list-cards'.split(' '),
+          responses: [],
+          testNotFound: false,
+          testServerError: false,
+          expectations: CliExpectations(
+              requests: [],
+              output: ['ERROR: list list-cards - Failure: List Id not given'],
+              help: helpOutput)));
 }
