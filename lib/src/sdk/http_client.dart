@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+import 'package:trello_sdk/external/dio_logger.dart';
+import 'package:trello_sdk/external/files.dart';
 
 import '../../trello_sdk.dart';
-import 'external/dio_logger.dart';
-import 'external/files.dart';
 
 abstract class HttpResponse<T> {
   T? get data;
