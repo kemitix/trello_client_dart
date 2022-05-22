@@ -143,9 +143,6 @@ void apiTest<T>({
                   expectedRequest.expectedQueryParameters));
         });
         group('response $count', () {
-          var expectedFailure =
-              ResourceNotFoundFailure(resource: expectedRequest.expectedPath)
-                  .withContext(expectedRequest.additionalContext);
           test(
               'status code',
               () async => response.fold(
