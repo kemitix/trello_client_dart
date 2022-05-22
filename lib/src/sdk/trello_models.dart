@@ -6,9 +6,6 @@ enum BoardBackgrounds {
   defaulT,
   none,
   premium;
-
-  @override
-  String toString() => name.toLowerCase();
 }
 
 enum BoardsInvited {
