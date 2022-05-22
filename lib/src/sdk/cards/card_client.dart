@@ -43,7 +43,7 @@ class CardClient {
   ///
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-id-attachments-get
   Future<List<TrelloAttachment>> attachments({
-    AttachmentFilter filter = AttachmentFilter.FALSE,
+    AttachmentFilter filter = AttachmentFilter.falsE,
     List<AttachmentFields>? fields,
   }) =>
       _client
