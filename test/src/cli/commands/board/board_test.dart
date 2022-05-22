@@ -26,4 +26,6 @@ void main() => cliTest(
         '',
         'Run "trello help" to see global options.'
       ],
+      testNotFound: false,
+      testServerError: false,
     );

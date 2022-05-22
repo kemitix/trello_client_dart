@@ -61,7 +61,7 @@ void apiTest<T>({
   required Future<T> Function(TestTrelloClient) apiCall,
   required List<ExpectedRequestWithResponseTests<T>> expectedRequests,
   bool testNotFound = true,
-  bool testUnknownError = true,
+  bool testServerError = true,
 }) {
   group('exists', () {
     //given
@@ -161,8 +161,8 @@ void apiTest<T>({
       }
     });
   }
-  if (testUnknownError) {
-    group('unknown error', () {
+  if (testServerError) {
+    group('server error', () {
       //given
       var missingResponse = createResponse(statusCode: 500, body: {});
       var client = TestTrelloClient(responses: [missingResponse]);
