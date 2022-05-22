@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:trello_sdk/src/sdk/external/dio_client_factory.dart';
+import 'package:trello_sdk/external/dio_client_factory.dart';
 import 'package:trello_sdk/trello_cli.dart';
 
 Future<void> main(List<String> arguments) async {
