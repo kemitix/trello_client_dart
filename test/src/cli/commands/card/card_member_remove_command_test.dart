@@ -25,7 +25,7 @@ void main() {
           }),
           createResponse(body: {})
         ],
-        expected: CliExpectations(
+        expectations: CliExpectations(
           requests: [
             ExpectedRequest(
               expectedMethod: 'GET',
@@ -66,7 +66,7 @@ void main() {
         ],
         testNotFound: false,
         testServerError: false,
-        expected: CliExpectations(
+        expectations: CliExpectations(
           requests: [
             ExpectedRequest(
                 expectedMethod: 'GET',
@@ -85,7 +85,7 @@ void main() {
       () => cliTest(
           arguments: 'card remove-member my-card-id'.split(' '),
           responses: [],
-          expected: CliExpectations(requests: [], output: [
+          expectations: CliExpectations(requests: [], output: [
             'ERROR: card remove-member - Failure: Member Id not given'
           ], help: helpOutput)));
   group(
@@ -93,7 +93,7 @@ void main() {
       () => cliTest(
           arguments: 'card remove-member'.split(' '),
           responses: [],
-          expected: CliExpectations(requests: [], output: [
+          expectations: CliExpectations(requests: [], output: [
             'ERROR: card remove-member - Failure: Card Id not given'
           ], help: helpOutput)));
 }

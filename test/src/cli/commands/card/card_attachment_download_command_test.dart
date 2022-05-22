@@ -22,7 +22,7 @@ void main() {
       createResponse(body: {'url': 'my-download-url'}),
       createResponse(body: {}),
     ],
-    expected: CliExpectations(
+    expectations: CliExpectations(
       requests: [
         ExpectedRequest(
             expectedMethod: 'GET',
@@ -84,7 +84,7 @@ void main() {
           arguments:
               'card download-attachment my-card-id my-attachment-id'.split(' '),
           responses: [],
-          expected: CliExpectations(requests: [], output: [
+          expectations: CliExpectations(requests: [], output: [
             'ERROR: card download-attachment - Failure: File name not given'
           ], help: helpOutput)));
   group(
@@ -92,7 +92,7 @@ void main() {
       () => cliTest(
           arguments: 'card download-attachment my-card-id'.split(' '),
           responses: [],
-          expected: CliExpectations(requests: [], output: [
+          expectations: CliExpectations(requests: [], output: [
             'ERROR: card download-attachment - Failure: Attachment Id not given'
           ], help: helpOutput)));
   group(
@@ -100,7 +100,7 @@ void main() {
       () => cliTest(
           arguments: 'card download-attachment'.split(' '),
           responses: [],
-          expected: CliExpectations(requests: [], output: [
+          expectations: CliExpectations(requests: [], output: [
             'ERROR: card download-attachment - Failure: Card Id not given'
           ], help: helpOutput)));
 }

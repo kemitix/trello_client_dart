@@ -25,7 +25,7 @@ void main() {
         'url': 'my-url',
       }),
     ],
-    expected: CliExpectations(
+    expectations: CliExpectations(
       requests: [
         ExpectedRequest(
           expectedMethod: 'GET',
@@ -55,7 +55,7 @@ void main() {
       () => cliTest(
           arguments: 'card get-attachment my-card-id'.split(' '),
           responses: [],
-          expected: CliExpectations(requests: [], output: [
+          expectations: CliExpectations(requests: [], output: [
             'ERROR: card get-attachment - Failure: Attachment Id not given'
           ], help: helpOutput)));
   group(
@@ -63,7 +63,7 @@ void main() {
       () => cliTest(
           arguments: 'card get-attachment'.split(' '),
           responses: [],
-          expected: CliExpectations(requests: [], output: [
+          expectations: CliExpectations(requests: [], output: [
             'ERROR: card get-attachment - Failure: Card Id not given'
           ], help: helpOutput)));
 }

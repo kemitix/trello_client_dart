@@ -25,7 +25,7 @@ void main() {
           }),
           createResponse(body: {})
         ],
-        expected: CliExpectations(
+        expectations: CliExpectations(
           requests: [
             ExpectedRequest(
               expectedMethod: 'GET',
@@ -66,7 +66,7 @@ void main() {
         ],
         testNotFound: false,
         testServerError: false,
-        expected: CliExpectations(
+        expectations: CliExpectations(
           requests: [
             ExpectedRequest(
                 expectedMethod: 'GET',
@@ -85,7 +85,7 @@ void main() {
       () => cliTest(
           arguments: 'card add-member my-card-id'.split(' '),
           responses: [],
-          expected: CliExpectations(
+          expectations: CliExpectations(
               requests: [],
               output: ['ERROR: card add-member - Failure: Member Id not given'],
               help: helpOutput)));
@@ -94,7 +94,7 @@ void main() {
       () => cliTest(
           arguments: 'card add-member'.split(' '),
           responses: [],
-          expected: CliExpectations(
+          expectations: CliExpectations(
               requests: [],
               output: ['ERROR: card add-member - Failure: Card Id not given'],
               help: helpOutput)));

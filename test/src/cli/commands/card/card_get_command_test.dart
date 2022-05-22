@@ -25,7 +25,7 @@ void main() {
         'idMembers': ['my-member-id'],
       })
     ],
-    expected: CliExpectations(
+    expectations: CliExpectations(
       requests: [
         ExpectedRequest(
           expectedMethod: 'GET',
@@ -53,7 +53,7 @@ void main() {
       () => cliTest(
           arguments: 'card get'.split(' '),
           responses: [],
-          expected: CliExpectations(
+          expectations: CliExpectations(
               requests: [],
               output: ['ERROR: card get - Failure: Card Id not given'],
               help: helpOutput)));

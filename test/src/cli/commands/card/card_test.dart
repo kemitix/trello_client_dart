@@ -3,7 +3,7 @@ import '../../cli_commons.dart';
 void main() => cliTest(
       arguments: 'card'.split(' '),
       responses: [],
-      expected: CliExpectations(
+      expectations: CliExpectations(
         requests: [],
         output: [
           'Missing subcommand for "trello card".',
