@@ -28,6 +28,5 @@ class ListCardsCommand extends ListCommand {
       getEnumFields(enumValues: CardFields.values, defaults: fields);
 
   @override
-  //TODO add fields override
   List<UpdateProperty> get updateProperties => [];
 }

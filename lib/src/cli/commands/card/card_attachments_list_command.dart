@@ -29,6 +29,5 @@ class ListAttachmentsCommand extends CardCommand {
       getEnumFields(enumValues: AttachmentFields.values, defaults: fields);
 
   @override
-  //TODO add fields override
   List<UpdateProperty> get updateProperties => [];
 }

@@ -14,7 +14,7 @@ void main() {
               apiCall: (client) =>
                   client.trelloClient.card(CardId('my-card-id')).get(),
               expectedRequests: [
-                ExpectedRequest<TrelloCard>(
+                ExpectedRequestWithResponseTests<TrelloCard>(
                     expectedMethod: 'GET',
                     expectedPath: '/1/cards/my-card-id',
                     expectedQueryParameters: {'fields': 'all'},
@@ -138,7 +138,7 @@ void main() {
             apiCall: (client) =>
                 client.trelloClient.card(CardId('my-card-id')).get(),
             expectedRequests: [
-              ExpectedRequest<TrelloCard>(
+              ExpectedRequestWithResponseTests<TrelloCard>(
                   expectedMethod: 'GET',
                   expectedPath: '/1/cards/my-card-id',
                   expectedQueryParameters: {'fields': 'all'},
@@ -161,7 +161,7 @@ void main() {
                 .card(CardId('my-card-id'))
                 .put({'name': 'my-new-card-name', 'desc': 'my-new-card-desc'}),
             expectedRequests: [
-              ExpectedRequest<TrelloCard>(
+              ExpectedRequestWithResponseTests<TrelloCard>(
                   expectedMethod: 'PUT',
                   expectedPath: '/1/cards/my-card-id',
                   expectedHeaders: {
@@ -190,7 +190,7 @@ void main() {
                   .card(CardId('my-card-id'))
                   .addMember(MemberId('my-member-id')),
               expectedRequests: [
-                ExpectedRequest(
+                ExpectedRequestWithResponseTests(
                     expectedMethod: 'POST',
                     expectedPath: '/1/cards/my-card-id/idMembers',
                     expectedHeaders: {
@@ -209,7 +209,7 @@ void main() {
                   .card(CardId('my-card-id'))
                   .removeMember(MemberId('my-member-id')),
               expectedRequests: [
-                ExpectedRequest(
+                ExpectedRequestWithResponseTests(
                     expectedMethod: 'DELETE',
                     expectedPath: '/1/cards/my-card-id/idMembers/my-member-id',
                     expectedHeaders: {
@@ -227,7 +227,7 @@ void main() {
             apiCall: (client) =>
                 client.trelloClient.card(CardId('my-card-id')).attachments(),
             expectedRequests: [
-              ExpectedRequest<List<TrelloAttachment>>(
+              ExpectedRequestWithResponseTests<List<TrelloAttachment>>(
                   expectedMethod: 'GET',
                   expectedPath: '/1/cards/my-card-id/attachments',
                   expectedHeaders: {
@@ -276,7 +276,7 @@ void main() {
                 .attachment(AttachmentId('my-attachment-id'))
                 .get(),
             expectedRequests: [
-              ExpectedRequest<TrelloAttachment>(
+              ExpectedRequestWithResponseTests<TrelloAttachment>(
                   expectedMethod: 'GET',
                   expectedPath:
                       '/1/cards/my-card-id/attachments/my-attachment-id',
@@ -324,7 +324,7 @@ void main() {
             testNotFound: false,
             testUnknownError: false,
             expectedRequests: [
-              ExpectedRequest<TrelloAttachment>(
+              ExpectedRequestWithResponseTests<TrelloAttachment>(
                   // get info about attachment, including the download url
                   expectedMethod: 'GET',
                   expectedPath:
@@ -346,7 +346,7 @@ void main() {
                     testValue('url', (r) => r.url, 'my-url'),
                   ],
                   additionalContext: {}),
-              ExpectedRequest(
+              ExpectedRequestWithResponseTests(
                 // download the attachment
                 expectedMethod: 'GET',
                 expectedPath: 'my-url',
