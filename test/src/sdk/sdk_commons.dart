@@ -27,20 +27,30 @@ TestResponseValue<T> testValue<T>(
         String name, dynamic Function(T) get, dynamic expected) =>
     TestResponseValue(name, get, expected);
 
-class ExpectedRequest<T> {
+class ExpectedRequest {
   String expectedMethod;
   String expectedPath;
   Map<String, String> expectedHeaders;
   Map<String, String> expectedQueryParameters;
-  ResponseBody existingResourceResponse;
-  List<TestResponseValue<T>> responseValues;
-  Map<String, String> additionalContext;
 
   ExpectedRequest({
     required this.expectedMethod,
     required this.expectedPath,
     required this.expectedHeaders,
     required this.expectedQueryParameters,
+  });
+}
+
+class ExpectedRequestWithResponseTests<T> extends ExpectedRequest {
+  ResponseBody existingResourceResponse;
+  List<TestResponseValue<T>> responseValues;
+  Map<String, String> additionalContext;
+
+  ExpectedRequestWithResponseTests({
+    required super.expectedMethod,
+    required super.expectedPath,
+    required super.expectedHeaders,
+    required super.expectedQueryParameters,
     required this.existingResourceResponse,
     required this.responseValues,
     required this.additionalContext,
@@ -49,7 +59,7 @@ class ExpectedRequest<T> {
 
 void apiTest<T>({
   required Future<T> Function(TestTrelloClient) apiCall,
-  required List<ExpectedRequest<T>> expectedRequests,
+  required List<ExpectedRequestWithResponseTests<T>> expectedRequests,
   bool testNotFound = true,
   bool testUnknownError = true,
 }) {

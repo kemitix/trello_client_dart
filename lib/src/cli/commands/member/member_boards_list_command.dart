@@ -31,6 +31,5 @@ class ListMemberBoardsCommand extends MemberCommand {
       getEnumFields(enumValues: BoardFields.values, defaults: fields);
 
   @override
-  //TODO add fields override
   List<UpdateProperty> get updateProperties => [];
 }

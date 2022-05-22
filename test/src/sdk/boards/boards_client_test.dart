@@ -11,7 +11,7 @@ void main() {
         apiCall: (client) =>
             client.trelloClient.board(BoardId('my-board-id')).getLists(),
         expectedRequests: [
-          ExpectedRequest<List<TrelloList>>(
+          ExpectedRequestWithResponseTests<List<TrelloList>>(
               expectedMethod: 'GET',
               expectedPath: '/1/boards/my-board-id/lists',
               expectedQueryParameters: {
