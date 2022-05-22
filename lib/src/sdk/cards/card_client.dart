@@ -70,10 +70,13 @@ class CardClient {
   /// Update a card
   ///
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-id-put
-  Future<TrelloCard> put(Map<String, dynamic> updates) =>
-      _client.put('/1/cards/$_cardId', data: _formatUpdates(updates), headers: {
-        Headers.contentTypeHeader: Headers.jsonContentType,
-      }).then((response) => TrelloCard(response.data, [CardFields.all]));
+  Future<TrelloCard> put(Map<String, dynamic> updates) {
+    if (updates.isEmpty) return Future.error(NoUpdatesFailure());
+    return _client
+        .put('/1/cards/$_cardId', data: _formatUpdates(updates), headers: {
+      Headers.contentTypeHeader: Headers.jsonContentType,
+    }).then((response) => TrelloCard(response.data, [CardFields.all]));
+  }
 
   String _formatUpdates(Map<String, dynamic> updates) => json.encode(updates);
 
@@ -98,4 +101,8 @@ class CardClient {
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-id-idmembers-idmember-delete
   Future<HttpResponse<void>> removeMember(MemberId memberId) =>
       _client.delete('/1/cards/$_cardId/idMembers/${memberId.value}');
+}
+
+class NoUpdatesFailure extends Failure {
+  NoUpdatesFailure() : super(message: 'No updates');
 }
