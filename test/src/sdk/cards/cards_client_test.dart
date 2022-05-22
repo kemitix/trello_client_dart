@@ -322,7 +322,7 @@ void main() {
                 .attachment(AttachmentId('my-attachment-id'))
                 .download(FileName('my-file-name')),
             testNotFound: false,
-            testUnknownError: false,
+            testServerError: false,
             expectedRequests: [
               ExpectedRequestWithResponseTests<TrelloAttachment>(
                   // get info about attachment, including the download url

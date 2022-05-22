@@ -40,13 +40,15 @@ void cliTest<T>({
   required List<String> expectedOutput,
   required List<String> expectedHelp,
   bool testNotFound = true,
-  bool testUnknownError = true,
+  List<String>? expectedNotFoundOutput,
+  bool testServerError = true,
+  List<String>? expectedServerErrorOutput,
 }) {
-  group('validate test', () {
+  group('validate test - ${arguments.join(' ')}', () {
     test('request count match response count',
         () => expect(expectedRequests.length, responses.length));
   });
-  group('--help', () {
+  group('${arguments.join(' ')} --help', () {
     //given
     var printer = FakePrinter();
     var client = TestTrelloClient(responses: responses);
@@ -62,7 +64,7 @@ void cliTest<T>({
         () => expect(client.fetchHistory.isEmpty, isTrue));
     test('output', () => expect(printer.output, expectedHelp));
   });
-  group('exists', () {
+  group('${arguments.join(' ')} (200 Okay)', () {
     //given
     var printer = FakePrinter();
     var client = TestTrelloClient(responses: responses);
@@ -104,4 +106,56 @@ void cliTest<T>({
     });
     test('output', () => expect(printer.output, expectedOutput));
   });
+  if (testNotFound && expectedRequests.isNotEmpty) {
+    test(
+        'expected output for Not Found Error provided',
+        () => expect(expectedNotFoundOutput, isNotNull,
+            reason:
+                'try "testNotFound: false" or supply "expectedNotFoundOutput"'));
+    if (expectedNotFoundOutput != null && expectedRequests.isNotEmpty) {
+      group('${arguments.join(' ')} (404 Not Found)', () {
+        //given
+        var printer = FakePrinter();
+        var client = TestTrelloClient(
+            responses: [createResponse(statusCode: 404, body: {})]);
+        var envArgsEnvironment = EnvArgsEnvironment(
+            platformEnvironment: validEnvironment,
+            arguments: arguments,
+            clientFactory: (_) => client.trelloClient,
+            printer: printer.printer);
+        //when
+        setUpAll(() async => await app().run(envArgsEnvironment));
+        //then
+        test('expected number of requests',
+            () => expect(client.fetchHistory.length, 1));
+        test('output', () => expect(printer.output, expectedNotFoundOutput));
+      });
+    }
+  }
+  if (testServerError && expectedRequests.isNotEmpty) {
+    test(
+        'expected output for Server Error provided',
+        () => expect(expectedServerErrorOutput, isNotNull,
+            reason:
+                'try "testServerError: false" or supply "expectedServerErrorOutput"'));
+    if (expectedServerErrorOutput != null) {
+      group('${arguments.join(' ')} (500 Server Error)', () {
+        //given
+        var printer = FakePrinter();
+        var client = TestTrelloClient(
+            responses: [createResponse(statusCode: 500, body: {})]);
+        var envArgsEnvironment = EnvArgsEnvironment(
+            platformEnvironment: validEnvironment,
+            arguments: arguments,
+            clientFactory: (_) => client.trelloClient,
+            printer: printer.printer);
+        //when
+        setUpAll(() async => await app().run(envArgsEnvironment));
+        //then
+        test('expected number of requests',
+            () => expect(client.fetchHistory.length, 1));
+        test('output', () => expect(printer.output, expectedServerErrorOutput));
+      });
+    }
+  }
 }

@@ -47,6 +47,12 @@ void main() {
               '',
               'Run "trello help" to see global options.'
             ],
+            expectedNotFoundOutput: [
+              'ERROR: board list-lists - Failure: Resource not found: /1/boards/my-board-id/lists - {boardId: my-board-id}'
+            ],
+            expectedServerErrorOutput: [
+              'ERROR: board list-lists - Failure: GET /1/boards/my-board-id/lists - {boardId: my-board-id}'
+            ],
           ));
   group(
       'board list-lists (missing board-id))',
@@ -73,6 +79,8 @@ void main() {
       () => cliTest(
             arguments:
                 'board list-lists --fields id,name my-board-id'.split(' '),
+            testNotFound: false,
+            testServerError: false,
             expectedRequests: [
               ExpectedRequest(
                 expectedMethod: 'GET',
