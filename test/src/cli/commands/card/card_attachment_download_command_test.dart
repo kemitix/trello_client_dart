@@ -10,40 +10,42 @@ void main() {
     arguments:
         'card download-attachment my-card-id my-attachment-id my-file-name'
             .split(' '),
-    expectedRequests: [
-      ExpectedRequest(
-          expectedMethod: 'GET',
-          expectedPath: '/1/cards/my-card-id/attachments/my-attachment-id',
-          expectedHeaders: {},
-          expectedQueryParameters: {}),
-      ExpectedRequest(
-          expectedMethod: 'GET',
-          expectedPath: 'my-download-url',
-          expectedHeaders: {
-            'Authorization':
-                'OAuth oauth_consumer_key="_key", oauth_token="_token"'
-          },
-          expectedQueryParameters: {}),
-    ],
     responses: [
       createResponse(body: {'url': 'my-download-url'}),
       createResponse(body: {}),
     ],
-    expectedOutput: ['Download complete'],
-    expectedHelp: [
-      'Download an Attachment file',
-      '',
-      'Usage: trello card download-attachment [arguments]',
-      '-h, --help    Print this usage information.',
-      '',
-      'Run "trello help" to see global options.'
-    ],
-    expectedNotFoundOutput: [
-      'ERROR: card download-attachment - Failure: Resource not found: /1/cards/my-card-id/attachments/my-attachment-id'
-    ],
-    expectedServerErrorOutput: [
-      'ERROR: card download-attachment - Failure: GET /1/cards/my-card-id/attachments/my-attachment-id'
-    ],
+    expected: CliExpectations(
+      requests: [
+        ExpectedRequest(
+            expectedMethod: 'GET',
+            expectedPath: '/1/cards/my-card-id/attachments/my-attachment-id',
+            expectedHeaders: {},
+            expectedQueryParameters: {}),
+        ExpectedRequest(
+            expectedMethod: 'GET',
+            expectedPath: 'my-download-url',
+            expectedHeaders: {
+              'Authorization':
+                  'OAuth oauth_consumer_key="_key", oauth_token="_token"'
+            },
+            expectedQueryParameters: {}),
+      ],
+      output: ['Download complete'],
+      help: [
+        'Download an Attachment file',
+        '',
+        'Usage: trello card download-attachment [arguments]',
+        '-h, --help    Print this usage information.',
+        '',
+        'Run "trello help" to see global options.'
+      ],
+      notFoundOutput: [
+        'ERROR: card download-attachment - Failure: Resource not found: /1/cards/my-card-id/attachments/my-attachment-id'
+      ],
+      serverErrorOutput: [
+        'ERROR: card download-attachment - Failure: GET /1/cards/my-card-id/attachments/my-attachment-id'
+      ],
+    ),
   );
   group('file download', () {
     //given
