@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:args/command_runner.dart';
 import 'package:tabular/tabular.dart';
+import 'package:trello_sdk/trello_cli.dart';
 
 import '../../../trello_sdk.dart';
 
@@ -82,16 +83,18 @@ abstract class TrelloCommand extends Command {
     this._description,
     this._commandEnvironment,
   ) {
-    updateProperties.forEach((update) {
-      switch (update.type) {
-        case UpdateType.option:
-          argParser.addOption(update.property, help: update.help);
-          break;
-        case UpdateType.flag:
-          argParser.addFlag(update.property, help: update.help);
-          break;
-      }
-    });
+    updateProperties.forEach(updateProperty);
+  }
+
+  void updateProperty(UpdateProperty update) {
+    switch (update.type) {
+      case UpdateType.option:
+        argParser.addOption(update.property, help: update.help);
+        break;
+      case UpdateType.flag:
+        argParser.addFlag(update.property, help: update.help);
+        break;
+    }
   }
 
   @override
