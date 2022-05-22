@@ -33,20 +33,32 @@ class FakePrinter {
       (Object s) => output.addAll(s.toString().split('\n'));
 }
 
+class CliExpectations {
+  CliExpectations({
+    required this.requests,
+    required this.output,
+    required this.help,
+    this.notFoundOutput,
+    this.serverErrorOutput,
+  });
+
+  final List<ExpectedRequest> requests;
+  final List<String> output;
+  final List<String> help;
+  final List<String>? notFoundOutput;
+  final List<String>? serverErrorOutput;
+}
+
 void cliTest<T>({
   required List<String> arguments,
-  required List<ExpectedRequest> expectedRequests,
   required List<ResponseBody> responses,
-  required List<String> expectedOutput,
-  required List<String> expectedHelp,
+  required CliExpectations expected,
   bool testNotFound = true,
-  List<String>? expectedNotFoundOutput,
   bool testServerError = true,
-  List<String>? expectedServerErrorOutput,
 }) {
   group('validate test - ${arguments.join(' ')}', () {
     test('request count match response count',
-        () => expect(expectedRequests.length, responses.length));
+        () => expect(expected.requests.length, responses.length));
   });
   group('${arguments.join(' ')} --help', () {
     //given
@@ -62,7 +74,7 @@ void cliTest<T>({
     //then
     test('there were no requests',
         () => expect(client.fetchHistory.isEmpty, isTrue));
-    test('output', () => expect(printer.output, expectedHelp));
+    test('output', () => expect(printer.output, expected.help));
   });
   group('${arguments.join(' ')} (200 Okay)', () {
     //given
@@ -78,9 +90,9 @@ void cliTest<T>({
     //then
     group('requests', () {
       test('expected number of requests',
-          () => expect(client.fetchHistory.length, expectedRequests.length));
+          () => expect(client.fetchHistory.length, expected.requests.length));
       var count = 0;
-      for (var expectedRequest in expectedRequests) {
+      for (var expectedRequest in expected.requests) {
         count++;
         group('request $count', () {
           var myCount = count;
@@ -104,15 +116,15 @@ void cliTest<T>({
         });
       }
     });
-    test('output', () => expect(printer.output, expectedOutput));
+    test('output', () => expect(printer.output, expected.output));
   });
-  if (testNotFound && expectedRequests.isNotEmpty) {
+  if (testNotFound && expected.requests.isNotEmpty) {
     test(
         'expected output for Not Found Error provided',
-        () => expect(expectedNotFoundOutput, isNotNull,
+        () => expect(expected.notFoundOutput, isNotNull,
             reason:
                 'try "testNotFound: false" or supply "expectedNotFoundOutput"'));
-    if (expectedNotFoundOutput != null && expectedRequests.isNotEmpty) {
+    if (expected.notFoundOutput != null && expected.requests.isNotEmpty) {
       group('${arguments.join(' ')} (404 Not Found)', () {
         //given
         var printer = FakePrinter();
@@ -128,17 +140,17 @@ void cliTest<T>({
         //then
         test('expected number of requests',
             () => expect(client.fetchHistory.length, 1));
-        test('output', () => expect(printer.output, expectedNotFoundOutput));
+        test('output', () => expect(printer.output, expected.notFoundOutput));
       });
     }
   }
-  if (testServerError && expectedRequests.isNotEmpty) {
+  if (testServerError && expected.requests.isNotEmpty) {
     test(
         'expected output for Server Error provided',
-        () => expect(expectedServerErrorOutput, isNotNull,
+        () => expect(expected.serverErrorOutput, isNotNull,
             reason:
                 'try "testServerError: false" or supply "expectedServerErrorOutput"'));
-    if (expectedServerErrorOutput != null) {
+    if (expected.serverErrorOutput != null) {
       group('${arguments.join(' ')} (500 Server Error)', () {
         //given
         var printer = FakePrinter();
@@ -154,7 +166,8 @@ void cliTest<T>({
         //then
         test('expected number of requests',
             () => expect(client.fetchHistory.length, 1));
-        test('output', () => expect(printer.output, expectedServerErrorOutput));
+        test(
+            'output', () => expect(printer.output, expected.serverErrorOutput));
       });
     }
   }
