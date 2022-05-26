@@ -49,16 +49,17 @@ class CardClient {
   }) =>
       _client
           .get<List<dynamic>>(QueryOptions(
-              path: '/1/cards/$_cardId/attachments',
-              queryParameters: {
-                'filter': filter.toString(),
-                'fields': asCsv(fields ?? [AttachmentFields.all]),
-              },
-              headers: {
-                'Authorization':
-                    'OAuth oauth_consumer_key="${_authentication.key}", '
-                        'oauth_token="${_authentication.token}"',
-              }))
+            path: '/1/cards/$_cardId/attachments',
+            queryParameters: {
+              'filter': filter.toString(),
+              'fields': asCsv(fields ?? [AttachmentFields.all]),
+            },
+            headers: {
+              'Authorization':
+                  'OAuth oauth_consumer_key="${_authentication.key}", '
+                      'oauth_token="${_authentication.token}"',
+            },
+          ))
           .then((response) => response.data ?? [])
           .then((items) => items
               .map((item) =>
@@ -97,9 +98,12 @@ class CardClient {
   ///
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-id-idmembers-post
   Future<HttpResponse<void>> addMember(MemberId memberId) =>
-      _client.post('/1/cards/$_cardId/idMembers', queryParameters: {
-        'value': memberId.value,
-      });
+      _client.post(QueryOptions(
+        path: '/1/cards/$_cardId/idMembers',
+        queryParameters: {
+          'value': memberId.value,
+        },
+      ));
 
   /// Remove a Member from a Card
   ///
