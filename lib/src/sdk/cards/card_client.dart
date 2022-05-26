@@ -113,7 +113,9 @@ class CardClient {
   ///
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-cards/#api-cards-id-idmembers-idmember-delete
   Future<HttpResponse<void>> removeMember(MemberId memberId) =>
-      _client.delete('/1/cards/$_cardId/idMembers/${memberId.value}');
+      _client.delete(QueryOptions(
+        path: '/1/cards/$_cardId/idMembers/${memberId.value}',
+      ));
 }
 
 class NoUpdatesFailure extends Failure {

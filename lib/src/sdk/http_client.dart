@@ -33,10 +33,8 @@ abstract class HttpClient {
   });
 
   Future<HttpResponse<T>> delete<T>(
-    String path, {
+    QueryOptions queryOptions, {
     data,
-    Map<String, String>? queryParameters,
-    Map<String, String>? headers,
   });
 }
 
@@ -134,23 +132,23 @@ class DioHttpClient extends HttpClient {
 
   @override
   Future<HttpResponse<T>> delete<T>(
-    String path, {
+    QueryOptions queryOptions, {
     data,
-    Map<String, String>? queryParameters,
-    Map<String, String>? headers,
   }) =>
       _dio
-          .delete<T>(path,
+          .delete<T>(queryOptions.path,
               data: data,
-              queryParameters: queryParameters,
-              options: Options(headers: headers))
+              queryParameters: queryOptions.queryParameters,
+              options: Options(headers: queryOptions.headers))
           .onError((error, stackTrace) {
         if (error.runtimeType == DioError &&
             (error as DioError).response != null &&
             error.response!.statusCode == 404) {
-          return Future.error(ResourceNotFoundFailure(resource: path));
+          return Future.error(
+              ResourceNotFoundFailure(resource: queryOptions.path));
         }
-        return Future.error(HttpClientFailure(message: 'DELETE $path'));
+        return Future.error(
+            HttpClientFailure(message: 'DELETE ${queryOptions.path}'));
       }).then((r) => DioHttpResponse(r));
 
   @override
