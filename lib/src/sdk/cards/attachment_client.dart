@@ -32,13 +32,17 @@ class AttachmentClient {
   /// Download an attachment and save it to disk.
   Future<TrelloAttachment> download(FileName fileName) =>
       get(fields: [AttachmentFields.url, AttachmentFields.bytes])
-          .then((attachment) => _client.download(
-                attachment.url,
+          .then((attachment) => _client
+              .download(
+                QueryOptions(
+                  path: attachment.url,
+                  headers: {
+                    'Authorization':
+                        'OAuth oauth_consumer_key="${_authentication.key}", '
+                            'oauth_token="${_authentication.token}"',
+                  },
+                ),
                 fileName,
-                headers: {
-                  'Authorization':
-                      'OAuth oauth_consumer_key="${_authentication.key}", '
-                          'oauth_token="${_authentication.token}"',
-                },
-              ).then((_) => attachment));
+              )
+              .then((_) => attachment));
 }

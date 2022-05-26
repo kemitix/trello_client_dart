@@ -17,10 +17,8 @@ abstract class HttpClient {
   Future<HttpResponse<T>> get<T>(QueryOptions queryOptions);
 
   Future<void> download(
-    String path,
+    QueryOptions queryOptions,
     FileName fileName, {
-    Map<String, String>? queryParameters,
-    Map<String, String>? headers,
     void Function(int, int)? onReceiveProgress,
   });
 
@@ -161,16 +159,14 @@ class DioHttpClient extends HttpClient {
 
   @override
   Future<void> download(
-    String path,
+    QueryOptions queryOptions,
     FileName fileName, {
-    Map<String, String>? queryParameters,
-    Map<String, String>? headers,
     void Function(int, int)? onReceiveProgress,
   }) =>
       _dioDownloader
           .get(
-        path, onReceiveProgress: onReceiveProgress,
-        queryParameters: queryParameters,
+        queryOptions.path, onReceiveProgress: onReceiveProgress,
+        queryParameters: queryOptions.queryParameters,
         //Received data with List<int>
         options: Options(
           responseType: ResponseType.bytes,
@@ -178,16 +174,18 @@ class DioHttpClient extends HttpClient {
           validateStatus: (status) {
             return status != null && status < 500;
           },
-          headers: headers,
+          headers: queryOptions.headers,
         ),
       )
           .onError((error, stackTrace) {
         if (error.runtimeType == DioError &&
             (error as DioError).response != null &&
             error.response!.statusCode == 404) {
-          return Future.error(ResourceNotFoundFailure(resource: path));
+          return Future.error(
+              ResourceNotFoundFailure(resource: queryOptions.path));
         }
-        return Future.error(HttpClientFailure(message: '(download) GET $path'));
+        return Future.error(
+            HttpClientFailure(message: '(download) GET ${queryOptions.path}'));
       }).then(
         (r) => _fileWriter(fileName, r.data),
       );
