@@ -1,5 +1,6 @@
 import '../../../trello_sdk.dart';
 import '../http_client.dart';
+import '../query_options.dart';
 
 class ListClient {
   final HttpClient _client;
@@ -15,10 +16,9 @@ class ListClient {
   ///
   /// https://developer.atlassian.com/cloud/trello/rest/api-group-lists/#api-lists-id-cards-get
   Future<List<TrelloCard>> getCards({List<CardFields>? fields}) => _client
-      .get<List<dynamic>>(
-        '/1/lists/$_id/cards',
-        queryParameters: {},
-      )
+      .get<List<dynamic>>(QueryOptions(
+        path: '/1/lists/$_id/cards',
+      ))
       .then((response) => response.data ?? [])
       .then((items) => items
           .map((item) => TrelloCard(item, fields ?? [CardFields.all]))

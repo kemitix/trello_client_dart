@@ -1,5 +1,6 @@
 import '../../../trello_sdk.dart';
 import '../http_client.dart';
+import '../query_options.dart';
 
 class MemberClient {
   final HttpClient _client;
@@ -62,7 +63,8 @@ class MemberClient {
     if (boards != null) queryParameters['boards'] = boards;
     if (notifications != null) queryParameters['notifications'] = notifications;
     return _client
-        .get<dynamic>('/1/members/$_id', queryParameters: queryParameters)
+        .get<dynamic>(QueryOptions(
+            path: '/1/members/$_id', queryParameters: queryParameters))
         .then((r) => r.data)
         .then((item) => TrelloMember(item, fields ?? [MemberFields.all]));
   }
@@ -79,13 +81,13 @@ class MemberClient {
     List<BoardFields>? fields,
   }) =>
       _client
-          .get<List<dynamic>>(
-            '/1/members/$_id/boards',
+          .get<List<dynamic>>(QueryOptions(
+            path: '/1/members/$_id/boards',
             queryParameters: {
               'filter': filter.name,
               'fields': asCsv(fields ?? [BoardFields.all])
             },
-          )
+          ))
           .then((response) => response.data ?? [])
           .then((items) => items
               .map((item) => TrelloBoard(item, fields ?? [BoardFields.all]))
