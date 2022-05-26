@@ -1,7 +1,14 @@
 class QueryOptions {
   final String path;
-  final Map<String, String> queryParameters;
-  final Map<String, String> headers;
+  late final Map<String, String> queryParameters;
+  late final Map<String, String> headers;
 
-  QueryOptions(this.path, this.queryParameters, this.headers);
+  QueryOptions({
+    required this.path,
+    Map<String, String>? queryParameters,
+    Map<String, String>? headers,
+  }) {
+    this.queryParameters = queryParameters ?? {};
+    this.headers = headers ?? {};
+  }
 }

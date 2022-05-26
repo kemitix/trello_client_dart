@@ -1,10 +1,11 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
-import 'package:trello_sdk/external/dio_logger.dart';
-import 'package:trello_sdk/external/files.dart';
 
+import '../../external/dio_logger.dart';
+import '../../external/files.dart';
 import '../../trello_sdk.dart';
+import 'query_options.dart';
 
 abstract class HttpResponse<T> {
   T? get data;
@@ -13,11 +14,7 @@ abstract class HttpResponse<T> {
 abstract class HttpClient {
   void close();
 
-  Future<HttpResponse<T>> get<T>(
-    String path, {
-    Map<String, String>? queryParameters,
-    Map<String, String>? headers,
-  });
+  Future<HttpResponse<T>> get<T>(QueryOptions queryOptions);
 
   Future<void> download(
     String path,
@@ -76,24 +73,21 @@ class DioHttpClient extends HttpClient {
   }
 
   @override
-  Future<HttpResponse<T>> get<T>(
-    String path, {
-    Map<String, String>? queryParameters,
-    Map<String, String>? headers,
-  }) =>
-      _dio
-          .get<T>(path,
-              queryParameters: queryParameters,
+  Future<HttpResponse<T>> get<T>(QueryOptions queryOptions) => _dio
+          .get<T>(queryOptions.path,
+              queryParameters: queryOptions.queryParameters,
               options: Options(
-                headers: headers,
+                headers: queryOptions.headers,
               ))
           .onError((error, stackTrace) {
         if (error.runtimeType == DioError &&
             (error as DioError).response != null &&
             error.response!.statusCode == 404) {
-          return Future.error(ResourceNotFoundFailure(resource: path));
+          return Future.error(
+              ResourceNotFoundFailure(resource: queryOptions.path));
         }
-        return Future.error(HttpClientFailure(message: 'GET $path'));
+        return Future.error(
+            HttpClientFailure(message: 'GET ${queryOptions.path}'));
       }).then((r) => DioHttpResponse(r));
 
   @override

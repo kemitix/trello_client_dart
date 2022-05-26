@@ -1,5 +1,6 @@
 import '../../../trello_sdk.dart';
 import '../http_client.dart';
+import '../query_options.dart';
 
 class BoardClient {
   final HttpClient _client;
@@ -21,15 +22,15 @@ class BoardClient {
     List<ListFields> fields = const [ListFields.all],
   }) =>
       _client
-          .get<List<dynamic>>(
-            '/1/boards/$_id/lists',
+          .get<List<dynamic>>(QueryOptions(
+            path: '/1/boards/$_id/lists',
             queryParameters: {
               'cards': cards.name,
               'card_fields': asCsv(cardFields),
               'filter': filter.name,
               'fields': asCsv(fields),
             },
-          )
+          ))
           .onError((Failure error, stackTrace) =>
               Future.error(error.withContext({'boardId': _id.value})))
           .then((response) => response.data ?? [])
