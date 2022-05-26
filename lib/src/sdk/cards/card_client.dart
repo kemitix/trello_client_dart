@@ -75,9 +75,16 @@ class CardClient {
   Future<TrelloCard> put(Map<String, dynamic> updates) {
     if (updates.isEmpty) return Future.error(NoUpdatesFailure());
     return _client
-        .put('/1/cards/$_cardId', data: _formatUpdates(updates), headers: {
-      Headers.contentTypeHeader: Headers.jsonContentType,
-    }).then((response) => TrelloCard(response.data, [CardFields.all]));
+        .put(
+          QueryOptions(
+            path: '/1/cards/$_cardId',
+            headers: {
+              Headers.contentTypeHeader: Headers.jsonContentType,
+            },
+          ),
+          data: _formatUpdates(updates),
+        )
+        .then((response) => TrelloCard(response.data, [CardFields.all]));
   }
 
   String _formatUpdates(Map<String, dynamic> updates) => json.encode(updates);
