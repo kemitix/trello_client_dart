@@ -50,9 +50,7 @@ class DioHttpClient extends HttpClient {
     Future<void> Function(FileName fileName, dynamic data)? fileWriter,
   }) {
     _dio = dioFactory(baseUrl, queryParameters);
-    //_dio.interceptors.add(curlLogger());
     _dioDownloader = dioFactory('', queryParameters);
-    //_dioDownloader.interceptors.add(CurlLoggerDioInterceptor());
     _fileWriter = fileWriter ?? defaultFileWriter;
   }
 
@@ -66,21 +64,13 @@ class DioHttpClient extends HttpClient {
 
   @override
   Future<HttpResponse<T>> get<T>(QueryOptions queryOptions) => _dio
-          .get<T>(queryOptions.path,
-              queryParameters: queryOptions.queryParameters,
-              options: Options(
-                headers: queryOptions.headers,
-              ))
-          .onError((error, stackTrace) {
-        if (error.runtimeType == DioError &&
-            (error as DioError).response != null &&
-            error.response!.statusCode == 404) {
-          return Future.error(
-              ResourceNotFoundFailure(resource: queryOptions.path));
-        }
-        return Future.error(
-            HttpClientFailure(message: 'GET ${queryOptions.path}'));
-      }).then((r) => DioHttpResponse(r));
+      .get<T>(queryOptions.path,
+          queryParameters: queryOptions.queryParameters,
+          options: Options(
+            headers: queryOptions.headers,
+          ))
+      .onError(errorHandler('GET', queryOptions))
+      .then((r) => DioHttpResponse(r));
 
   @override
   Future<HttpResponse<T>> put<T>(
@@ -94,18 +84,8 @@ class DioHttpClient extends HttpClient {
               options: Options(
                 headers: queryOptions.headers,
               ))
-          .onError((error, stackTrace) {
-        if (error.runtimeType == DioError &&
-            (error as DioError).response != null &&
-            error.response!.statusCode == 404) {
-          return Future.error(
-              ResourceNotFoundFailure(resource: queryOptions.path));
-        }
-        return Future.error(
-            HttpClientFailure(message: 'PUT ${queryOptions.path}'));
-      }).then(
-        (r) => DioHttpResponse(r),
-      );
+          .onError(errorHandler('PUT', queryOptions))
+          .then((r) => DioHttpResponse(r));
 
   @override
   Future<HttpResponse<T>> post<T>(
@@ -117,18 +97,8 @@ class DioHttpClient extends HttpClient {
               data: data,
               queryParameters: queryOptions.queryParameters,
               options: Options(headers: queryOptions.headers))
-          .onError((error, stackTrace) {
-        if (error.runtimeType == DioError &&
-            (error as DioError).response != null &&
-            error.response!.statusCode == 404) {
-          return Future.error(
-              ResourceNotFoundFailure(resource: queryOptions.path));
-        }
-        return Future.error(
-            HttpClientFailure(message: 'POST ${queryOptions.path}'));
-      }).then(
-        (r) => DioHttpResponse(r),
-      );
+          .onError(errorHandler('POST', queryOptions))
+          .then((r) => DioHttpResponse(r));
 
   @override
   Future<HttpResponse<T>> delete<T>(
@@ -140,16 +110,8 @@ class DioHttpClient extends HttpClient {
               data: data,
               queryParameters: queryOptions.queryParameters,
               options: Options(headers: queryOptions.headers))
-          .onError((error, stackTrace) {
-        if (error.runtimeType == DioError &&
-            (error as DioError).response != null &&
-            error.response!.statusCode == 404) {
-          return Future.error(
-              ResourceNotFoundFailure(resource: queryOptions.path));
-        }
-        return Future.error(
-            HttpClientFailure(message: 'DELETE ${queryOptions.path}'));
-      }).then((r) => DioHttpResponse(r));
+          .onError(errorHandler('DELETE', queryOptions))
+          .then((r) => DioHttpResponse(r));
 
   @override
   Future<void> download(
@@ -159,30 +121,31 @@ class DioHttpClient extends HttpClient {
   }) =>
       _dioDownloader
           .get(
-        queryOptions.path, onReceiveProgress: onReceiveProgress,
-        queryParameters: queryOptions.queryParameters,
-        //Received data with List<int>
-        options: Options(
-          responseType: ResponseType.bytes,
-          followRedirects: false,
-          validateStatus: (status) {
-            return status != null && status < 500;
-          },
-          headers: queryOptions.headers,
-        ),
-      )
-          .onError((error, stackTrace) {
-        if (error.runtimeType == DioError &&
-            (error as DioError).response != null &&
-            error.response!.statusCode == 404) {
-          return Future.error(
-              ResourceNotFoundFailure(resource: queryOptions.path));
-        }
-        return Future.error(
-            HttpClientFailure(message: '(download) GET ${queryOptions.path}'));
-      }).then(
-        (r) => _fileWriter(fileName, r.data),
-      );
+            queryOptions.path,
+            onReceiveProgress: onReceiveProgress,
+            queryParameters: queryOptions.queryParameters,
+            options: Options(
+              responseType: ResponseType.bytes,
+              followRedirects: false,
+              validateStatus: (status) => status != null && status < 500,
+              headers: queryOptions.headers,
+            ),
+          )
+          .onError(errorHandler('(download) GET', queryOptions))
+          .then((r) => _fileWriter(fileName, r.data));
+
+  FutureOr<Response<T>> Function(Object error, StackTrace stackTrace)
+      errorHandler<T>(String method, QueryOptions queryOptions) =>
+          (Object error, StackTrace stackTrace) {
+            if (error.runtimeType == DioError &&
+                (error as DioError).response != null &&
+                error.response!.statusCode == 404) {
+              return Future.error(
+                  ResourceNotFoundFailure(resource: queryOptions.path));
+            }
+            return Future.error(
+                HttpClientFailure(message: '$method ${queryOptions.path}'));
+          };
 }
 
 class DioHttpResponse<T> extends HttpResponse<T> {
