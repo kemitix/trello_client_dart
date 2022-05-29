@@ -1,7 +1,10 @@
-import 'dart:async';
+import 'dart:async' show FutureOr;
 
-import '../../../../trello_sdk.dart';
-import '../../cli.dart';
+import 'package:trello_sdk/trello_sdk.dart'
+    show CardFields, Either, Failure, left, CollapsableEither;
+
+import '../commands.dart' show CommandEnvironment, UpdateProperty;
+import 'card_module.dart' show CardCommand;
 
 class GetCardCommand extends CardCommand {
   GetCardCommand(CommandEnvironment commandEnvironment)

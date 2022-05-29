@@ -1,7 +1,10 @@
-import 'dart:async';
+import 'dart:async' show FutureOr;
 
-import '../../../../trello_sdk.dart';
-import '../../cli.dart';
+import 'package:trello_sdk/trello_sdk.dart'
+    show BoardFields, CollapsableEither, Either, Failure, left;
+
+import '../commands.dart' show CommandEnvironment, UpdateProperty;
+import 'member_module.dart' show MemberCommand;
 
 class ListMemberBoardsCommand extends MemberCommand {
   ListMemberBoardsCommand(CommandEnvironment commandEnvironment)

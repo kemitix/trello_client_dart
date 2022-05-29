@@ -4,6 +4,7 @@ export 'client.dart';
 export 'errors.dart';
 export 'extensions/either_extensions.dart';
 export 'fp/fp.dart';
+export 'http_client.dart';
 export 'lists/lists.dart';
 export 'members/members.dart';
 export 'misc.dart';

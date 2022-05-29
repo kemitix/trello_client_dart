@@ -1,9 +1,11 @@
-import 'package:dio/dio.dart';
-import 'package:test/test.dart';
-import 'package:trello_sdk/trello_cli.dart';
+import 'package:dio/dio.dart' show RequestOptions, ResponseBody;
+import 'package:test/test.dart'
+    show expect, fail, group, isNotNull, setUp, setUpAll, test;
+import 'package:trello_sdk/trello_sdk.dart'
+    show Either, HttpClientFailure, ResourceNotFoundFailure, left, right;
 
-import '../cli/cli_commons.dart';
-import '../mocks/dio_mock.dart';
+import '../cli/cli_commons.dart' show createResponse;
+import '../mocks/dio_mock.dart' show TestTrelloClient;
 
 void verify<V>(Future<V> value, void Function(V) fn) => value
     .onError((error, stackTrace) => fail('should have succeeded'))

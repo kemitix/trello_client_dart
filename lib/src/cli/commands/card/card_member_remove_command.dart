@@ -1,9 +1,20 @@
-import 'dart:async';
+import 'dart:async' show Future, FutureOr;
 
-import '../../../../trello_sdk.dart';
-import '../../../sdk/cards/card.dart';
-import '../../../sdk/http_client.dart';
-import '../../cli.dart';
+import 'package:trello_sdk/trello_sdk.dart'
+    show
+        AlreadyAppliedFailure,
+        Card,
+        CardId,
+        CollapsableEither,
+        Either,
+        Failure,
+        HttpResponse,
+        MemberId,
+        left,
+        map2either;
+
+import '../commands.dart' show CommandEnvironment, UpdateProperty;
+import 'card_module.dart' show CardCommand;
 
 class RemoveMemberFromCardCommand extends CardCommand {
   RemoveMemberFromCardCommand(CommandEnvironment commandEnvironment)

@@ -1,4 +1,4 @@
-import '../../cli_commons.dart';
+import '../../cli_commons.dart' show CliExpectations, cliTest;
 
 void main() => cliTest(
       arguments: 'board'.split(' '),

@@ -1,7 +1,11 @@
-import 'dart:async';
+import 'dart:async' show FutureOr;
 
-import '../../../../trello_sdk.dart';
-import '../../cli.dart';
+import 'package:trello_sdk/trello_sdk.dart'
+    show CollapsableEither, Either, Failure, left;
+
+import '../commands.dart'
+    show CommandEnvironment, UpdateFlag, UpdateOption, UpdateProperty;
+import 'card_module.dart' show CardCommand;
 
 class UpdateCardCommand extends CardCommand {
   UpdateCardCommand(CommandEnvironment commandEnvironment)
