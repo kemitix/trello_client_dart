@@ -1,6 +1,7 @@
-import '../../../trello_sdk.dart';
-import '../http_client.dart';
-import '../query_options.dart';
+import '../cards/cards.dart' show CardFields, TrelloCard;
+import '../http_client.dart' show HttpClient;
+import '../query_options.dart' show QueryOptions;
+import 'list_models.dart' show ListId;
 
 class ListClient {
   final HttpClient _client;

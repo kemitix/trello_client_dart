@@ -1,12 +1,30 @@
-import 'package:dio/dio.dart';
-import 'package:test/test.dart';
-import 'package:trello_sdk/src/sdk/boards/board_models.dart';
-import 'package:trello_sdk/src/sdk/members/members.dart';
-import 'package:trello_sdk/src/sdk/trello_models.dart';
+import 'package:dio/dio.dart' show RequestOptions;
+import 'package:test/test.dart' show expect, group, isTrue, setUpAll, test;
+import 'package:trello_sdk/trello_sdk.dart'
+    show
+        BoardFields,
+        BoardId,
+        BoardsInvited,
+        BoardsInvitedFields,
+        MemberBoardBackgrounds,
+        MemberBoardFilter,
+        MemberCards,
+        MemberCustomBoardBackground,
+        MemberCustomEmoji,
+        MemberCustomStickers,
+        MemberFields,
+        MemberId,
+        MemberOrganizationFields,
+        MemberOrganizations,
+        MemberOrganizationsInvited,
+        MemberOrganizationsInvitedFields,
+        MemberTokens,
+        TrelloBoard,
+        TrelloMember;
 
-import '../../cli/cli_commons.dart';
-import '../../mocks/dio_mock.dart';
-import '../sdk_commons.dart';
+import '../../cli/cli_commons.dart' show createResponse;
+import '../../mocks/dio_mock.dart' show TestTrelloClient;
+import '../sdk_commons.dart' show verify;
 
 void main() {
   group('get', () {

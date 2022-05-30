@@ -1,7 +1,11 @@
-import 'package:equatable/equatable.dart';
+import 'package:dartz/dartz.dart' show Function1;
+import 'package:equatable/equatable.dart' show Equatable, EquatableMixin;
 
-import '../../trello_sdk.dart';
-import 'http_client.dart';
+import 'boards/boards.dart' show BoardClient, BoardId;
+import 'cards/cards.dart' show CardClient, CardId;
+import 'http_client.dart' show HttpClient;
+import 'lists/lists.dart' show ListClient, ListId;
+import 'members/members.dart' show MemberClient, MemberId;
 
 class TrelloAuthentication extends Equatable {
   final String _key;

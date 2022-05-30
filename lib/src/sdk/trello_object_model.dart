@@ -1,4 +1,4 @@
-import 'package:meta/meta.dart';
+import 'package:meta/meta.dart' show protected;
 
 abstract class TrelloObject<T extends Enum> {
   final Map<String, dynamic> _source;

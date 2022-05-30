@@ -1,6 +1,19 @@
-import '../client.dart';
-import '../trello_models.dart';
-import '../trello_object_model.dart';
+import '../client.dart' show StringValue;
+import '../trello_models.dart'
+    show
+        AllOrNone,
+        BoardBackgrounds,
+        BoardsInvited,
+        BoardsInvitedFields,
+        NestedActionsQueryParamsActions,
+        NestedBoardsQueryParamsBoards,
+        NestedCardQueryParametersCards,
+        NestedNotificationsQueryParametersNotifications,
+        OrganizationFields,
+        Organizations,
+        OrganizationsInvited,
+        OrganizationsInvitedFields;
+import '../trello_object_model.dart' show TrelloObject;
 
 class TrelloMember extends TrelloObject<MemberFields> {
   TrelloMember(super.source, super.fields);

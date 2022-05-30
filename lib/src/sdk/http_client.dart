@@ -1,11 +1,14 @@
-import 'dart:async';
+import 'dart:async' show Future, FutureOr;
 
-import 'package:dio/dio.dart';
+import 'package:dio/dio.dart'
+    show Dio, DioError, Interceptor, Options, Response, ResponseType;
+import 'package:trello_sdk/external/dio_logger.dart'
+    show CurlLoggerDioInterceptor;
+import 'package:trello_sdk/external/files.dart' show defaultFileWriter;
 
-import '../../external/dio_logger.dart';
-import '../../external/files.dart';
-import '../../trello_sdk.dart';
-import 'query_options.dart';
+import 'cards/cards.dart' show FileName;
+import 'errors.dart' show HttpClientFailure, ResourceNotFoundFailure;
+import 'query_options.dart' show QueryOptions;
 
 abstract class HttpResponse<T> {
   T? get data;
