@@ -1,4 +1,5 @@
-import 'package:dio/dio.dart';
+import 'package:dio/dio.dart'
+    show Interceptor, RequestInterceptorHandler, RequestOptions;
 
 class CurlLoggerDioInterceptor extends Interceptor {
   @override
