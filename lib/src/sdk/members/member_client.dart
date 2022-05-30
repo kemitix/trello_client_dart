@@ -1,6 +1,29 @@
-import '../../../trello_sdk.dart';
-import '../http_client.dart';
-import '../query_options.dart';
+import 'package:trello_sdk/trello_sdk.dart'
+    show
+        BoardFields,
+        HttpClient,
+        MemberActions,
+        MemberBoardBackgrounds,
+        MemberBoards,
+        MemberBoardsInvited,
+        MemberBoardsInvitedFields,
+        MemberCards,
+        MemberCustomBoardBackground,
+        MemberCustomEmoji,
+        MemberCustomStickers,
+        MemberFields,
+        MemberId,
+        MemberNotifications,
+        MemberOrganizationFields,
+        MemberOrganizations,
+        MemberOrganizationsInvited,
+        MemberOrganizationsInvitedFields,
+        MemberTokens,
+        TrelloBoard,
+        TrelloMember,
+        asCsv;
+
+import '../query_options.dart' show QueryOptions;
 
 class MemberClient {
   final HttpClient _client;

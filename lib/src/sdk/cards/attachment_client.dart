@@ -1,6 +1,7 @@
-import '../../../trello_sdk.dart';
+import '../client.dart';
 import '../http_client.dart';
 import '../query_options.dart';
+import 'cards.dart';
 
 class AttachmentClient {
   AttachmentClient(

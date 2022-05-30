@@ -1,6 +1,10 @@
-import 'package:args/command_runner.dart';
+import 'package:args/command_runner.dart' show UsageException;
+import 'package:trello_sdk/trello_sdk.dart'
+    show Reader, TrelloAuthentication, TrelloClient;
 
-import '../../trello_cli.dart';
+import 'authentication.dart' show authentication;
+import 'commands/commands.dart' show CommandEnvironment;
+import 'runner.dart' show Environment, runner;
 
 class EnvArgsEnvironment {
   EnvArgsEnvironment({
@@ -21,9 +25,12 @@ class EnvArgsEnvironment {
   late final void Function(Object object) _printer;
 
   Environment get env => _env;
+
   List<String> get args => _args;
+
   TrelloClient Function(TrelloAuthentication) get clientFactory =>
       _clientFactory;
+
   void Function(Object object) get printer => _printer;
 }
 
@@ -43,7 +50,9 @@ class ArgsClientEnvironment {
   late final void Function(Object object) _printer;
 
   List<String> get args => _args;
+
   TrelloClient get client => _client;
+
   void Function(Object object) get printer => _printer;
 }
 

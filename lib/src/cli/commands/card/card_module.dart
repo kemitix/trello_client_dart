@@ -1,12 +1,14 @@
-import '../../../../trello_sdk.dart';
-import '../commands.dart';
-import 'card_attachment_download_command.dart';
-import 'card_attachment_get_command.dart';
-import 'card_attachments_list_command.dart';
-import 'card_get_command.dart';
-import 'card_member_add_command.dart';
-import 'card_member_remove_command.dart';
-import 'card_update_command.dart';
+import 'package:trello_sdk/trello_sdk.dart'
+    show AttachmentId, CardId, Either, Failure, FileName;
+
+import '../commands.dart' show CommandEnvironment, TrelloCommand, TrelloModule;
+import 'card_attachment_download_command.dart' show DownloadAttachmentCommand;
+import 'card_attachment_get_command.dart' show GetAttachmentCommand;
+import 'card_attachments_list_command.dart' show ListAttachmentsCommand;
+import 'card_get_command.dart' show GetCardCommand;
+import 'card_member_add_command.dart' show AddMemberToCardCommand;
+import 'card_member_remove_command.dart' show RemoveMemberFromCardCommand;
+import 'card_update_command.dart' show UpdateCardCommand;
 
 class CardModule extends TrelloModule {
   @override

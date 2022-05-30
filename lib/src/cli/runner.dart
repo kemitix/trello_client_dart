@@ -1,6 +1,10 @@
-import 'package:args/command_runner.dart';
+import 'package:args/command_runner.dart' show CommandRunner;
 
-import 'cli.dart';
+import 'commands/board/board_module.dart' show BoardModule;
+import 'commands/card/card_module.dart' show CardModule;
+import 'commands/commands.dart' show CommandEnvironment;
+import 'commands/list/list_module.dart' show ListModule;
+import 'commands/member/member_module.dart' show MemberModule;
 
 typedef Environment = Map<String, String>;
 

@@ -1,7 +1,7 @@
-import 'package:test/test.dart';
+import 'package:test/test.dart' show group;
 
-import '../../../sdk/sdk_commons.dart';
-import '../../cli_commons.dart';
+import '../../../sdk/sdk_commons.dart' show ExpectedRequest;
+import '../../cli_commons.dart' show CliExpectations, cliTest, createResponse;
 
 void main() {
   group(

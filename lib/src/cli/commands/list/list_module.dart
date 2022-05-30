@@ -1,6 +1,7 @@
-import '../../../../trello_sdk.dart';
-import '../commands.dart';
-import 'list_cards_list_command.dart';
+import 'package:trello_sdk/trello_sdk.dart' show Either, Failure, ListId;
+
+import '../commands.dart' show CommandEnvironment, TrelloCommand, TrelloModule;
+import 'list_cards_list_command.dart' show ListCardsCommand;
 
 class ListModule extends TrelloModule {
   @override

@@ -1,10 +1,20 @@
-import 'package:dio/dio.dart';
-import 'package:test/test.dart';
-import 'package:trello_sdk/src/sdk/cards/cards.dart';
-import 'package:trello_sdk/src/sdk/members/members.dart';
+import 'package:dio/dio.dart' show Headers;
+import 'package:test/test.dart' show group, isTrue;
+import 'package:trello_sdk/trello_sdk.dart'
+    show
+        AttachmentId,
+        CardBadges,
+        CardCoordinates,
+        CardId,
+        CardLabel,
+        FileName,
+        MemberId,
+        TrelloAttachment,
+        TrelloCard;
 
-import '../../cli/cli_commons.dart';
-import '../sdk_commons.dart';
+import '../../cli/cli_commons.dart' show createResponse;
+import '../sdk_commons.dart'
+    show ExpectedRequestWithResponseTests, apiTest, testValue;
 
 void main() {
   //get

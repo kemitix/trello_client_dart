@@ -1,6 +1,9 @@
-import 'package:verify/verify.dart';
+import 'package:trello_sdk/trello_sdk.dart'
+    show Either, Left, MemberId, Right, TrelloAuthentication;
+import 'package:verify/verify.dart'
+    show ValidationError, Validator, ValidatorUtils, Verify;
 
-import '../../trello_cli.dart';
+import 'runner.dart';
 
 typedef Errors = List<dynamic>;
 

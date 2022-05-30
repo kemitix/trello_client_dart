@@ -1,9 +1,9 @@
-import 'package:test/test.dart';
-import 'package:trello_sdk/src/sdk/boards/board_models.dart';
-import 'package:trello_sdk/src/sdk/lists/list_models.dart';
+import 'package:test/test.dart' show group, isTrue;
+import 'package:trello_sdk/trello_sdk.dart' show BoardId, ListId, TrelloList;
 
-import '../../cli/cli_commons.dart';
-import '../sdk_commons.dart';
+import '../../cli/cli_commons.dart' show createResponse;
+import '../sdk_commons.dart'
+    show ExpectedRequestWithResponseTests, apiTest, testValue;
 
 void main() {
   group('board lists', () {

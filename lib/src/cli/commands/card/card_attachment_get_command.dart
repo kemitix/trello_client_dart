@@ -1,7 +1,18 @@
-import 'dart:async';
+import 'dart:async' show FutureOr;
 
-import '../../../../trello_sdk.dart';
-import '../../cli.dart';
+import 'package:trello_sdk/trello_sdk.dart'
+    show
+        AttachmentFields,
+        AttachmentId,
+        CardId,
+        CollapsableEither,
+        Either,
+        Failure,
+        left,
+        map2either;
+
+import '../commands.dart' show CommandEnvironment, UpdateProperty;
+import 'card_module.dart' show CardCommand;
 
 class GetAttachmentCommand extends CardCommand {
   GetAttachmentCommand(CommandEnvironment commandEnvironment)

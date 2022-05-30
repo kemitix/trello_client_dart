@@ -1,7 +1,18 @@
-import 'dart:async';
+import 'dart:async' show FutureOr;
 
-import '../../../../trello_sdk.dart';
-import '../../cli.dart';
+import 'package:trello_sdk/trello_sdk.dart'
+    show
+        AttachmentId,
+        CardId,
+        CollapsableEither,
+        Either,
+        Failure,
+        FileName,
+        left,
+        map3either;
+
+import '../commands.dart' show CommandEnvironment, UpdateProperty;
+import 'card_module.dart' show CardCommand;
 
 /// download-attachment $CARD_ID $ATTACHMENT_ID $FILE_NAME
 class DownloadAttachmentCommand extends CardCommand {

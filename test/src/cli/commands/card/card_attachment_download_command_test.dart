@@ -1,9 +1,16 @@
-import 'package:test/test.dart';
-import 'package:trello_sdk/trello_cli.dart';
+import 'package:test/test.dart' show expect, group, setUpAll, test;
+import 'package:trello_sdk/trello_cli.dart' show EnvArgsEnvironment, app;
+import 'package:trello_sdk/trello_sdk.dart' show FileName;
 
-import '../../../mocks/dio_mock.dart';
-import '../../../sdk/sdk_commons.dart';
-import '../../cli_commons.dart';
+import '../../../mocks/dio_mock.dart' show TestTrelloClient;
+import '../../../sdk/sdk_commons.dart' show ExpectedRequest;
+import '../../cli_commons.dart'
+    show
+        CliExpectations,
+        FakePrinter,
+        cliTest,
+        createResponse,
+        validEnvironment;
 
 void main() {
   var helpOutput = [

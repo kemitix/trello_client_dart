@@ -1,8 +1,8 @@
-import 'package:test/test.dart';
-import 'package:trello_sdk/src/cli/app.dart';
+import 'package:test/test.dart' show expect, group, setUpAll, test;
+import 'package:trello_sdk/trello_cli.dart' show EnvArgsEnvironment, app;
 
-import '../mocks/dio_mock.dart';
-import 'cli_commons.dart';
+import '../mocks/dio_mock.dart' show TestTrelloClient;
+import 'cli_commons.dart' show FakePrinter, validEnvironment;
 
 void main() {
   group('environment errors', () {

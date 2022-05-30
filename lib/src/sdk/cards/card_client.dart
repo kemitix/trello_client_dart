@@ -1,10 +1,15 @@
-import 'dart:convert';
+import 'dart:convert' show json;
 
-import 'package:dio/dio.dart';
+import 'package:dio/dio.dart' show Headers;
 
-import '../../../trello_sdk.dart';
+import '../client.dart';
+import '../errors.dart';
 import '../http_client.dart';
+import '../members/members.dart';
+import '../misc.dart';
 import '../query_options.dart';
+import 'attachment_client.dart';
+import 'card_models.dart';
 
 class CardClient {
   CardClient(this._client, this._cardId, this._authentication) {
