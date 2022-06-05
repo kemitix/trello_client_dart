@@ -2,14 +2,22 @@ import 'dart:convert' show json;
 
 import 'package:dio/dio.dart' show Headers;
 
-import '../client.dart';
-import '../errors.dart';
-import '../http_client.dart';
-import '../members/members.dart';
-import '../misc.dart';
-import '../query_options.dart';
-import 'attachment_client.dart';
-import 'card_models.dart';
+import '../client.dart' show TrelloAuthentication;
+import '../errors.dart' show Failure;
+import '../http_client.dart' show HttpClient, HttpResponse;
+import '../members/members.dart' show MemberId;
+import '../misc.dart' show asCsv;
+import '../query_options.dart' show QueryOptions;
+import 'attachment_client.dart' show AttachmentClient;
+import 'card_models.dart'
+    show
+        AttachmentFields,
+        AttachmentFilter,
+        AttachmentId,
+        CardFields,
+        CardId,
+        TrelloAttachment,
+        TrelloCard;
 
 class CardClient {
   CardClient(this._client, this._cardId, this._authentication) {
