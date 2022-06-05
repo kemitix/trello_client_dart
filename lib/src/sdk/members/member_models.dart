@@ -13,7 +13,7 @@ import '../trello_models.dart'
         Organizations,
         OrganizationsInvited,
         OrganizationsInvitedFields;
-import '../trello_object_model.dart' show TrelloObject;
+import '../trello_object.dart' show TrelloObject;
 
 class TrelloMember extends TrelloObject<MemberFields> {
   TrelloMember(super.source, super.fields);

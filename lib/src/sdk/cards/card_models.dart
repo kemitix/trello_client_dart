@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart' show EquatableMixin;
 
 import '../client.dart' show StringValue;
-import '../trello_object_model.dart' show TrelloObject;
+import '../trello_object.dart' show TrelloObject;
 
 class TrelloCard extends TrelloObject<CardFields> {
   TrelloCard(source, List<CardFields> fields)

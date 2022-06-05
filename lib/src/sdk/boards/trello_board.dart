@@ -1,5 +1,5 @@
 import '../members/member_models.dart';
-import '../trello_object_model.dart';
+import '../trello_object.dart';
 import 'board_models.dart';
 
 class TrelloBoard extends TrelloObject<BoardFields> {

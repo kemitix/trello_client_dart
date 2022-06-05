@@ -9,4 +9,4 @@ export 'src/sdk/lists/lists.dart';
 export 'src/sdk/members/members.dart';
 export 'src/sdk/misc.dart';
 export 'src/sdk/trello_models.dart';
-export 'src/sdk/trello_object_model.dart';
+export 'src/sdk/trello_object.dart';
