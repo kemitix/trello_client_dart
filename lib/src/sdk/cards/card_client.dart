@@ -16,8 +16,8 @@ import 'card_models.dart'
         AttachmentFilter,
         AttachmentId,
         CardFields,
-        TrelloAttachment,
-        TrelloCard;
+        TrelloAttachment;
+import 'trello_card.dart' show TrelloCard;
 
 class CardClient {
   CardClient(this._client, this._cardId, this._authentication) {
