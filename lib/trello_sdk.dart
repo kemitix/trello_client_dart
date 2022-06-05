@@ -3,6 +3,7 @@ export 'src/sdk/cards/cards.dart';
 export 'src/sdk/client.dart';
 export 'src/sdk/errors.dart';
 export 'src/sdk/extensions/either_extensions.dart';
+export 'src/sdk/file_name.dart';
 export 'src/sdk/fp/fp.dart';
 export 'src/sdk/http_client.dart';
 export 'src/sdk/lists/lists.dart';

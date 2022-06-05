@@ -6,8 +6,8 @@ import 'package:trello_sdk/external/dio_logger.dart'
     show CurlLoggerDioInterceptor;
 import 'package:trello_sdk/external/files.dart' show defaultFileWriter;
 
-import 'cards/cards.dart' show FileName;
 import 'errors.dart' show HttpClientFailure, ResourceNotFoundFailure;
+import 'file_name.dart' show FileName;
 import 'query_options.dart' show QueryOptions;
 
 abstract class HttpResponse<T> {

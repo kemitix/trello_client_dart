@@ -1,11 +1,6 @@
 import 'package:equatable/equatable.dart' show EquatableMixin;
 
-import '../client.dart' show StringValue;
 import '../trello_object.dart' show TrelloObject;
-
-class FileName extends StringValue {
-  FileName(super.fileName);
-}
 
 // Field vale may come from Trello as 'latitude,longitude'
 class CardCoordinates with EquatableMixin {
