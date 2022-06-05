@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart' show RequestOptions;
 import 'package:test/test.dart' show expect, group, isTrue, setUpAll, test;
+import 'package:trello_sdk/src/sdk/boards/trello_board.dart';
 import 'package:trello_sdk/trello_sdk.dart'
     show
         BoardFields,

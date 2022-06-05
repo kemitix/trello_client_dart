@@ -23,6 +23,7 @@ import 'package:trello_sdk/trello_sdk.dart'
         TrelloMember,
         asCsv;
 
+import '../boards/trello_board.dart';
 import '../query_options.dart' show QueryOptions;
 
 class MemberClient {
