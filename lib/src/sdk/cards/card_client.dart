@@ -3,10 +3,10 @@ import 'dart:convert' show json;
 import 'package:dio/dio.dart' show Headers;
 
 import '../client.dart' show TrelloAuthentication;
-import '../errors.dart' show Failure;
 import '../http_client.dart' show HttpClient, HttpResponse;
 import '../members/members.dart' show MemberId;
 import '../misc.dart' show asCsv;
+import '../no_updates_failure.dart';
 import '../query_options.dart' show QueryOptions;
 import 'attachment_client.dart' show AttachmentClient;
 import 'card_models.dart'
@@ -129,8 +129,4 @@ class CardClient {
       _client.delete(QueryOptions(
         path: '/1/cards/$_cardId/idMembers/${memberId.value}',
       ));
-}
-
-class NoUpdatesFailure extends Failure {
-  NoUpdatesFailure() : super(message: 'No updates');
 }
