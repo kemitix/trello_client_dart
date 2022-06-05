@@ -1,8 +1,4 @@
-import '../client.dart';
 
-class BoardId extends StringValue {
-  BoardId(String id) : super(id);
-}
 
 enum BoardFields {
   all,

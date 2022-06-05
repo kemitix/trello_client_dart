@@ -4,7 +4,7 @@ import '../http_client.dart' show HttpClient;
 import '../lists/lists.dart' show ListFields, ListFilter, TrelloList;
 import '../misc.dart' show asCsv;
 import '../query_options.dart' show QueryOptions;
-import 'board_models.dart' show BoardId;
+import 'board_id.dart' show BoardId;
 
 class BoardClient {
   final HttpClient _client;
