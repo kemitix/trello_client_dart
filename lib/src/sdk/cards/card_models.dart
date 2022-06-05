@@ -3,10 +3,6 @@ import 'package:equatable/equatable.dart' show EquatableMixin;
 import '../client.dart' show StringValue;
 import '../trello_object.dart' show TrelloObject;
 
-class AttachmentId extends StringValue {
-  AttachmentId(super.id);
-}
-
 class FileName extends StringValue {
   FileName(super.fileName);
 }
