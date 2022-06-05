@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart' show EquatableMixin;
 
 import '../client.dart' show StringValue;
 import '../trello_object.dart' show TrelloObject;
+import 'card_id.dart' show CardId;
 
 class TrelloCard extends TrelloObject<CardFields> {
   TrelloCard(source, List<CardFields> fields)
@@ -91,10 +92,6 @@ class TrelloCard extends TrelloObject<CardFields> {
     return CardCoordinates(
         latitude: value['latitude'], longitude: value['longitude']);
   }
-}
-
-class CardId extends StringValue {
-  CardId(super.id);
 }
 
 class AttachmentId extends StringValue {

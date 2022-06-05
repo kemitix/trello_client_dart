@@ -9,13 +9,13 @@ import '../misc.dart' show asCsv;
 import '../no_updates_failure.dart';
 import '../query_options.dart' show QueryOptions;
 import 'attachment_client.dart' show AttachmentClient;
+import 'card_id.dart' show CardId;
 import 'card_models.dart'
     show
         AttachmentFields,
         AttachmentFilter,
         AttachmentId,
         CardFields,
-        CardId,
         TrelloAttachment,
         TrelloCard;
 
