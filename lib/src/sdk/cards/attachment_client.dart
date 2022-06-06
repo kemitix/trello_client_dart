@@ -3,7 +3,7 @@ import '../file_name.dart' show FileName;
 import '../http_client.dart' show HttpClient;
 import '../query_options.dart' show QueryOptions;
 import 'cards.dart'
-    show AttachmentFields, AttachmentId, CardId, FileName, TrelloAttachment;
+    show AttachmentFields, AttachmentId, CardId, TrelloAttachment;
 
 class AttachmentClient {
   AttachmentClient(
