@@ -2,12 +2,12 @@ import 'dart:convert' show json;
 
 import 'package:dio/dio.dart' show Headers;
 
-import '../client.dart' show TrelloAuthentication;
 import '../http_client.dart' show HttpClient, HttpResponse;
 import '../members/members.dart' show MemberId;
 import '../misc.dart' show asCsv;
 import '../no_updates_failure.dart';
 import '../query_options.dart' show QueryOptions;
+import '../trello_authentication.dart' show TrelloAuthentication;
 import 'attachment_client.dart' show AttachmentClient;
 import 'attachment_fields.dart' show AttachmentFields;
 import 'attachment_filter.dart' show AttachmentFilter;

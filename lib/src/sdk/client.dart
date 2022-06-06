@@ -1,37 +1,18 @@
-import 'package:dartz/dartz.dart' show Function1;
-import 'package:equatable/equatable.dart' show Equatable, EquatableMixin;
+import 'package:equatable/equatable.dart' show EquatableMixin;
 
 import 'boards/boards.dart' show BoardClient, BoardId;
 import 'cards/cards.dart' show CardClient, CardId;
 import 'http_client.dart' show HttpClient;
 import 'lists/lists.dart' show ListClient, ListId;
 import 'members/members.dart' show MemberClient, MemberId;
-
-class TrelloAuthentication extends Equatable {
-  final String _key;
-
-  String get key => _key;
-
-  final String _token;
-
-  String get token => _token;
-
-  final MemberId _memberId;
-
-  MemberId get memberId => _memberId;
-
-  TrelloAuthentication.of(this._memberId, this._key, this._token);
-
-  @override
-  List<Object?> get props => [memberId, key, token];
-}
+import 'trello_authentication.dart' show TrelloAuthentication;
 
 class TrelloClient {
   late final HttpClient _httpClient;
-  late final Function1<MemberId, MemberClient> _member;
-  late final Function1<BoardId, BoardClient> _board;
-  late final Function1<ListId, ListClient> _list;
-  late final Function1<CardId, CardClient> _card;
+  late final MemberClient Function(MemberId) _member;
+  late final BoardClient Function(BoardId) _board;
+  late final ListClient Function(ListId) _list;
+  late final CardClient Function(CardId) _card;
 
   TrelloClient(this._httpClient, TrelloAuthentication authentication) {
     _member = (id) => MemberClient(_httpClient, id);
