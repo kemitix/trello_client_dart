@@ -1,7 +1,7 @@
 import '../boards/boards.dart' show BoardId;
 import '../trello_object.dart' show TrelloObject;
+import 'list_fields.dart' show ListFields;
 import 'list_id.dart' show ListId;
-import 'list_models.dart' show ListFields;
 
 class TrelloList extends TrelloObject<ListFields> {
   TrelloList(source, List<ListFields> fields)
