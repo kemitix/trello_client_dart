@@ -1,7 +1,8 @@
 import '../coordinates.dart' show Coordinates;
 import '../trello_object.dart' show TrelloObject;
 import 'card_id.dart' show CardId;
-import 'card_models.dart' show CardBadges, CardFields, CardLabel;
+import 'card_label.dart' show CardLabel;
+import 'card_models.dart' show CardBadges, CardFields;
 
 class TrelloCard extends TrelloObject<CardFields> {
   TrelloCard(source, List<CardFields> fields)

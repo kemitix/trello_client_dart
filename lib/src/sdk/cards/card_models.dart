@@ -2,18 +2,6 @@ import 'package:equatable/equatable.dart' show EquatableMixin;
 
 import '../trello_object.dart' show TrelloObject;
 
-class CardLabel with EquatableMixin {
-  late String id;
-  late String idBoard;
-  late String name;
-  late String color;
-
-  CardLabel(this.id, this.idBoard, this.name, this.color);
-
-  @override
-  List<Object?> get props => [id, idBoard, name, color];
-}
-
 class CardBadges with EquatableMixin {
   late int votes;
   late bool viewingMemberVoted;
