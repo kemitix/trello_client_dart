@@ -1,12 +1,5 @@
 import '../trello_object.dart' show TrelloObject;
 
-enum CardFilter {
-  all,
-  closed,
-  none,
-  open,
-}
-
 class TrelloAttachment extends TrelloObject<AttachmentFields> {
   TrelloAttachment(source, List<AttachmentFields> fields)
       : super(source, fields);
