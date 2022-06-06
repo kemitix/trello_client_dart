@@ -14,7 +14,7 @@ import 'attachment_filter.dart' show AttachmentFilter;
 import 'attachment_id.dart' show AttachmentId;
 import 'card_fields.dart' show CardFields;
 import 'card_id.dart' show CardId;
-import 'card_models.dart' show TrelloAttachment;
+import 'trello_attachment.dart' show TrelloAttachment;
 import 'trello_card.dart' show TrelloCard;
 
 class CardClient {

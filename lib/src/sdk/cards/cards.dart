@@ -8,5 +8,5 @@ export 'card_client.dart';
 export 'card_fields.dart';
 export 'card_id.dart';
 export 'card_label.dart';
-export 'card_models.dart';
+export 'trello_attachment.dart';
 export 'trello_card.dart';
