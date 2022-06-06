@@ -1,4 +1,3 @@
-import '../client.dart' show StringValue;
 import '../trello_models.dart'
     show
         AllOrNone,
@@ -13,10 +12,6 @@ import '../trello_models.dart'
         Organizations,
         OrganizationsInvited,
         OrganizationsInvitedFields;
-
-class MemberId extends StringValue {
-  MemberId(super.id);
-}
 
 enum MemberFields {
   all,

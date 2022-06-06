@@ -1,4 +1,4 @@
-import '../members/member_models.dart' show MemberId;
+import '../members/member_id.dart' show MemberId;
 import '../trello_object.dart' show TrelloObject;
 import 'board_fields.dart' show BoardFields;
 import 'board_id.dart' show BoardId;
