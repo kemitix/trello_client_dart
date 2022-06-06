@@ -1,6 +1,7 @@
 export 'src/sdk/boards/boards.dart';
 export 'src/sdk/cards/cards.dart';
 export 'src/sdk/client.dart';
+export 'src/sdk/coordinates.dart';
 export 'src/sdk/errors.dart';
 export 'src/sdk/extensions/either_extensions.dart';
 export 'src/sdk/file_name.dart';

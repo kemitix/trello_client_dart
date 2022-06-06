@@ -4,7 +4,7 @@ import 'package:trello_sdk/trello_sdk.dart'
     show
         AttachmentId,
         CardBadges,
-        CardCoordinates,
+        Coordinates,
         CardId,
         CardLabel,
         FileName,
@@ -133,7 +133,7 @@ void main() {
                       testValue('locationName', (r) => r.locationName,
                           'my-location-name'),
                       testValue('coordinates', (r) => r.coordinates,
-                          CardCoordinates(latitude: 12.34, longitude: 45.67)),
+                          Coordinates(latitude: 12.34, longitude: 45.67)),
                       testValue(
                           'badges',
                           (r) => r.badges,
@@ -158,7 +158,7 @@ void main() {
                   expectedHeaders: {},
                   responseValues: [
                     testValue('coordinates', (r) => r.coordinates,
-                        CardCoordinates(latitude: 12.34, longitude: 45.67)),
+                        Coordinates(latitude: 12.34, longitude: 45.67)),
                   ],
                   additionalContext: {})
             ],

@@ -1,5 +1,5 @@
+import '../coordinates.dart' show Coordinates;
 import '../trello_object.dart' show TrelloObject;
-import 'card_coordinates.dart' show CardCoordinates;
 import 'card_id.dart' show CardId;
 import 'card_models.dart' show CardBadges, CardFields, CardLabel;
 
@@ -81,14 +81,14 @@ class TrelloCard extends TrelloObject<CardFields> {
 
   String get locationName => getValue(CardFields.locationName);
 
-  CardCoordinates get coordinates {
+  Coordinates get coordinates {
     var value = getValue(CardFields.coordinates);
     if (value is String) {
       List<String> split = value.split(',');
-      return CardCoordinates(
+      return Coordinates(
           latitude: double.parse(split[0]), longitude: double.parse(split[1]));
     }
-    return CardCoordinates(
+    return Coordinates(
         latitude: value['latitude'], longitude: value['longitude']);
   }
 }
