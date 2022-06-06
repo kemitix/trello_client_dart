@@ -2,8 +2,6 @@ import 'dart:async' show Future, FutureOr;
 
 import 'package:dio/dio.dart'
     show Dio, DioError, Interceptor, Options, Response, ResponseType;
-import 'package:trello_sdk/external/dio_logger.dart'
-    show CurlLoggerDioInterceptor;
 import 'package:trello_sdk/external/files.dart' show defaultFileWriter;
 
 import 'errors.dart' show HttpClientFailure, ResourceNotFoundFailure;
@@ -57,7 +55,7 @@ class DioHttpClient extends HttpClient {
     _fileWriter = fileWriter ?? defaultFileWriter;
   }
 
-  Interceptor curlLogger() => CurlLoggerDioInterceptor();
+//  Interceptor curlLogger() => CurlLoggerDioInterceptor();
 
   @override
   void close() {
