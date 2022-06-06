@@ -1,4 +1,5 @@
 export 'attachment_client.dart';
+export 'attachment_fields.dart';
 export 'attachment_id.dart';
 export 'card.dart';
 export 'card_badges.dart';

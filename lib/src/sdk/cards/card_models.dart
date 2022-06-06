@@ -1,4 +1,5 @@
 import '../trello_object.dart' show TrelloObject;
+import 'attachment_fields.dart' show AttachmentFields;
 
 class TrelloAttachment extends TrelloObject<AttachmentFields> {
   TrelloAttachment(source, List<AttachmentFields> fields)
@@ -25,21 +26,6 @@ class TrelloAttachment extends TrelloObject<AttachmentFields> {
   String get url => getValue(AttachmentFields.url);
 
   double get pos => getValue(AttachmentFields.pos);
-}
-
-enum AttachmentFields {
-  all,
-  id,
-  bytes,
-  date,
-  edgeColor,
-  idMember,
-  isUpload,
-  mimeType,
-  name,
-  pos,
-  previews,
-  url,
 }
 
 enum AttachmentFilter {
