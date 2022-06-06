@@ -1,4 +1,4 @@
-import '../cards/cards.dart' show CardFields, CardFilter;
+import '../cards/cards.dart' show CardFields;
 import '../errors.dart' show Failure;
 import '../http_client.dart' show HttpClient;
 import '../lists/lists.dart' show ListFields, ListFilter, TrelloList;

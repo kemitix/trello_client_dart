@@ -27,11 +27,3 @@ class TrelloAttachment extends TrelloObject<AttachmentFields> {
 
   double get pos => getValue(AttachmentFields.pos);
 }
-
-enum AttachmentFilter {
-  falsE,
-  cover;
-
-  @override
-  String toString() => name.toLowerCase();
-}
