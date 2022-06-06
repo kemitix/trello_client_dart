@@ -1,37 +1,5 @@
 import '../trello_object.dart' show TrelloObject;
 
-enum CardFields {
-  all,
-  id,
-  badges,
-  checkItemStates,
-  closed,
-  dateLastActivity,
-  desc,
-  descData,
-  due,
-  dueComplete,
-  idAttachmentCover,
-  idBoard,
-  idChecklists,
-  idLabels,
-  idList,
-  idMembers,
-  idMembersVoted,
-  idShort,
-  labels,
-  manualCoverAttachment,
-  name,
-  pos,
-  shortLink,
-  shortUrl,
-  subscribed,
-  url,
-  address,
-  locationName,
-  coordinates,
-}
-
 enum CardFilter {
   all,
   closed,

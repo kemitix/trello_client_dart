@@ -10,9 +10,10 @@ import '../no_updates_failure.dart';
 import '../query_options.dart' show QueryOptions;
 import 'attachment_client.dart' show AttachmentClient;
 import 'attachment_id.dart' show AttachmentId;
+import 'card_fields.dart' show CardFields;
 import 'card_id.dart' show CardId;
 import 'card_models.dart'
-    show AttachmentFields, AttachmentFilter, CardFields, TrelloAttachment;
+    show AttachmentFields, AttachmentFilter, TrelloAttachment;
 import 'trello_card.dart' show TrelloCard;
 
 class CardClient {
