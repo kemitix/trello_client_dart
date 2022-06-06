@@ -1,6 +1,6 @@
 import '../trello_object.dart' show TrelloObject;
+import 'member_fields.dart' show MemberFields;
 import 'member_id.dart';
-import 'member_models.dart' show MemberFields;
 
 class TrelloMember extends TrelloObject<MemberFields> {
   TrelloMember(super.source, super.fields);
