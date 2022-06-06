@@ -1,7 +1,7 @@
 import 'dart:async' show Future, FutureOr;
 
 import 'package:dio/dio.dart'
-    show Dio, DioError, Interceptor, Options, Response, ResponseType;
+    show Dio, DioError, Options, Response, ResponseType;
 import 'package:trello_sdk/external/files.dart' show defaultFileWriter;
 
 import 'errors.dart' show HttpClientFailure, ResourceNotFoundFailure;
