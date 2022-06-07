@@ -4,6 +4,7 @@ export 'src/sdk/coordinates.dart';
 export 'src/sdk/errors.dart';
 export 'src/sdk/extensions/collapsable_either.dart';
 export 'src/sdk/extensions/list_head.dart';
+export 'src/sdk/failure.dart';
 export 'src/sdk/file_name.dart';
 export 'src/sdk/fp/fp.dart';
 export 'src/sdk/http_client.dart';

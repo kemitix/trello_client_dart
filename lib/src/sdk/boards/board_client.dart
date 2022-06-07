@@ -1,5 +1,5 @@
 import '../cards/cards.dart' show CardFields;
-import '../errors.dart' show Failure;
+import '../failure.dart' show Failure;
 import '../http_client.dart' show HttpClient;
 import '../lists/lists.dart' show ListFields, TrelloList;
 import '../misc.dart' show asCsv;
