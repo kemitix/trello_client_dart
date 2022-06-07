@@ -1,5 +1,5 @@
-import '../client.dart' show TrelloClient;
 import '../members/members.dart' show MemberId;
+import '../trello_client.dart' show TrelloClient;
 import 'card_fields.dart' show CardFields;
 import 'card_id.dart' show CardId;
 
