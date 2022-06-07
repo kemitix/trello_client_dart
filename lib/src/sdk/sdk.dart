@@ -12,6 +12,7 @@ export 'http_client_failure.dart';
 export 'lists/lists.dart';
 export 'members/members.dart';
 export 'misc.dart';
+export 'resource_not_found_failure.dart';
 export 'trello_authentication.dart';
 export 'trello_client.dart';
 export 'trello_models.dart';

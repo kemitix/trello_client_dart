@@ -4,10 +4,10 @@ import 'package:dio/dio.dart'
     show Dio, DioError, Options, Response, ResponseType;
 import 'package:trello_sdk/external/files.dart' show defaultFileWriter;
 
-import 'errors.dart' show ResourceNotFoundFailure;
 import 'file_name.dart';
 import 'http_client_failure.dart';
 import 'query_options.dart';
+import 'resource_not_found_failure.dart';
 
 abstract class HttpResponse<T> {
   T? get data;
