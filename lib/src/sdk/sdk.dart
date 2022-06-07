@@ -1,7 +1,7 @@
+export 'already_applied_failure.dart';
 export 'boards/boards.dart';
 export 'cards/cards.dart';
 export 'coordinates.dart';
-export 'errors.dart';
 export 'extensions/collapsable_either.dart';
 export 'extensions/list_head.dart';
 export 'failure.dart';
