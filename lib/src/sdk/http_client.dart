@@ -1,7 +1,5 @@
 import 'dart:async' show Future;
 
-import 'package:dio/dio.dart' show Response;
-
 import 'file_name.dart';
 import 'http_response.dart';
 import 'query_options.dart';
@@ -31,13 +29,4 @@ abstract class HttpClient {
     QueryOptions queryOptions, {
     data,
   });
-}
-
-class DioHttpResponse<T> extends HttpResponse<T> {
-  final Response<T> _response;
-
-  DioHttpResponse(this._response);
-
-  @override
-  T? get data => _response.data;
 }

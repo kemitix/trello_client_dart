@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:trello_sdk/external/files.dart' show defaultFileWriter;
 
+import 'dio_http_response.dart';
 import 'file_name.dart';
 import 'http_client.dart';
 import 'http_client_failure.dart';
