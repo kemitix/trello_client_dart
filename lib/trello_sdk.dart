@@ -8,6 +8,7 @@ export 'src/sdk/failure.dart';
 export 'src/sdk/file_name.dart';
 export 'src/sdk/fp/fp.dart';
 export 'src/sdk/http_client.dart';
+export 'src/sdk/http_client_failure.dart';
 export 'src/sdk/lists/lists.dart';
 export 'src/sdk/members/members.dart';
 export 'src/sdk/misc.dart';
