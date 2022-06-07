@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart' show BaseOptions, Dio;
+import 'package:trello_sdk/src/sdk/dio_http_client.dart';
 import 'package:trello_sdk/trello_sdk.dart'
-    show DioHttpClient, TrelloAuthentication, TrelloClient;
+    show TrelloAuthentication, TrelloClient;
 
 TrelloClient dioClientFactory(TrelloAuthentication authentication) =>
     TrelloClient(
