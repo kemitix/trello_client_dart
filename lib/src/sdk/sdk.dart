@@ -16,7 +16,6 @@ export 'misc.dart';
 export 'resource_not_found_failure.dart';
 export 'trello_authentication.dart';
 export 'trello_client.dart';
-export 'trello_models.dart';
 export 'trello_object.dart';
 export 'types.dart';
 export 'usage_failure.dart';
