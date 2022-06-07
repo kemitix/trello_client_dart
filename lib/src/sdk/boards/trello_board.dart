@@ -1,6 +1,7 @@
-import '../client.dart';
-import '../members/members.dart';
-import '../trello_object_model.dart';
+import '../members/member_id.dart' show MemberId;
+import '../trello_object.dart' show TrelloObject;
+import 'board_fields.dart' show BoardFields;
+import 'board_id.dart' show BoardId;
 
 class TrelloBoard extends TrelloObject<BoardFields> {
   TrelloBoard(source, List<BoardFields> fields)
@@ -35,28 +36,4 @@ class TrelloBoard extends TrelloObject<BoardFields> {
 // TODO prefs
 // TODO labelNames
 // TODO limits
-}
-
-class BoardId extends StringValue {
-  BoardId(String id) : super(id);
-}
-
-enum BoardFields {
-  all,
-  id,
-  name,
-  desc,
-  descData,
-  closed,
-  idMemberCreator,
-  idOrganization,
-  pinned,
-  url,
-  shortUrl,
-  //prefs,
-  //labelNames,
-  starred,
-  //limits, -- https://developer.atlassian.com/cloud/trello/guides/rest-api/limits/
-  memberships,
-  enterpriseOwned
 }

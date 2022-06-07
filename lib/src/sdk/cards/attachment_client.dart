@@ -1,7 +1,9 @@
-import '../client.dart';
-import '../http_client.dart';
-import '../query_options.dart';
-import 'cards.dart';
+import '../file_name.dart' show FileName;
+import '../http_client.dart' show HttpClient;
+import '../query_options.dart' show QueryOptions;
+import '../trello_authentication.dart' show TrelloAuthentication;
+import 'cards.dart'
+    show AttachmentFields, AttachmentId, CardId, TrelloAttachment;
 
 class AttachmentClient {
   AttachmentClient(

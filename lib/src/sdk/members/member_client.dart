@@ -24,6 +24,7 @@ import 'package:trello_sdk/trello_sdk.dart'
         asCsv;
 
 import '../query_options.dart' show QueryOptions;
+import 'member_board_filter.dart' show MemberBoardFilter;
 
 class MemberClient {
   final HttpClient _client;
@@ -115,14 +116,4 @@ class MemberClient {
           .then((items) => items
               .map((item) => TrelloBoard(item, fields ?? [BoardFields.all]))
               .toList(growable: false));
-}
-
-enum MemberBoardFilter {
-  all,
-  closed,
-  members,
-  open,
-  organization,
-  public,
-  starred,
 }

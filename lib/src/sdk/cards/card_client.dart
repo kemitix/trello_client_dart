@@ -2,14 +2,21 @@ import 'dart:convert' show json;
 
 import 'package:dio/dio.dart' show Headers;
 
-import '../client.dart';
-import '../errors.dart';
 import '../http_client.dart';
-import '../members/members.dart';
-import '../misc.dart';
+import '../http_response.dart';
+import '../members/member_id.dart';
+import '../misc.dart' show asCsv;
+import '../no_updates_failure.dart';
 import '../query_options.dart';
+import '../trello_authentication.dart';
 import 'attachment_client.dart';
-import 'card_models.dart';
+import 'attachment_fields.dart';
+import 'attachment_filter.dart';
+import 'attachment_id.dart';
+import 'card_fields.dart';
+import 'card_id.dart';
+import 'trello_attachment.dart';
+import 'trello_card.dart';
 
 class CardClient {
   CardClient(this._client, this._cardId, this._authentication) {
@@ -121,8 +128,4 @@ class CardClient {
       _client.delete(QueryOptions(
         path: '/1/cards/$_cardId/idMembers/${memberId.value}',
       ));
-}
-
-class NoUpdatesFailure extends Failure {
-  NoUpdatesFailure() : super(message: 'No updates');
 }

@@ -1,4 +1,12 @@
 export 'attachment_client.dart';
+export 'attachment_fields.dart';
+export 'attachment_filter.dart';
+export 'attachment_id.dart';
 export 'card.dart';
+export 'card_badges.dart';
 export 'card_client.dart';
-export 'card_models.dart';
+export 'card_fields.dart';
+export 'card_id.dart';
+export 'card_label.dart';
+export 'trello_attachment.dart';
+export 'trello_card.dart';

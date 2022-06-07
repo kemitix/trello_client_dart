@@ -1,6 +1,7 @@
 import '../boards/boards.dart' show BoardId;
-import '../client.dart' show StringValue;
-import '../trello_object_model.dart' show TrelloObject;
+import '../trello_object.dart' show TrelloObject;
+import 'list_fields.dart' show ListFields;
+import 'list_id.dart' show ListId;
 
 class TrelloList extends TrelloObject<ListFields> {
   TrelloList(source, List<ListFields> fields)
@@ -17,25 +18,4 @@ class TrelloList extends TrelloObject<ListFields> {
   int get pos => getValue(ListFields.pos);
 
   bool get subscribed => getValue(ListFields.subscribed);
-}
-
-class ListId extends StringValue {
-  ListId(id) : super(id);
-}
-
-enum ListFields {
-  all,
-  id,
-  name,
-  closed,
-  idBoard,
-  pos,
-  subscribed,
-}
-
-enum ListFilter {
-  all,
-  closed,
-  none,
-  open,
 }

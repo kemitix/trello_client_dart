@@ -1,4 +1,4 @@
-import 'fp.dart' show Either, left, map2either, map3either, right;
+import 'fp.dart' show Either, left, right;
 
 /// map2either - map 2 `Either`s onto a plain function
 Either<L, R> map2either<L, A, A2 extends A, B, B2 extends B, R>(

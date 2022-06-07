@@ -1,6 +1,7 @@
-import '../client.dart' show TrelloClient;
 import '../members/members.dart' show MemberId;
-import 'card_models.dart';
+import '../trello_client.dart' show TrelloClient;
+import 'card_fields.dart' show CardFields;
+import 'card_id.dart' show CardId;
 
 class Card {
   static Future<List<MemberId>> getMemberIds(
