@@ -6,12 +6,9 @@ import 'package:trello_sdk/external/files.dart' show defaultFileWriter;
 
 import 'file_name.dart';
 import 'http_client_failure.dart';
+import 'http_response.dart';
 import 'query_options.dart';
 import 'resource_not_found_failure.dart';
-
-abstract class HttpResponse<T> {
-  T? get data;
-}
 
 abstract class HttpClient {
   void close();

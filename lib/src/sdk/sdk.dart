@@ -9,6 +9,7 @@ export 'file_name.dart';
 export 'fp/fp.dart';
 export 'http_client.dart';
 export 'http_client_failure.dart';
+export 'http_response.dart';
 export 'lists/lists.dart';
 export 'members/members.dart';
 export 'misc.dart';
