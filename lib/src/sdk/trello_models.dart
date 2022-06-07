@@ -39,20 +39,3 @@ enum BoardsInvitedFields {
   memberships,
   enterpriseOwned
 }
-
-enum AllOrNone { all, none }
-
-typedef NestedActionsQueryParamsActions = String;
-typedef NestedBoardsQueryParamsBoards = String;
-
-enum NestedCardQueryParametersCards { all, closed, none, open, visible }
-
-typedef NestedNotificationsQueryParametersNotifications = String;
-
-enum Organizations { all, members, none, public }
-
-enum OrganizationFields { all, id, name }
-
-enum OrganizationsInvited { all, members, none, public }
-
-enum OrganizationsInvitedFields { all, id, name }
