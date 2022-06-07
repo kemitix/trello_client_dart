@@ -1,5 +1,3 @@
-import 'package:equatable/equatable.dart' show EquatableMixin;
-
 import 'boards/boards.dart' show BoardClient, BoardId;
 import 'cards/cards.dart' show CardClient, CardId;
 import 'http_client.dart' show HttpClient;
@@ -31,19 +29,5 @@ class TrelloClient {
 
   void close() {
     _httpClient.close();
-  }
-}
-
-abstract class StringValue with EquatableMixin {
-  final String value;
-
-  StringValue(this.value);
-
-  @override
-  List<Object?> get props => [value];
-
-  @override
-  String toString() {
-    return value;
   }
 }
