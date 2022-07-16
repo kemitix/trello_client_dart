@@ -1,5 +1,5 @@
-name: trello_sdk
-description: CLI and SDK for accessing the Trello API
+name: trello_client
+description: Client for accessing the Trello API
 version: 1.0.0
 # homepage: https://www.example.com
 
