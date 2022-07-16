@@ -1,6 +1,6 @@
 import 'dart:async' show FutureOr;
 
-import 'package:trello_sdk/trello_sdk.dart'
+import 'package:trello_client/trello_sdk.dart'
     show CardFields, Either, Failure, left, CollapsableEither;
 
 import '../commands.dart' show CommandEnvironment, UpdateProperty;

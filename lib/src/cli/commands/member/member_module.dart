@@ -1,4 +1,4 @@
-import 'package:trello_sdk/trello_sdk.dart' show Either, Failure, MemberId;
+import 'package:trello_client/trello_sdk.dart' show Either, Failure, MemberId;
 
 import '../commands.dart' show CommandEnvironment, TrelloCommand, TrelloModule;
 import 'member_boards_list_command.dart' show ListMemberBoardsCommand;

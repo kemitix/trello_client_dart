@@ -1,4 +1,4 @@
-import 'package:trello_sdk/src/sdk/types.dart';
+import 'package:trello_client/src/sdk/types.dart';
 
 export 'member_board_filter.dart';
 export 'member_client.dart';

@@ -1,4 +1,4 @@
-import 'package:trello_sdk/trello_sdk.dart'
+import 'package:trello_client/trello_sdk.dart'
     show Either, Left, MemberId, Right, TrelloAuthentication;
 import 'package:verify/verify.dart'
     show ValidationError, Validator, ValidatorUtils, Verify;

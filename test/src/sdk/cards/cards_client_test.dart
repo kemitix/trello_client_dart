@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart' show Headers;
 import 'package:test/test.dart' show group, isTrue;
-import 'package:trello_sdk/trello_sdk.dart'
+import 'package:trello_client/trello_sdk.dart'
     show
         AttachmentId,
         CardBadges,

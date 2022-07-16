@@ -1,5 +1,5 @@
 import 'package:test/test.dart' show group, isTrue;
-import 'package:trello_sdk/trello_sdk.dart' show BoardId, ListId, TrelloList;
+import 'package:trello_client/trello_sdk.dart' show BoardId, ListId, TrelloList;
 
 import '../../cli/cli_commons.dart' show createResponse;
 import '../sdk_commons.dart'

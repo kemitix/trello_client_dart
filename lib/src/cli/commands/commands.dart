@@ -2,7 +2,7 @@ import 'dart:async' show FutureOr;
 
 import 'package:args/command_runner.dart' show Command;
 import 'package:tabular/tabular.dart' show tabular;
-import 'package:trello_sdk/trello_sdk.dart'
+import 'package:trello_client/trello_sdk.dart'
     show Either, Failure, Left, Right, TrelloClient, TrelloObject, UsageFailure;
 
 class CommandEnvironment {

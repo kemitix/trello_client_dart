@@ -2,8 +2,8 @@ import 'dart:typed_data' show Uint8List;
 
 import 'package:dio/dio.dart'
     show BaseOptions, Dio, HttpClientAdapter, RequestOptions, ResponseBody;
-import 'package:trello_sdk/src/sdk/dio_http_client.dart';
-import 'package:trello_sdk/trello_sdk.dart'
+import 'package:trello_client/src/sdk/dio_http_client.dart';
+import 'package:trello_client/trello_sdk.dart'
     show FileName, MemberId, TrelloAuthentication, TrelloClient, Tuple2, Tuple3;
 
 class DioAdapterMock implements HttpClientAdapter {
