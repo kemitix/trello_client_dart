@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:trello_sdk/trello_sdk.dart';
+import 'package:trello_client/trello_sdk.dart';
 
 void main() {
   test('list.head returns first item on list', () {

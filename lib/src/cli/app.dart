@@ -1,5 +1,5 @@
 import 'package:args/command_runner.dart' show UsageException;
-import 'package:trello_sdk/trello_sdk.dart'
+import 'package:trello_client/trello_sdk.dart'
     show Reader, TrelloAuthentication, TrelloClient;
 
 import 'authentication.dart' show authentication;

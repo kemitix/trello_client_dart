@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart' show RequestOptions, ResponseBody;
 import 'package:test/test.dart'
     show expect, fail, group, isNotNull, setUp, setUpAll, test;
-import 'package:trello_sdk/trello_sdk.dart'
+import 'package:trello_client/trello_sdk.dart'
     show Either, HttpClientFailure, ResourceNotFoundFailure, left, right;
 
 import '../cli/cli_commons.dart' show createResponse;

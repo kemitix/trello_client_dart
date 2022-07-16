@@ -3,10 +3,10 @@
 import 'dart:io' show Platform;
 
 import 'package:dcli/dcli.dart' show menu;
-import 'package:trello_sdk/external/dio_client_factory.dart'
+import 'package:trello_client/external/dio_client_factory.dart'
     show dioClientFactory;
-import 'package:trello_sdk/trello_cli.dart' show Errors, authentication;
-import 'package:trello_sdk/trello_sdk.dart'
+import 'package:trello_client/trello_cli.dart' show Errors, authentication;
+import 'package:trello_client/trello_sdk.dart'
     show
         BoardFields,
         CardFields,

@@ -1,8 +1,8 @@
 import 'dart:io' show Platform;
 
-import 'package:trello_sdk/external/dio_client_factory.dart'
+import 'package:trello_client/external/dio_client_factory.dart'
     show dioClientFactory;
-import 'package:trello_sdk/trello_cli.dart' show EnvArgsEnvironment, app;
+import 'package:trello_client/trello_cli.dart' show EnvArgsEnvironment, app;
 
 Future<void> main(List<String> arguments) async {
   await app().run(EnvArgsEnvironment(

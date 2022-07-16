@@ -1,6 +1,6 @@
 import 'package:test/test.dart' show expect, fail, test;
-import 'package:trello_sdk/trello_cli.dart' show authentication;
-import 'package:trello_sdk/trello_sdk.dart' show MemberId, TrelloAuthentication;
+import 'package:trello_client/trello_cli.dart' show authentication;
+import 'package:trello_client/trello_sdk.dart' show MemberId, TrelloAuthentication;
 
 void main() {
   test('no env set', () {

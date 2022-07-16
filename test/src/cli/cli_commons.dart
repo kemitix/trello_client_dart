@@ -3,7 +3,7 @@ import 'dart:convert' show jsonEncode;
 import 'package:dio/dio.dart' show Headers, RequestOptions, ResponseBody;
 import 'package:test/test.dart'
     show expect, group, isNotNull, isTrue, setUpAll, test;
-import 'package:trello_sdk/trello_cli.dart' show EnvArgsEnvironment, app;
+import 'package:trello_client/trello_cli.dart' show EnvArgsEnvironment, app;
 
 import '../mocks/dio_mock.dart' show TestTrelloClient;
 import '../sdk/sdk_commons.dart' show ExpectedRequest;

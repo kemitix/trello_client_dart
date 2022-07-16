@@ -3,9 +3,9 @@
 import 'dart:io' show Platform;
 
 import 'package:dcli/dcli.dart' show calculateHash, delete, lastModified;
-import 'package:trello_sdk/external/dio_client_factory.dart'
+import 'package:trello_client/external/dio_client_factory.dart'
     show dioClientFactory;
-import 'package:trello_sdk/trello_cli.dart' show EnvArgsEnvironment, app;
+import 'package:trello_client/trello_cli.dart' show EnvArgsEnvironment, app;
 
 const String member = "kemitix";
 const String memberId = "5d999fc87ac5a442f45cb8eb";

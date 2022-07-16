@@ -1,4 +1,4 @@
-import 'package:trello_sdk/trello_sdk.dart'
+import 'package:trello_client/trello_sdk.dart'
     show
         BoardFields,
         HttpClient,
